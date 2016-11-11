@@ -28,8 +28,7 @@ HEADERS += \
     Source/CEngineSettings.h \
     Source/CCarSettings.h \
     Source/CGearBox.h \
-    Source/CCar.h \
-    Source/CCarEmulator.h
+    Source/CCar.h
 
 SOURCES += \
     Source/CNormalizedInput.cpp \
@@ -38,5 +37,4 @@ SOURCES += \
     Source/CEngineSettings.cpp \
     Source/CCarSettings.cpp \
     Source/CGearBox.cpp \
-    Source/CCar.cpp \
-    Source/CCarEmulator.cpp
+    Source/CCar.cpp

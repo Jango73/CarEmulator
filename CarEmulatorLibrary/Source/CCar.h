@@ -13,6 +13,7 @@
 #include <QDateTime>
 
 // Application
+#include "CInterpolator.h"
 #include "CNormalizedInput.h"
 #include "CCarSettings.h"
 #include "CSensors.h"
@@ -46,9 +47,6 @@ public:
     //-------------------------------------------------------------------------------------------------
     // Setters
     //-------------------------------------------------------------------------------------------------
-
-    //! Définit le nom du noeud
-    //! Sets the node's name
 
     //-------------------------------------------------------------------------------------------------
     // Getters
@@ -95,14 +93,20 @@ protected slots:
 
 protected:
 
-    CCarSettings        m_sSettings;
-    CEngineSettings     m_sEngineSettings;
-    CSensors            m_sSensors;
-    CGearBox            m_gGearBox;
+    CCarSettings            m_sSettings;
+    CEngineSettings         m_sEngineSettings;
+    CSensors                m_sSensors;
+    CGearBox                m_gGearBox;
 
-    CNormalizedInput    m_iGasPedal;
-    CNormalizedInput    m_iBreakPedal;
-    CNormalizedInput    m_iClutchPedal;
+    CNormalizedInput        m_iGasPedal;
+    CNormalizedInput        m_iBreakPedal;
+    CNormalizedInput        m_iClutchPedal;
+
+    CNormalizedInput        m_iClutchLevel;
+    CInterpolator<double>   m_iTorqueTable;
+
+    double                  m_dWheelRPS;
+    double                  m_dEnginePowerRPS;
 };
 
 }

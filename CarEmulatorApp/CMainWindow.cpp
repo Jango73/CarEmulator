@@ -28,19 +28,22 @@ void CMainWindow::onTimeout()
 {
     m_tEmulator.process(100);
 
-    int iCurrentGear = m_tEmulator.vehicle().gearBox().currentGear();
+    int iCurrentGear = m_tEmulator.gearBox().currentGear();
     m_pUI->CurrentGear->setText(QString::number(iCurrentGear));
 
-    double dEngineRPM = m_tEmulator.vehicle().sensors().currentRPM().value();
+    double dEngineRPM = m_tEmulator.sensors().currentRPM().value();
     m_pUI->EngineRPM->setText(QString::number(dEngineRPM, 'g', 4));
 
-    double dSpeed = m_tEmulator.vehicle().sensors().currentSpeedKMH().value();
+    double dSpeed = m_tEmulator.sensors().currentSpeedKMH().value();
     m_pUI->Speed->setText(QString::number(dSpeed, 'g', 4));
 
-    double dEngineTemp = m_tEmulator.vehicle().sensors().currentEngineTempC().value();
+    double dFuelLevel = m_tEmulator.sensors().currentFuelLevelL().value();
+    m_pUI->FuelLevel->setText(QString::number(dFuelLevel, 'g', 4));
+
+    double dEngineTemp = m_tEmulator.sensors().currentEngineTempC().value();
     m_pUI->EngineTemperature->setText(QString::number(dEngineTemp, 'g', 4));
 
-    double dFuelCons = m_tEmulator.vehicle().sensors().fuelConsumptionL100KM().value();
+    double dFuelCons = m_tEmulator.sensors().fuelConsumptionL100KM().value();
     m_pUI->FuelConsumption->setText(QString::number(dFuelCons, 'g', 4));
 }
 
@@ -55,27 +58,27 @@ void CMainWindow::onGearUpClicked(bool bValue)
 {
     Q_UNUSED(bValue);
 
-    m_tEmulator.vehicle().gearBox().up();
+    m_tEmulator.gearBox().up();
 }
 
 void CMainWindow::onGearDownClicked(bool bValue)
 {
     Q_UNUSED(bValue);
 
-    m_tEmulator.vehicle().gearBox().down();
+    m_tEmulator.gearBox().down();
 }
 
 void CMainWindow::onClutchChanged(int iValue)
 {
-    m_tEmulator.vehicle().clutchPedal().setValue(1.0 - ((double) iValue / 100.0));
+    m_tEmulator.clutchPedal().setValue(1.0 - ((double) iValue / 100.0));
 }
 
 void CMainWindow::onBreakChanged(int iValue)
 {
-    m_tEmulator.vehicle().breakPedal().setValue((double) iValue / 100.0);
+    m_tEmulator.breakPedal().setValue((double) iValue / 100.0);
 }
 
 void CMainWindow::onGasChanged(int iValue)
 {
-    m_tEmulator.vehicle().gasPedal().setValue((double) iValue / 100.0);
+    m_tEmulator.gasPedal().setValue((double) iValue / 100.0);
 }
