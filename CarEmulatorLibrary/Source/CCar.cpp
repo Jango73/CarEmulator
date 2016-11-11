@@ -117,6 +117,11 @@ void CCar::process(double dDeltaTimeMillis)
     double dFuelGasFactor = gasPedal().value();
     if (dFuelGasFactor < 0.02) dFuelGasFactor = 0.02;
 
+    if (m_bEngineOn == false)
+    {
+        dFuelGasFactor = 0.0;
+    }
+
     // Torque transfer factor
     m_dTorqueTransferFactor = m_iClutchLevel.value();
     if (m_dTorqueTransferFactor > 1.0) m_dTorqueTransferFactor = 1.0;
@@ -135,11 +140,6 @@ void CCar::process(double dDeltaTimeMillis)
 
     // Slow down the engine RPS using limit RPM
     dRawEngineTorqueRPS = (dRawEngineTorqueRPS * ((dBreakDownRPS - dRawEngineTorqueRPS) / dBreakDownRPS)) * 4;
-
-    if (m_bEngineOn == false)
-    {
-        dRawEngineTorqueRPS = 0.0;
-    }
 
     double dEngineDrag = ((dBreakDownRPS - dEngineRPS) / dBreakDownRPS);
 

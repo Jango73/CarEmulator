@@ -22,7 +22,7 @@ CMainWindow::CMainWindow(QWidget *parent) :
     connect(m_pUI->Break, SIGNAL(valueChanged(int)), this, SLOT(onBreakChanged(int)));
     connect(m_pUI->Gas, SIGNAL(valueChanged(int)), this, SLOT(onGasChanged(int)));
 
-    m_tTimer.setInterval(100);
+    m_tTimer.setInterval(50);
     m_tTimer.start();
 
     m_pUI->Cluster->setResizeMode(QQuickWidget::SizeRootObjectToView);
@@ -37,7 +37,7 @@ CMainWindow::~CMainWindow()
 
 void CMainWindow::onTimeout()
 {
-    m_tCar.process(100);
+    m_tCar.process(50);
 
     int iCurrentGear = m_tCar.gearBox().currentGear();
     m_pUI->CurrentGear->setText(QString::number(iCurrentGear));
