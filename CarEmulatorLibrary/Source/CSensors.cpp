@@ -13,6 +13,7 @@ CSensors::CSensors()
     , m_vAccelerationKMHS(CSensorValue(0.0))
     , m_vEngineAccelerationRPSS(CSensorValue(0.0))
     , m_vCurrentFuelLevelL(CSensorValue(60.0))
+    , m_vCurrentFuelLevelPercent(CSensorValue(100.0))
     , m_vFuelConsumptionL100KM(CSensorValue(0.0))
 {
     m_tFuelConsTimer.start();
@@ -50,6 +51,11 @@ CSensorValue& CSensors::engineAccelerationRPSS()
 CSensorValue& CSensors::currentFuelLevelL()
 {
     return m_vCurrentFuelLevelL;
+}
+
+CSensorValue& CSensors::currentFuelLevelPercent()
+{
+    return m_vCurrentFuelLevelPercent;
 }
 
 CSensorValue& CSensors::fuelConsumptionL100KM()

@@ -32,6 +32,7 @@ class CAREMULATOR_SHARED_EXPORT CCar : public QObject
 
     Q_PROPERTY(double engineRPM READ engineRPM NOTIFY engineRPMChanged)
     Q_PROPERTY(double speedKMH READ speedKMH NOTIFY speedKMHChanged)
+    Q_PROPERTY(double fuelPercent READ fuelPercent NOTIFY fuelPercentChanged)
 
 public:
 
@@ -56,6 +57,8 @@ public:
     double engineRPM() { return m_sSensors.currentRPM().value(); }
 
     double speedKMH() { return m_sSensors.currentSpeedKMH().value(); }
+
+    double fuelPercent() { return m_sSensors.currentFuelLevelPercent().value(); }
 
     double torqueTransferFactor() { return m_dTorqueTransferFactor; }
 
@@ -92,6 +95,8 @@ signals:
     void engineRPMChanged();
 
     void speedKMHChanged();
+
+    void fuelPercentChanged();
 
     //-------------------------------------------------------------------------------------------------
     // Properties

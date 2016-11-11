@@ -9,14 +9,16 @@ Rectangle {
 
     property double engineRPM: car.engineRPM
     property double speedKMH: car.speedKMH
+    property double fuelPercent: car.fuelPercent
 
     Row {
-        anchors.fill: parent
+        anchors.centerIn: parent
 
         CircularGauge {
             id: engineRPMGauge
-            width: root.width * 0.48
-            height: width
+            width: height
+            height: root.height * 0.98
+            anchors.bottom: parent.bottom
             minimumValue: 0
             maximumValue: 8000
             stepSize: 10
@@ -34,9 +36,33 @@ Rectangle {
         }
 
         CircularGauge {
+            id: speedFuelGauge
+            width: height
+            height: root.height * 0.60
+            anchors.bottom: parent.bottom
+            minimumValue: 0
+            maximumValue: 100
+            stepSize: 0.5
+            value: fuelPercent
+
+            Behavior on value {
+                NumberAnimation {
+                    duration: 1000
+                }
+            }
+
+            style: CircularGaugeStyle {
+                tickmarkStepSize: 25
+                minimumValueAngle: 150
+                maximumValueAngle: 30
+            }
+        }
+
+        CircularGauge {
             id: speedKMHGauge
-            width: root.width * 0.48
-            height: width
+            width: height
+            height: root.height * 0.98
+            anchors.bottom: parent.bottom
             minimumValue: 0
             maximumValue: 280
             stepSize: 0.5

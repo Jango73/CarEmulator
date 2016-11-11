@@ -258,7 +258,9 @@ void CCar::process(double dDeltaTimeMillis)
 
     // Assign new fuel level
     m_sSensors.currentFuelLevelL().setValue(dFuelLevelL);
+    m_sSensors.currentFuelLevelPercent().setValue((dFuelLevelL / 60.0) * 100.0);
 
     emit engineRPMChanged();
     emit speedKMHChanged();
+    emit fuelPercentChanged();
 }

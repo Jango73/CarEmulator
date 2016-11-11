@@ -54,6 +54,8 @@ public:
 
     CSensorValue& currentFuelLevelL();
 
+    CSensorValue& currentFuelLevelPercent();
+
     CSensorValue& fuelConsumptionL100KM();
 
     //-------------------------------------------------------------------------------------------------
@@ -76,6 +78,7 @@ protected:
     CSensorValue    m_vAccelerationKMHS;          // Kilometers per hour per second
     CSensorValue    m_vEngineAccelerationRPSS;    // Rounds per second per second
     CSensorValue    m_vCurrentFuelLevelL;         // Liters
+    CSensorValue    m_vCurrentFuelLevelPercent;   // Percentage
     CSensorValue    m_vFuelConsumptionL100KM;     // Liters per 100 km
 
     double          m_vPreviousSpeedKMH;          // Kilometers per hour
