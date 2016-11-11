@@ -79,7 +79,7 @@ protected slots:
 
 protected:
 
-    CCar*                   _Vehicle;
+    CCar                    _Vehicle;
     CNormalizedInput        _ClutchLevel;
     CInterpolator<double>   _TorqueTable;
 
