@@ -57,6 +57,8 @@ public:
 
     double speedKMH() { return m_sSensors.currentSpeedKMH().value(); }
 
+    double torqueTransferFactor() { return m_dTorqueTransferFactor; }
+
     CCarSettings& settings();
 
     CEngineSettings& engineSettings();
@@ -112,6 +114,7 @@ protected:
     bool                    m_bEngineOn;
     double                  m_dWheelRPS;
     double                  m_dEnginePowerRPS;
+    double                  m_dTorqueTransferFactor;
 };
 
 }

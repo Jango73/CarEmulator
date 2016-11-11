@@ -56,6 +56,9 @@ void CMainWindow::onTimeout()
 
     double dFuelCons = m_tCar.sensors().fuelConsumptionL100KM().value();
     m_pUI->FuelConsumption->setText(QString::number(dFuelCons, 'g', 4));
+
+    double dTorqueTransferFactor = m_tCar.torqueTransferFactor();
+    m_pUI->TorqueTransfer->setText(QString::number(dTorqueTransferFactor, 'g', 4));
 }
 
 void CMainWindow::onActionStartEngine(bool bValue)

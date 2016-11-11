@@ -61,10 +61,25 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="EngineTemperature"/>
+           <widget class="QLineEdit" name="EngineTemperature">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Fuel cons</string>
+            </property>
+           </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="FuelConsumption"/>
+           <widget class="QLineEdit" name="FuelConsumption">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="Speed">
@@ -80,10 +95,10 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Fuel cons</string>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="FuelLevel">
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -94,8 +109,19 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="FuelLevel"/>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Torque trans</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="TorqueTransfer">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

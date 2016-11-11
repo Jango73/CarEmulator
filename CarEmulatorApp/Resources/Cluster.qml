@@ -3,17 +3,20 @@ import QtQuick.Layouts 1.1
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Styles 1.4
 
-Item {
+Rectangle {
     id: root
+    color: "black"
 
     property double engineRPM: car.engineRPM
     property double speedKMH: car.speedKMH
 
-    RowLayout {
+    Row {
         anchors.fill: parent
 
         CircularGauge {
             id: engineRPMGauge
+            width: root.width * 0.48
+            height: width
             minimumValue: 0
             maximumValue: 8000
             stepSize: 10
@@ -32,9 +35,11 @@ Item {
 
         CircularGauge {
             id: speedKMHGauge
+            width: root.width * 0.48
+            height: width
             minimumValue: 0
             maximumValue: 280
-            stepSize: 2
+            stepSize: 0.5
             value: speedKMH
 
             Behavior on value {

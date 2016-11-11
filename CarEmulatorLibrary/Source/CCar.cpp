@@ -118,9 +118,10 @@ void CCar::process(double dDeltaTimeMillis)
     if (dFuelGasFactor < 0.02) dFuelGasFactor = 0.02;
 
     // Torque transfer factor
-    double dTorqueTransferFactor = m_iClutchLevel.value();
-    if (dTorqueTransferFactor > 1.0) dTorqueTransferFactor = 1.0;
-    if (dGearRatio == 0.0) dTorqueTransferFactor = 0.0;
+    m_dTorqueTransferFactor = m_iClutchLevel.value();
+    if (m_dTorqueTransferFactor > 1.0) m_dTorqueTransferFactor = 1.0;
+    if (m_dTorqueTransferFactor < 0.0) m_dTorqueTransferFactor = 0.0;
+    if (dGearRatio == 0.0) m_dTorqueTransferFactor = 0.0;
 
     // Bring car speed value up to RPM
     dCarSpeedMS *= CEngineSettings::SpeedMSToRPS;
@@ -143,7 +144,7 @@ void CCar::process(double dDeltaTimeMillis)
     double dEngineDrag = ((dBreakDownRPS - dEngineRPS) / dBreakDownRPS);
 
     // Apply the engine drag (reaching limit RPM) to the engine RPM
-    dEngineRPS += (((dRawEngineTorqueRPS * (1 - dTorqueTransferFactor)) * dEngineDrag) * dDeltaTimeSeconds) * 1.5;
+    dEngineRPS += (((dRawEngineTorqueRPS * (1 - m_dTorqueTransferFactor)) * dEngineDrag) * dDeltaTimeSeconds) * 1.5;
 
     // Bring back engine to minimum RPS according to torque transfer factor and fuel flow
     double dIdlePower = (dEngineRPS - dIdleEngineRPS) / (dIdleEngineRPS / 15.0);
@@ -153,14 +154,15 @@ void CCar::process(double dDeltaTimeMillis)
         dIdlePower = dEngineRPS / (dIdleEngineRPS / 15.0);
     }
 
-    dEngineRPS -= ((dIdlePower * (1.0 - dTorqueTransferFactor) * (1.0 - dFuelGasFactor)) * dDeltaTimeSeconds) * 1.5;
+    dEngineRPS -= ((dIdlePower * (1.0 - m_dTorqueTransferFactor) * (1.0 - dFuelGasFactor)) * dDeltaTimeSeconds) * 1.5;
 
     // Compute the force from the wheels applied to the engine by the clutch
     double dWheelRPSToEngine = 0.0;
 
     if (dGearRatio != 0.0)
     {
-        dWheelRPSToEngine = ((m_dWheelRPS - (dEngineRPS / dGearRatio)) * dTorqueTransferFactor) * 8.0;
+        // dWheelRPSToEngine = ((m_dWheelRPS - (dEngineRPS / dGearRatio)) * dTorqueTransferFactor) * 8.0;
+        dWheelRPSToEngine = ((m_dWheelRPS - (dEngineRPS / dGearRatio)) * m_dTorqueTransferFactor) * 8.0;
     }
 
     // Apply the wheel force to the engine
@@ -176,13 +178,13 @@ void CCar::process(double dDeltaTimeMillis)
     if (dCarSpeedDivider < 1.0) dCarSpeedDivider = 1.0;
 
     // Add power to engine when starting up
-    m_dEnginePowerRPS += (dEngineRPS * (1.0 - dTorqueTransferFactor)) / dCarSpeedDivider;
+    m_dEnginePowerRPS += (dEngineRPS * (1.0 - m_dTorqueTransferFactor)) / dCarSpeedDivider;
 
     // Compute engine break
     // TODO
 
     // Compute acceleration
-    double dAccelRPS = m_dEnginePowerRPS * dTorqueTransferFactor;
+    double dAccelRPS = m_dEnginePowerRPS * m_dTorqueTransferFactor;
 
     // Compute car speed
     m_dWheelRPS += dAccelRPS * dDeltaTimeSeconds;
