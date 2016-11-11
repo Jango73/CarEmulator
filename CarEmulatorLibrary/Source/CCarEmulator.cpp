@@ -6,7 +6,7 @@ using namespace CarEmulator;
 
 //-------------------------------------------------------------------------------------------------
 
-CCarEmulator::CCarEmulator(CCar* pVehicle)
+CCarEmulator::CCarEmulator()
 {
     _TorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);
     _TorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);
@@ -25,6 +25,8 @@ CCarEmulator::~CCarEmulator()
 
 void CCarEmulator::Process(double DeltaTimeMillis)
 {
+    _Vehicle.Process(DeltaTimeMillis);
+
     // Get parameters from settings and sensors
     double DeltaTimeSeconds = CUtils::MillisToSeconds(DeltaTimeMillis);
     double EngineRPS = CUtils::RPMToRPS(_Vehicle.Sensors().CurrentRPM().Value());

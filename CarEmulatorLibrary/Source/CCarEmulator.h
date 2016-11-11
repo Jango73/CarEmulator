@@ -35,7 +35,7 @@ public:
 
     //! Constructeur par défaut
     //! Default constructor
-    CCarEmulator(CCar* pVehicle);
+    CCarEmulator();
 
     //! Destructeur
     //! Destructor

@@ -11,19 +11,27 @@ CNormalizedInput::CNormalizedInput()
 {
 }
 
+//-------------------------------------------------------------------------------------------------
+
 CNormalizedInput::~CNormalizedInput()
 {
 }
+
+//-------------------------------------------------------------------------------------------------
 
 void CNormalizedInput::setValue(double dValue)
 {
     m_dValue = dValue;
 }
 
+//-------------------------------------------------------------------------------------------------
+
 double CNormalizedInput::Value() const
 {
     return m_dValue;
 }
+
+//-------------------------------------------------------------------------------------------------
 
 void CNormalizedInput::Release(bool bValue)
 {

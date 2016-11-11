@@ -4,12 +4,12 @@
 
 CMainWindow::CMainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CMainWindow)
+    m_pUI(new Ui::CMainWindow)
 {
-    ui->setupUi(this);
+    m_pUI->setupUi(this);
 }
 
 CMainWindow::~CMainWindow()
 {
-    delete ui;
+    delete m_pUI;
 }

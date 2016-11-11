@@ -19,3 +19,10 @@ HEADERS  += \
     CMainWindow.h
 
 FORMS    += CMainWindow.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../CarEmulatorLibrary/release/ -lCarEmulatorLibrary
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../CarEmulatorLibrary/debug/ -lCarEmulatorLibrary
+else:unix: LIBS += -L$$OUT_PWD/../CarEmulatorLibrary/ -lCarEmulatorLibrary
+
+INCLUDEPATH += $$PWD/../CarEmulatorLibrary
+DEPENDPATH += $$PWD/../CarEmulatorLibrary
