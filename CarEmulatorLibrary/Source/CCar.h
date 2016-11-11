@@ -54,26 +54,26 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    CCarSettings& Settings();
+    CCarSettings& settings();
 
-    CEngineSettings& EngineSettings();
+    CEngineSettings& engineSettings();
 
-    CSensors& Sensors();
+    CSensors& sensors();
 
-    CGearBox& GearBox();
+    CGearBox& gearBox();
 
-    CNormalizedInput& GasPedal();
+    CNormalizedInput& gasPedal();
 
-    CNormalizedInput& BreakPedal();
+    CNormalizedInput& breakPedal();
 
-    CNormalizedInput& ClutchPedal();
+    CNormalizedInput& clutchPedal();
 
     //-------------------------------------------------------------------------------------------------
     // Méthodes de contrôle
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    void Process(double DeltaTimeMillis);
+    void process(double dDeltaTimeMillis);
 
     //-------------------------------------------------------------------------------------------------
     // Signaux
@@ -95,14 +95,14 @@ protected slots:
 
 protected:
 
-    CCarSettings        _Settings;
-    CEngineSettings     _EngineSettings;
-    CSensors            _Sensors;
-    CGearBox            _GearBox;
+    CCarSettings        m_sSettings;
+    CEngineSettings     m_sEngineSettings;
+    CSensors            m_sSensors;
+    CGearBox            m_gGearBox;
 
-    CNormalizedInput    _GasPedal;
-    CNormalizedInput    _BreakPedal;
-    CNormalizedInput    _ClutchPedal;
+    CNormalizedInput    m_iGasPedal;
+    CNormalizedInput    m_iBreakPedal;
+    CNormalizedInput    m_iClutchPedal;
 };
 
 }

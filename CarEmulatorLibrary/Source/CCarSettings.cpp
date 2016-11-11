@@ -7,7 +7,7 @@ using namespace CarEmulator;
 
 CCarSettings::CCarSettings()
 {
-    _WeightKG = 1200.0;
+    m_dWeightKG = 1200.0;
 }
 
 CCarSettings::~CCarSettings()
@@ -16,10 +16,10 @@ CCarSettings::~CCarSettings()
 
 void CCarSettings::setWeightKG(double dValue)
 {
-    _WeightKG = dValue;
+    m_dWeightKG = dValue;
 }
 
-double CCarSettings::WeightKG() const
+double CCarSettings::weightKG() const
 {
-    return _WeightKG;
+    return m_dWeightKG;
 }

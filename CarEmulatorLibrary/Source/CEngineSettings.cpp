@@ -12,17 +12,17 @@ const double CEngineSettings::WheelRadiusM = 0.4;
 //-------------------------------------------------------------------------------------------------
 
 CEngineSettings::CEngineSettings()
-    : _StallRPM(500.0)
-    , _IdleRPM(800.0)
-    , _MaxRPM(3000.0)
-    , _BreakDownRPM(8000.0)
-    , _MaxTemperatureC(90.0)
-    , _BreakDownTemperatureC(120.0)
-    , _MaxSpeedKMH(200.0)
-    , _ClutchContact(0.3)
-    , _ClutchFullEngaged(0.6)
-    , _GasPedalEpsilon(0.02)
-    , _StartupEndSpeedKMH(5.0)
+    : m_dStallRPM(500.0)
+    , m_dIdleRPM(800.0)
+    , m_dMaxRPM(3000.0)
+    , m_dBreakDownRPM(8000.0)
+    , m_dMaxTemperatureC(90.0)
+    , m_dBreakDownTemperatureC(120.0)
+    , m_dMaxSpeedKMH(200.0)
+    , m_dClutchContact(0.3)
+    , m_dClutchFullEngaged(0.6)
+    , m_dGasPedalEpsilon(0.02)
+    , m_dStartupEndSpeedKMH(5.0)
 {
 }
 
@@ -30,57 +30,57 @@ CEngineSettings::~CEngineSettings()
 {
 }
 
-double CEngineSettings::StallRPM() const
+double CEngineSettings::stallRPM() const
 {
-    return _StallRPM;
+    return m_dStallRPM;
 }
 
-double CEngineSettings::IdleRPM() const
+double CEngineSettings::idleRPM() const
 {
-    return _IdleRPM;
+    return m_dIdleRPM;
 }
 
-double CEngineSettings::MaxRPM() const
+double CEngineSettings::maxRPM() const
 {
-    return _MaxRPM;
+    return m_dMaxRPM;
 }
 
-double CEngineSettings::BreakDownRPM() const
+double CEngineSettings::breakDownRPM() const
 {
-    return _BreakDownRPM;
+    return m_dBreakDownRPM;
 }
 
-double CEngineSettings::MaxTemperatureC() const
+double CEngineSettings::maxTemperatureC() const
 {
-    return _MaxTemperatureC;
+    return m_dMaxTemperatureC;
 }
 
-double CEngineSettings::BreakDownTemperatureC() const
+double CEngineSettings::breakDownTemperatureC() const
 {
-    return _BreakDownTemperatureC;
+    return m_dBreakDownTemperatureC;
 }
 
-double CEngineSettings::MaxSpeedKMH() const
+double CEngineSettings::maxSpeedKMH() const
 {
-    return _MaxSpeedKMH;
+    return m_dMaxSpeedKMH;
 }
 
-double CEngineSettings::ClutchContact() const
+double CEngineSettings::clutchContact() const
 {
-    return _ClutchContact;
+    return m_dClutchContact;
 }
 
-double CEngineSettings::ClutchFullEngaged() const
+double CEngineSettings::clutchFullEngaged() const
 {
-    return _ClutchFullEngaged;
+    return m_dClutchFullEngaged;
 }
 
-double CEngineSettings::GasPedalEpsilon() const
+double CEngineSettings::gasPedalEpsilon() const
 {
-    return _GasPedalEpsilon;
+    return m_dGasPedalEpsilon;
 }
 
-double CEngineSettings::StartupEndSpeedKMH() const
+double CEngineSettings::startupEndSpeedKMH() const
 {
-    return _StartupEndSpeedKMH;
+    return m_dStartupEndSpeedKMH;
 }

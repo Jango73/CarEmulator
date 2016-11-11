@@ -42,34 +42,34 @@ public:
     // Setters
     //-------------------------------------------------------------------------------------------------
 
-    bool SetNeutralGear();
+    bool setNeutralGear();
 
-    bool SetHighestGear();
+    bool setHighestGear();
 
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    int NumGears() const;
+    int numGears() const;
 
-    int CurrentGear() const;
+    int currentGear() const;
 
-    int TargetGear() const;
+    int targetGear() const;
 
-    double CurrentRatio() const;
+    double currentRatio() const;
 
-    double CurrentMaxSpeedKMH() const;
+    double currentMaxSpeedKMH() const;
 
-    double CurrentMinSpeedKMH() const;
+    double currentMinSpeedKMH() const;
 
     //-------------------------------------------------------------------------------------------------
     // Méthodes de contrôle
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    bool Up();
+    bool up();
 
-    bool Down();
+    bool down();
 
     //-------------------------------------------------------------------------------------------------
     // Slots
@@ -86,13 +86,13 @@ protected:
 
 protected:
 
-    int                 _NumGears;
-    int                 _CurrentGear;
-    int                 _TargetGear;
-    QVector<double>     _Ratios;
-    QVector<double>     _MaxSpeedKMH;
-    QVector<double>     _MinSpeedKMH;
-    QTimer              _Timer;
+    int                 m_iNumGears;
+    int                 m_iCurrentGear;
+    int                 m_iTargetGear;
+    QVector<double>     m_vRatios;
+    QVector<double>     m_vMaxSpeedKMH;
+    QVector<double>     m_vMinSpeedKMH;
+    QTimer              m_tTimer;
 };
 
 }

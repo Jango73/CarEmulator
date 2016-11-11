@@ -57,7 +57,7 @@ public:
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    void Process(double DeltaTimeMillis);
+    void process(double dDeltaTimeMillis);
 
     //-------------------------------------------------------------------------------------------------
     // Signaux
@@ -79,12 +79,12 @@ protected slots:
 
 protected:
 
-    CCar                    _Vehicle;
-    CNormalizedInput        _ClutchLevel;
-    CInterpolator<double>   _TorqueTable;
+    CCar                    m_cVehicle;
+    CNormalizedInput        m_iClutchLevel;
+    CInterpolator<double>   m_iTorqueTable;
 
-    double                  _WheelRPS;
-    double                  _EnginePowerRPS;
+    double                  m_dWheelRPS;
+    double                  m_dEnginePowerRPS;
 };
 
 }

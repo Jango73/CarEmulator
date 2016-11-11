@@ -8,9 +8,7 @@
 
 // Qt
 #include <QObject>
-#include <QVector>
-#include <QTimer>
-#include <QDateTime>
+#include <QElapsedTimer>
 
 // Application
 #include "CSensorValue.h"
@@ -43,33 +41,30 @@ public:
     // Setters
     //-------------------------------------------------------------------------------------------------
 
-    //! Définit le nom du noeud
-    //! Sets the node's name
-
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    CSensorValue& CurrentRPM();
+    CSensorValue& currentRPM();
 
-    CSensorValue& CurrentSpeedKMH();
+    CSensorValue& currentSpeedKMH();
 
-    CSensorValue& CurrentEngineTempC();
+    CSensorValue& currentEngineTempC();
 
-    CSensorValue& AccelerationKMHS();
+    CSensorValue& accelerationKMHS();
 
-    CSensorValue& EngineAccelerationRPSS();
+    CSensorValue& engineAccelerationRPSS();
 
-    CSensorValue& CurrentFuelLevelL();
+    CSensorValue& currentFuelLevelL();
 
-    CSensorValue& FuelConsumptionL100KM();
+    CSensorValue& fuelConsumptionL100KM();
 
     //-------------------------------------------------------------------------------------------------
     // Méthodes de contrôle
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    void Process(double DeltaTimeMillis);
+    void process(double dDeltaTimeMillis);
 
     //-------------------------------------------------------------------------------------------------
     // Signaux
@@ -91,17 +86,19 @@ protected slots:
 
 protected:
 
-    CSensorValue    _CurrentRPM;                // Rounds per minute
-    CSensorValue    _CurrentSpeedKMH;           // Kilometers per hour
-    CSensorValue    _CurrentEngineTempC;        // Degrees celcius
-    CSensorValue    _AccelerationKMHS;          // Kilometers per hour per second
-    CSensorValue    _EngineAccelerationRPSS;    // Rounds per second per second
-    CSensorValue    _CurrentFuelLevelL;         // Liters
-    CSensorValue    _FuelConsumptionL100KM;     // Liters per 100 km
+    QElapsedTimer   m_tFuelConsTimer;
 
-    double          _PreviousSpeedKMH;          // Kilometers per hour
-    double          _PreviousRPS;               // Rounds per second
-    double          _PreviousFuelLevelL;        // Liters
+    CSensorValue    m_vCurrentRPM;                // Rounds per minute
+    CSensorValue    m_vCurrentSpeedKMH;           // Kilometers per hour
+    CSensorValue    m_vCurrentEngineTempC;        // Degrees celcius
+    CSensorValue    m_vAccelerationKMHS;          // Kilometers per hour per second
+    CSensorValue    m_vEngineAccelerationRPSS;    // Rounds per second per second
+    CSensorValue    m_vCurrentFuelLevelL;         // Liters
+    CSensorValue    m_vFuelConsumptionL100KM;     // Liters per 100 km
+
+    double          m_vPreviousSpeedKMH;          // Kilometers per hour
+    double          m_vPreviousRPS;               // Rounds per second
+    double          m_vPreviousFuelLevelL;        // Liters
 };
 
 }

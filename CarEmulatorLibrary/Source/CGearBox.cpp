@@ -6,108 +6,108 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CGearBox::CGearBox()
-    : _NumGears(6)
-    , _CurrentGear(0)
-    , _TargetGear(0)
+    : m_iNumGears(6)
+    , m_iCurrentGear(0)
+    , m_iTargetGear(0)
 {
-    _Ratios << 0.0;
-    _Ratios << 2.20;
-    _Ratios << 1.20;
-    _Ratios << 0.75;
-    _Ratios << 0.60;
-    _Ratios << 0.50;
+    m_vRatios << 0.0;
+    m_vRatios << 2.20;
+    m_vRatios << 1.20;
+    m_vRatios << 0.75;
+    m_vRatios << 0.60;
+    m_vRatios << 0.50;
 
-    _MaxSpeedKMH << 0.0;
-    _MaxSpeedKMH << 10.0;
-    _MaxSpeedKMH << 25.0;
-    _MaxSpeedKMH << 45.0;
-    _MaxSpeedKMH << 65.0;
-    _MaxSpeedKMH << 200.0;
+    m_vMaxSpeedKMH << 0.0;
+    m_vMaxSpeedKMH << 10.0;
+    m_vMaxSpeedKMH << 25.0;
+    m_vMaxSpeedKMH << 45.0;
+    m_vMaxSpeedKMH << 65.0;
+    m_vMaxSpeedKMH << 200.0;
 
-    _MinSpeedKMH << 0.0;
-    _MinSpeedKMH << 5.0;
-    _MinSpeedKMH << 10.0;
-    _MinSpeedKMH << 20.0;
-    _MinSpeedKMH << 40.0;
-    _MinSpeedKMH << 60.0;
+    m_vMinSpeedKMH << 0.0;
+    m_vMinSpeedKMH << 5.0;
+    m_vMinSpeedKMH << 10.0;
+    m_vMinSpeedKMH << 20.0;
+    m_vMinSpeedKMH << 40.0;
+    m_vMinSpeedKMH << 60.0;
 
-    _Timer.setInterval(1000);
+    m_tTimer.setInterval(1000);
 
-    connect(&_Timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+    connect(&m_tTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
 CGearBox::~CGearBox()
 {
 }
 
-int CGearBox::NumGears() const
+int CGearBox::numGears() const
 {
-    return _NumGears;
+    return m_iNumGears;
 }
 
-int CGearBox::CurrentGear() const
+int CGearBox::currentGear() const
 {
-    return _CurrentGear;
+    return m_iCurrentGear;
 }
 
-int CGearBox::TargetGear() const
+int CGearBox::targetGear() const
 {
-    return _TargetGear;
+    return m_iTargetGear;
 }
 
-double CGearBox::CurrentRatio() const
+double CGearBox::currentRatio() const
 {
-    return _Ratios[_CurrentGear];
+    return m_vRatios[m_iCurrentGear];
 }
 
-double CGearBox::CurrentMaxSpeedKMH() const
+double CGearBox::currentMaxSpeedKMH() const
 {
-    return _MaxSpeedKMH[_CurrentGear];
+    return m_vMaxSpeedKMH[m_iCurrentGear];
 }
 
-double CGearBox::CurrentMinSpeedKMH() const
+double CGearBox::currentMinSpeedKMH() const
 {
-    return _MinSpeedKMH[_CurrentGear];
+    return m_vMinSpeedKMH[m_iCurrentGear];
 }
 
 void CGearBox::onTimeout()
 {
-    _Timer.stop();
-    _CurrentGear = _TargetGear;
+    m_tTimer.stop();
+    m_iCurrentGear = m_iTargetGear;
 }
 
-bool CGearBox::SetNeutralGear()
+bool CGearBox::setNeutralGear()
 {
-    if (_CurrentGear != 0)
+    if (m_iCurrentGear != 0)
     {
-        _TargetGear = 0;
-        _Timer.start();
+        m_iTargetGear = 0;
+        m_tTimer.start();
     }
     return true;
 }
 
-bool CGearBox::SetHighestGear()
+bool CGearBox::setHighestGear()
 {
-    if (_CurrentGear < _NumGears - 1)
+    if (m_iCurrentGear < m_iNumGears - 1)
     {
-        _TargetGear = _NumGears - 1;
-        _Timer.start();
+        m_iTargetGear = m_iNumGears - 1;
+        m_tTimer.start();
     }
     return true;
 }
 
-bool CGearBox::Up()
+bool CGearBox::up()
 {
-    if (_CurrentGear == _NumGears - 1) return false;
-    _TargetGear = _CurrentGear + 1;
-    _Timer.start();
+    if (m_iCurrentGear == m_iNumGears - 1) return false;
+    m_iTargetGear = m_iCurrentGear + 1;
+    m_tTimer.start();
     return true;
 }
 
-bool CGearBox::Down()
+bool CGearBox::down()
 {
-    if (_CurrentGear == 0) return false;
-    _TargetGear = _CurrentGear - 1;
-    _Timer.start();
+    if (m_iCurrentGear == 0) return false;
+    m_iTargetGear = m_iCurrentGear - 1;
+    m_tTimer.start();
     return true;
 }

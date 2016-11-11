@@ -7,107 +7,104 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CSensors::CSensors()
-    : _CurrentRPM(CSensorValue(800.0))
-    , _CurrentSpeedKMH(CSensorValue(0.0))
-    , _CurrentEngineTempC(CSensorValue(80.0))
-    , _AccelerationKMHS(CSensorValue(0.0))
-    , _EngineAccelerationRPSS(CSensorValue(0.0))
-    , _CurrentFuelLevelL(CSensorValue(60.0))
-    , _FuelConsumptionL100KM(CSensorValue(0.0))
+    : m_vCurrentRPM(CSensorValue(800.0))
+    , m_vCurrentSpeedKMH(CSensorValue(0.0))
+    , m_vCurrentEngineTempC(CSensorValue(80.0))
+    , m_vAccelerationKMHS(CSensorValue(0.0))
+    , m_vEngineAccelerationRPSS(CSensorValue(0.0))
+    , m_vCurrentFuelLevelL(CSensorValue(60.0))
+    , m_vFuelConsumptionL100KM(CSensorValue(0.0))
 {
+    m_tFuelConsTimer.start();
 }
 
 CSensors::~CSensors()
 {
 }
 
-CSensorValue& CSensors::CurrentRPM()
+CSensorValue& CSensors::currentRPM()
 {
-    return _CurrentRPM;
+    return m_vCurrentRPM;
 }
 
-CSensorValue& CSensors::CurrentSpeedKMH()
+CSensorValue& CSensors::currentSpeedKMH()
 {
-    return _CurrentSpeedKMH;
+    return m_vCurrentSpeedKMH;
 }
 
-CSensorValue& CSensors::CurrentEngineTempC()
+CSensorValue& CSensors::currentEngineTempC()
 {
-    return _CurrentEngineTempC;
+    return m_vCurrentEngineTempC;
 }
 
-CSensorValue& CSensors::AccelerationKMHS()
+CSensorValue& CSensors::accelerationKMHS()
 {
-    return _AccelerationKMHS;
+    return m_vAccelerationKMHS;
 }
 
-CSensorValue& CSensors::EngineAccelerationRPSS()
+CSensorValue& CSensors::engineAccelerationRPSS()
 {
-    return _EngineAccelerationRPSS;
+    return m_vEngineAccelerationRPSS;
 }
 
-CSensorValue& CSensors::CurrentFuelLevelL()
+CSensorValue& CSensors::currentFuelLevelL()
 {
-    return _CurrentFuelLevelL;
+    return m_vCurrentFuelLevelL;
 }
 
-CSensorValue& CSensors::FuelConsumptionL100KM()
+CSensorValue& CSensors::fuelConsumptionL100KM()
 {
-    return _FuelConsumptionL100KM;
+    return m_vFuelConsumptionL100KM;
 }
 
-void CSensors::Process(double DeltaTimeMillis)
+void CSensors::process(double dDeltaTimeMillis)
 {
     // Compute acceleration
-    double SpeedDiffKMH = _CurrentSpeedKMH.Value() - _PreviousSpeedKMH;
+    double dSpeedDiffKMH = m_vCurrentSpeedKMH.value() - m_vPreviousSpeedKMH;
 
-    if (abs(SpeedDiffKMH) < 0.0001)
+    if (abs(dSpeedDiffKMH) < 0.0001)
     {
-        _AccelerationKMHS.setValue(0.0);
+        m_vAccelerationKMHS.setValue(0.0);
     }
     else
     {
-        _AccelerationKMHS.setValue(SpeedDiffKMH / (DeltaTimeMillis / 1000.0));
+        m_vAccelerationKMHS.setValue(dSpeedDiffKMH / (dDeltaTimeMillis / 1000.0));
     }
 
     // Compute engine acceleration
-    double EngineDiffRPS = CUtils::RPMToRPS(_CurrentRPM.Value()) - _PreviousRPS;
+    double dEngineDiffRPS = CUtils::RPMToRPS(m_vCurrentRPM.value()) - m_vPreviousRPS;
 
-    if (abs(EngineDiffRPS) < 0.0001)
+    if (abs(dEngineDiffRPS) < 0.0001)
     {
-        _EngineAccelerationRPSS.setValue(0.0);
+        m_vEngineAccelerationRPSS.setValue(0.0);
     }
     else
     {
-        _EngineAccelerationRPSS.setValue(EngineDiffRPS / (DeltaTimeMillis / 1000.0));
+        m_vEngineAccelerationRPSS.setValue(dEngineDiffRPS / (dDeltaTimeMillis / 1000.0));
     }
 
     // Compute fuel consumption
 
-    /*
-    if (_FuelConsTimer.ElapsedMilliseconds > 1000)
+    if (m_tFuelConsTimer.elapsed() > 1000)
     {
-        _FuelConsTimer.Stop();
+        double dFuelDiff = m_vCurrentFuelLevelL.value() - m_vPreviousFuelLevelL;
+        m_vPreviousFuelLevelL = m_vCurrentFuelLevelL.value();
 
-        double FuelDiff = _CurrentFuelLevelL.Value - _PreviousFuelLevelL;
-        _PreviousFuelLevelL = _CurrentFuelLevelL.Value;
-
-        if (_CurrentSpeedKMH.Value > 3.0)
+        if (m_vCurrentSpeedKMH.value() > 3.0)
         {
-            double FuelConsumptionLS = (FuelDiff * ((double) _FuelConsTimer.ElapsedMilliseconds / 1000.0)) * -1.0;
-            // _FuelConsumptionL100KM.Value = FuelConsumptionLS;
-            double _SecondsFor100KM = Utils.HoursToSeconds(100.0 / _CurrentSpeedKMH.Value);
-            _FuelConsumptionL100KM.Value = FuelConsumptionLS * _SecondsFor100KM;
+            double dFuelConsumptionLS = (dFuelDiff * ((double) m_tFuelConsTimer.elapsed() / 1000.0)) * -1.0;
+            // m_vFuelConsumptionL100KM.setValue(FuelConsumptionLS);
+            double dSecondsFor100KM = CUtils::HoursToSeconds(100.0 / m_vCurrentSpeedKMH.value());
+            m_vFuelConsumptionL100KM.setValue(dFuelConsumptionLS * dSecondsFor100KM);
         }
         else
         {
-            _FuelConsumptionL100KM.Value = 0.0;
+            m_vFuelConsumptionL100KM.setValue(0.0);
         }
 
-        _FuelConsTimer.Restart();
+        m_tFuelConsTimer.restart();
     }
-    */
 
-    _PreviousSpeedKMH = _CurrentSpeedKMH.Value();
-    _PreviousRPS = CUtils::RPMToRPS(_CurrentRPM.Value());
+    m_vPreviousSpeedKMH = m_vCurrentSpeedKMH.value();
+    m_vPreviousRPS = CUtils::RPMToRPS(m_vCurrentRPM.value());
 }

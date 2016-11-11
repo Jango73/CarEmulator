@@ -8,167 +8,167 @@ using namespace CarEmulator;
 
 CCarEmulator::CCarEmulator()
 {
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(10, 0.6);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(16, 1.0);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(45, 2.0);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(75, 2.5);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(103, 1.8);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(133, 0.4);
-    _TorqueTable << CInterpolator<double>::InterpolatorValue(150, 0.0);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(10, 0.6);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(16, 1.0);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(45, 2.0);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(75, 2.5);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(103, 1.8);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(133, 0.4);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(150, 0.0);
 }
 
 CCarEmulator::~CCarEmulator()
 {
 }
 
-void CCarEmulator::Process(double DeltaTimeMillis)
+void CCarEmulator::process(double dDeltaTimeMillis)
 {
-    _Vehicle.Process(DeltaTimeMillis);
+    m_cVehicle.process(dDeltaTimeMillis);
 
     // Get parameters from settings and sensors
-    double DeltaTimeSeconds = CUtils::MillisToSeconds(DeltaTimeMillis);
-    double EngineRPS = CUtils::RPMToRPS(_Vehicle.Sensors().CurrentRPM().Value());
-    double IdleEngineRPS = CUtils::RPMToRPS(_Vehicle.EngineSettings().IdleRPM());
-    double BreakDownRPS = CUtils::RPMToRPS(_Vehicle.EngineSettings().BreakDownRPM());
-    double CarSpeedMS = CUtils::KMHToMS(_Vehicle.Sensors().CurrentSpeedKMH().Value());
-    double ClutchRange = _Vehicle.EngineSettings().ClutchFullEngaged() - _Vehicle.EngineSettings().ClutchContact();
-    double GearRatio = _Vehicle.GearBox().CurrentRatio();
-    double CurrentEngineTempC = _Vehicle.Sensors().CurrentEngineTempC().Value();
-    double MaxTemperatureC = _Vehicle.EngineSettings().MaxTemperatureC();
-    double BreakDownTemperatureC = _Vehicle.EngineSettings().BreakDownTemperatureC();
-    double FuelLevelL = _Vehicle.Sensors().CurrentFuelLevelL().Value();
+    double dDeltaTimeSeconds = CUtils::MillisToSeconds(dDeltaTimeMillis);
+    double dEngineRPS = CUtils::RPMToRPS(m_cVehicle.sensors().currentRPM().value());
+    double dIdleEngineRPS = CUtils::RPMToRPS(m_cVehicle.engineSettings().idleRPM());
+    double dBreakDownRPS = CUtils::RPMToRPS(m_cVehicle.engineSettings().breakDownRPM());
+    double dCarSpeedMS = CUtils::KMHToMS(m_cVehicle.sensors().currentSpeedKMH().value());
+    double dClutchRange = m_cVehicle.engineSettings().clutchFullEngaged() - m_cVehicle.engineSettings().clutchContact();
+    double dGearRatio = m_cVehicle.gearBox().currentRatio();
+    double dCurrentEngineTempC = m_cVehicle.sensors().currentEngineTempC().value();
+    double dMaxTemperatureC = m_cVehicle.engineSettings().maxTemperatureC();
+    double dBreakDownTemperatureC = m_cVehicle.engineSettings().breakDownTemperatureC();
+    double dFuelLevelL = m_cVehicle.sensors().currentFuelLevelL().value();
 
     // Compute the actual clutch level using contact point and full engage point
-    _ClutchLevel.setValue((_Vehicle.ClutchPedal().Value() - _Vehicle.EngineSettings().ClutchContact()) / ClutchRange);
+    m_iClutchLevel.setValue((m_cVehicle.clutchPedal().Value() - m_cVehicle.engineSettings().clutchContact()) / dClutchRange);
 
     // Compute fuel consumption
-    double FuelGasFactor = _Vehicle.GasPedal().Value();
-    if (FuelGasFactor < 0.05) FuelGasFactor = 0.05;
+    double dFuelGasFactor = m_cVehicle.gasPedal().Value();
+    if (dFuelGasFactor < 0.05) dFuelGasFactor = 0.05;
 
     // Compute torque transfer factor
-    double TorqueTransferFactor = _ClutchLevel.Value();
-    if (TorqueTransferFactor > 1.0) TorqueTransferFactor = 1.0;
-    if (GearRatio == 0.0) TorqueTransferFactor = 0.0;
+    double dTorqueTransferFactor = m_iClutchLevel.Value();
+    if (dTorqueTransferFactor > 1.0) dTorqueTransferFactor = 1.0;
+    if (dGearRatio == 0.0) dTorqueTransferFactor = 0.0;
 
     // Bring car speed value up to RPM
-    CarSpeedMS *= CEngineSettings::SpeedMSToRPS;
+    dCarSpeedMS *= CEngineSettings::SpeedMSToRPS;
 
     // Compute wheel circumference
-    double WheelCircM = 2.0 * CEngineSettings::WheelRadiusM * M_PI;
-    _WheelRPS = CarSpeedMS / WheelCircM;
+    double dWheelCircM = 2.0 * CEngineSettings::WheelRadiusM * M_PI;
+    m_dWheelRPS = dCarSpeedMS / dWheelCircM;
 
     // Compute raw force produced by engine
-    double RawEngineTorqueRPS = EngineRPS * FuelGasFactor;
+    double dRawEngineTorqueRPS = dEngineRPS * dFuelGasFactor;
 
     // Slow down the engine RPS using limit RPM
-    RawEngineTorqueRPS = (RawEngineTorqueRPS * ((BreakDownRPS - RawEngineTorqueRPS) / BreakDownRPS)) * 4;
+    dRawEngineTorqueRPS = (dRawEngineTorqueRPS * ((dBreakDownRPS - dRawEngineTorqueRPS) / dBreakDownRPS)) * 4;
 
-    double EngineDrag = ((BreakDownRPS - EngineRPS) / BreakDownRPS);
+    double dEngineDrag = ((dBreakDownRPS - dEngineRPS) / dBreakDownRPS);
 
     // Apply the engine drag (reaching limit RPM) to the engine RPM
-    EngineRPS += (((RawEngineTorqueRPS * (1 - TorqueTransferFactor)) * EngineDrag) * DeltaTimeSeconds) * 1.5;
+    dEngineRPS += (((dRawEngineTorqueRPS * (1 - dTorqueTransferFactor)) * dEngineDrag) * dDeltaTimeSeconds) * 1.5;
 
     // Bring back engine to minimum RPS according to torque transfer factor and fuel flow
-    double IdlePower = (EngineRPS - IdleEngineRPS) / (IdleEngineRPS / 15.0);
+    double dIdlePower = (dEngineRPS - dIdleEngineRPS) / (dIdleEngineRPS / 15.0);
 
-    EngineRPS -= ((IdlePower * (1.0 - TorqueTransferFactor) * (1.0 - FuelGasFactor)) * DeltaTimeSeconds) * 1.5;
+    dEngineRPS -= ((dIdlePower * (1.0 - dTorqueTransferFactor) * (1.0 - dFuelGasFactor)) * dDeltaTimeSeconds) * 1.5;
 
     // Compute the force from the wheels applied to the engine by the clutch
-    double WheelRPSToEngine = 0.0;
+    double dWheelRPSToEngine = 0.0;
 
-    if (GearRatio != 0.0)
+    if (dGearRatio != 0.0)
     {
-        WheelRPSToEngine = ((_WheelRPS - (EngineRPS / GearRatio)) * TorqueTransferFactor) * 8.0;
+        dWheelRPSToEngine = ((m_dWheelRPS - (dEngineRPS / dGearRatio)) * dTorqueTransferFactor) * 8.0;
     }
 
     // Apply the wheel force to the engine
-    EngineRPS += WheelRPSToEngine * DeltaTimeSeconds;
+    dEngineRPS += dWheelRPSToEngine * dDeltaTimeSeconds;
 
-    if (EngineRPS < 0) EngineRPS = 0;
-    if (EngineRPS > BreakDownRPS) EngineRPS = BreakDownRPS;
+    if (dEngineRPS < 0) dEngineRPS = 0;
+    if (dEngineRPS > dBreakDownRPS) dEngineRPS = dBreakDownRPS;
 
     // Compute the engine power
-    _EnginePowerRPS = (_TorqueTable.getValue(EngineRPS) * 8) * FuelGasFactor;
+    m_dEnginePowerRPS = (m_iTorqueTable.getValue(dEngineRPS) * 8) * dFuelGasFactor;
 
-    double CarSpeedDivider = CarSpeedMS * 0.05;
-    if (CarSpeedDivider < 1.0) CarSpeedDivider = 1.0;
+    double dCarSpeedDivider = dCarSpeedMS * 0.05;
+    if (dCarSpeedDivider < 1.0) dCarSpeedDivider = 1.0;
 
     // Add power to engine when starting up
-    _EnginePowerRPS += (EngineRPS * (1.0 - TorqueTransferFactor)) / CarSpeedDivider;
+    m_dEnginePowerRPS += (dEngineRPS * (1.0 - dTorqueTransferFactor)) / dCarSpeedDivider;
 
     // Compute engine break
     // TODO
 
     // Compute acceleration
-    double AccelRPS = _EnginePowerRPS * TorqueTransferFactor;
+    double dAccelRPS = m_dEnginePowerRPS * dTorqueTransferFactor;
 
     // Compute car speed
-    _WheelRPS += AccelRPS * DeltaTimeSeconds;
+    m_dWheelRPS += dAccelRPS * dDeltaTimeSeconds;
 
     // Check speed limits
-    if (_WheelRPS < 0) _WheelRPS = 0;
+    if (m_dWheelRPS < 0) m_dWheelRPS = 0;
 
-    CarSpeedMS = _WheelRPS * WheelCircM;
+    dCarSpeedMS = m_dWheelRPS * dWheelCircM;
 
     // Compute ground drag
-    double GroundDrag = CarSpeedMS / -5000.0;
-    if (GroundDrag > -2) GroundDrag = -2;
+    double dGroundDrag = dCarSpeedMS / -5000.0;
+    if (dGroundDrag > -2) dGroundDrag = -2;
 
     // Compute air drag
-    double AirDrag = (CarSpeedMS * CarSpeedMS) / -5000.0;
-    if (AirDrag > -2) AirDrag = -2;
+    double dAirDrag = (dCarSpeedMS * dCarSpeedMS) / -5000.0;
+    if (dAirDrag > -2) dAirDrag = -2;
 
     // Compute total drag
-    double TotalDrag = GroundDrag + AirDrag;
+    double dTotalDrag = dGroundDrag + dAirDrag;
 
     // Add drags to speed
-    CarSpeedMS += (TotalDrag * DeltaTimeSeconds);
+    dCarSpeedMS += (dTotalDrag * dDeltaTimeSeconds);
 
     // Add break to speed
-    CarSpeedMS += (_Vehicle.BreakPedal().Value() * -60) * DeltaTimeSeconds;
+    dCarSpeedMS += (m_cVehicle.breakPedal().Value() * -60) * dDeltaTimeSeconds;
 
     // Compute wheel RPS
-    _WheelRPS = (CarSpeedMS / WheelCircM) / CEngineSettings::SpeedMSToRPS;
+    m_dWheelRPS = (dCarSpeedMS / dWheelCircM) / CEngineSettings::SpeedMSToRPS;
 
     // Compute fuel consumption
-    double FuelCons = (((TotalDrag * -1.0) + AccelRPS) * CEngineSettings::RPSToL) * FuelGasFactor;
+    double dFuelCons = (((dTotalDrag * -1.0) + dAccelRPS) * CEngineSettings::RPSToL) * dFuelGasFactor;
 
-    FuelLevelL -= FuelCons * DeltaTimeSeconds;
-    if (FuelLevelL < 0.0) FuelLevelL = 0.0;
+    dFuelLevelL -= dFuelCons * dDeltaTimeSeconds;
+    if (dFuelLevelL < 0.0) dFuelLevelL = 0.0;
 
     // Compute engine temperature
-    double TemperatureChangeCS = ((EngineRPS / BreakDownRPS) * (EngineRPS / BreakDownRPS)) * 5;
-    TemperatureChangeCS *= (BreakDownTemperatureC - CurrentEngineTempC) / BreakDownTemperatureC;
+    double dTemperatureChangeCS = ((dEngineRPS / dBreakDownRPS) * (dEngineRPS / dBreakDownRPS)) * 5;
+    dTemperatureChangeCS *= (dBreakDownTemperatureC - dCurrentEngineTempC) / dBreakDownTemperatureC;
 
-    CurrentEngineTempC += TemperatureChangeCS * DeltaTimeSeconds;
+    dCurrentEngineTempC += dTemperatureChangeCS * dDeltaTimeSeconds;
 
     // Compute engine cooling
-    double EngineTemperatureCoolingCS = (CurrentEngineTempC - MaxTemperatureC) * 0.01;
-    if (EngineTemperatureCoolingCS < 0.0) EngineTemperatureCoolingCS = 0.0;
-    EngineTemperatureCoolingCS *= -1.0;
+    double dEngineTemperatureCoolingCS = (dCurrentEngineTempC - dMaxTemperatureC) * 0.01;
+    if (dEngineTemperatureCoolingCS < 0.0) dEngineTemperatureCoolingCS = 0.0;
+    dEngineTemperatureCoolingCS *= -1.0;
 
-    CurrentEngineTempC += EngineTemperatureCoolingCS * DeltaTimeSeconds;
+    dCurrentEngineTempC += dEngineTemperatureCoolingCS * dDeltaTimeSeconds;
 
     // Compute natural temperature loss
-    if (TemperatureChangeCS < 0.01)
+    if (dTemperatureChangeCS < 0.01)
     {
-        CurrentEngineTempC -= 0.05 * DeltaTimeSeconds;
+        dCurrentEngineTempC -= 0.05 * dDeltaTimeSeconds;
     }
 
     // Bring car speed value down from RPM
-    CarSpeedMS /= CEngineSettings::SpeedMSToRPS;
+    dCarSpeedMS /= CEngineSettings::SpeedMSToRPS;
 
     // Assign new engine RPM
-    _Vehicle.Sensors().CurrentRPM().setValue(CUtils::RPSToRPM(EngineRPS));
+    m_cVehicle.sensors().currentRPM().setValue(CUtils::RPSToRPM(dEngineRPS));
 
     // Assign new speed
-    _Vehicle.Sensors().CurrentSpeedKMH().setValue(CUtils::MSToKMH(CarSpeedMS));
+    m_cVehicle.sensors().currentSpeedKMH().setValue(CUtils::MSToKMH(dCarSpeedMS));
 
     // Assign new engine temperature
-    _Vehicle.Sensors().CurrentEngineTempC().setValue(CurrentEngineTempC);
+    m_cVehicle.sensors().currentEngineTempC().setValue(dCurrentEngineTempC);
 
     // Assign new fuel level
-    _Vehicle.Sensors().CurrentFuelLevelL().setValue(FuelLevelL);
+    m_cVehicle.sensors().currentFuelLevelL().setValue(dFuelLevelL);
 }

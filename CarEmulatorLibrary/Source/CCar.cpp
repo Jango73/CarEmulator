@@ -9,46 +9,64 @@ CCar::CCar()
 {
 }
 
+//-------------------------------------------------------------------------------------------------
+
 CCar::~CCar()
 {
 }
 
-CCarSettings& CCar::Settings()
+//-------------------------------------------------------------------------------------------------
+
+CCarSettings& CCar::settings()
 {
-    return _Settings;
+    return m_sSettings;
 }
 
-CEngineSettings& CCar::EngineSettings()
+//-------------------------------------------------------------------------------------------------
+
+CEngineSettings& CCar::engineSettings()
 {
-    return _EngineSettings;
+    return m_sEngineSettings;
 }
 
-CSensors& CCar::Sensors()
+//-------------------------------------------------------------------------------------------------
+
+CSensors& CCar::sensors()
 {
-    return _Sensors;
+    return m_sSensors;
 }
 
-CGearBox& CCar::GearBox()
+//-------------------------------------------------------------------------------------------------
+
+CGearBox& CCar::gearBox()
 {
-    return _GearBox;
+    return m_gGearBox;
 }
 
-CNormalizedInput& CCar::GasPedal()
+//-------------------------------------------------------------------------------------------------
+
+CNormalizedInput& CCar::gasPedal()
 {
-    return _GasPedal;
+    return m_iGasPedal;
 }
 
-CNormalizedInput& CCar::BreakPedal()
+//-------------------------------------------------------------------------------------------------
+
+CNormalizedInput& CCar::breakPedal()
 {
-    return _BreakPedal;
+    return m_iBreakPedal;
 }
 
-CNormalizedInput& CCar::ClutchPedal()
+//-------------------------------------------------------------------------------------------------
+
+CNormalizedInput& CCar::clutchPedal()
 {
-    return _ClutchPedal;
+    return m_iClutchPedal;
 }
 
-void CCar::Process(double DeltaTimeMillis)
+//-------------------------------------------------------------------------------------------------
+
+void CCar::process(double dDeltaTimeMillis)
 {
-    _Sensors.Process(DeltaTimeMillis);
+    m_sSensors.process(dDeltaTimeMillis);
 }

@@ -6,8 +6,8 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CSensorValue::CSensorValue(double dValue)
-    : _IsValid(true)
-    , _Value(dValue)
+    : m_bIsValid(true)
+    , m_dValue(dValue)
 {
 }
 
@@ -17,15 +17,15 @@ CSensorValue::~CSensorValue()
 
 void CSensorValue::setValue(double dValue)
 {
-    _Value = dValue;
+    m_dValue = dValue;
 }
 
-bool CSensorValue::IsValid() const
+bool CSensorValue::isValid() const
 {
-    return _IsValid;
+    return m_bIsValid;
 }
 
-double CSensorValue::Value() const
+double CSensorValue::value() const
 {
-    return _Value;
+    return m_dValue;
 }

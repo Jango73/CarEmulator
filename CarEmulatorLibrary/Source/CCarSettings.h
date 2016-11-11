@@ -44,7 +44,7 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    double WeightKG() const;
+    double weightKG() const;
 
     //-------------------------------------------------------------------------------------------------
     // Méthodes de contrôle
@@ -71,7 +71,7 @@ protected slots:
 
 protected:
 
-    double  _WeightKG;
+    double  m_dWeightKG;
 };
 
 }

@@ -38,9 +38,9 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    bool IsValid() const;
+    bool isValid() const;
 
-    double Value() const;
+    double value() const;
 
     //-------------------------------------------------------------------------------------------------
     // Propriétés
@@ -49,8 +49,8 @@ public:
 
 protected:
 
-    double      _IsValid;
-    double      _Value;
+    double      m_bIsValid;
+    double      m_dValue;
 };
 
 }
