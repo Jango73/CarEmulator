@@ -3,6 +3,7 @@
 
 // Qt
 #include <QMainWindow>
+#include <QTimer>
 
 // Foundations
 #include "../CarEmulatorLibrary/Source/CCarEmulator.h"
@@ -25,9 +26,27 @@ public:
 
     ~CMainWindow();
 
+protected slots:
+
+    void onTimeout();
+
+    void onActionStart(bool);
+
+    void onGearUpClicked(bool bValue);
+
+    void onGearDownClicked(bool bValue);
+
+    void onClutchChanged(int iValue);
+
+    void onBreakChanged(int iValue);
+
+    void onGasChanged(int iValue);
+
 private:
 
     Ui::CMainWindow*            m_pUI;
 
     CarEmulator::CCarEmulator   m_tEmulator;
+
+    QTimer                      m_tTimer;
 };

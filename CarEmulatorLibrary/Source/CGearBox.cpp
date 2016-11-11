@@ -32,7 +32,6 @@ CGearBox::CGearBox()
     m_vMinSpeedKMH << 60.0;
 
     m_tTimer.setInterval(1000);
-
     connect(&m_tTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 

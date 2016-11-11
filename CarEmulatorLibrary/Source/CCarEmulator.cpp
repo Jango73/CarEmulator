@@ -23,6 +23,11 @@ CCarEmulator::~CCarEmulator()
 {
 }
 
+CCar& CCarEmulator::vehicle()
+{
+    return m_cVehicle;
+}
+
 void CCarEmulator::process(double dDeltaTimeMillis)
 {
     m_cVehicle.process(dDeltaTimeMillis);
@@ -41,14 +46,14 @@ void CCarEmulator::process(double dDeltaTimeMillis)
     double dFuelLevelL = m_cVehicle.sensors().currentFuelLevelL().value();
 
     // Compute the actual clutch level using contact point and full engage point
-    m_iClutchLevel.setValue((m_cVehicle.clutchPedal().Value() - m_cVehicle.engineSettings().clutchContact()) / dClutchRange);
+    m_iClutchLevel.setValue((m_cVehicle.clutchPedal().value() - m_cVehicle.engineSettings().clutchContact()) / dClutchRange);
 
     // Compute fuel consumption
-    double dFuelGasFactor = m_cVehicle.gasPedal().Value();
+    double dFuelGasFactor = m_cVehicle.gasPedal().value();
     if (dFuelGasFactor < 0.05) dFuelGasFactor = 0.05;
 
     // Compute torque transfer factor
-    double dTorqueTransferFactor = m_iClutchLevel.Value();
+    double dTorqueTransferFactor = m_iClutchLevel.value();
     if (dTorqueTransferFactor > 1.0) dTorqueTransferFactor = 1.0;
     if (dGearRatio == 0.0) dTorqueTransferFactor = 0.0;
 
@@ -127,7 +132,7 @@ void CCarEmulator::process(double dDeltaTimeMillis)
     dCarSpeedMS += (dTotalDrag * dDeltaTimeSeconds);
 
     // Add break to speed
-    dCarSpeedMS += (m_cVehicle.breakPedal().Value() * -60) * dDeltaTimeSeconds;
+    dCarSpeedMS += (m_cVehicle.breakPedal().value() * -60) * dDeltaTimeSeconds;
 
     // Compute wheel RPS
     m_dWheelRPS = (dCarSpeedMS / dWheelCircM) / CEngineSettings::SpeedMSToRPS;

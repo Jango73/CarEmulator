@@ -26,7 +26,7 @@ void CNormalizedInput::setValue(double dValue)
 
 //-------------------------------------------------------------------------------------------------
 
-double CNormalizedInput::Value() const
+double CNormalizedInput::value() const
 {
     return m_dValue;
 }

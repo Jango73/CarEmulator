@@ -4,8 +4,6 @@
 // Std
 #include "math.h"
 
-#include "CarEmulatorGlobal.h"
-
 //-------------------------------------------------------------------------------------------------
 // Includes
 
@@ -14,7 +12,7 @@
 namespace CarEmulator
 {
 
-class CAREMULATOR_SHARED_EXPORT CUtils
+class CUtils
 {
 public:
 
@@ -24,7 +22,7 @@ public:
 
     static inline double MillisToSeconds(double Millis)
     {
-        return Millis / 1000;
+        return Millis / 1000.0;
     }
 
     static inline double SecondsToHours(double Seconds)
