@@ -16,15 +16,12 @@ class CAREMULATOR_SHARED_EXPORT CSensorValue
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructeurs et destructeur
     // Constructors et destructor
     //-------------------------------------------------------------------------------------------------
 
-    //! Constructeur par défaut
     //! Default constructor
     CSensorValue(double dValue = 0.0);
 
-    //! Destructeur
     //! Destructor
     virtual ~CSensorValue();
 
@@ -43,7 +40,6 @@ public:
     double value() const;
 
     //-------------------------------------------------------------------------------------------------
-    // Propriétés
     // Properties
     //-------------------------------------------------------------------------------------------------
 

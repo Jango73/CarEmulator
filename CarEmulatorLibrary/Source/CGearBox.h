@@ -26,15 +26,12 @@ class CAREMULATOR_SHARED_EXPORT CGearBox : public QObject
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructeurs et destructeur
     // Constructors et destructor
     //-------------------------------------------------------------------------------------------------
 
-    //! Constructeur par défaut
     //! Default constructor
     CGearBox();
 
-    //! Destructeur
     //! Destructor
     virtual ~CGearBox();
 
@@ -63,7 +60,6 @@ public:
     double currentMinSpeedKMH() const;
 
     //-------------------------------------------------------------------------------------------------
-    // Méthodes de contrôle
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
@@ -80,7 +76,6 @@ protected slots:
     void onTimeout();
 
     //-------------------------------------------------------------------------------------------------
-    // Propriétés
     // Properties
     //-------------------------------------------------------------------------------------------------
 

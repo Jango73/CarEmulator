@@ -8,15 +8,17 @@ CMainWindow::CMainWindow(QWidget *parent) :
 {
     m_pUI->setupUi(this);
 
-    m_tTimer.setInterval(100);
     connect(&m_tTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-
-    connect(m_pUI->actionStart, SIGNAL(triggered(bool)), this, SLOT(onActionStart(bool)));
+    connect(m_pUI->actionStartEngine, SIGNAL(triggered(bool)), this, SLOT(onActionStartEngine(bool)));
+    connect(m_pUI->actionStopEngine, SIGNAL(triggered(bool)), this, SLOT(onActionStopEngine(bool)));
     connect(m_pUI->GearUp, SIGNAL(clicked(bool)), this, SLOT(onGearUpClicked(bool)));
     connect(m_pUI->GearDown, SIGNAL(clicked(bool)), this, SLOT(onGearDownClicked(bool)));
     connect(m_pUI->Clutch, SIGNAL(valueChanged(int)), this, SLOT(onClutchChanged(int)));
     connect(m_pUI->Break, SIGNAL(valueChanged(int)), this, SLOT(onBreakChanged(int)));
     connect(m_pUI->Gas, SIGNAL(valueChanged(int)), this, SLOT(onGasChanged(int)));
+
+    m_tTimer.setInterval(100);
+    m_tTimer.start();
 }
 
 CMainWindow::~CMainWindow()
@@ -26,59 +28,66 @@ CMainWindow::~CMainWindow()
 
 void CMainWindow::onTimeout()
 {
-    m_tEmulator.process(100);
+    m_tCar.process(100);
 
-    int iCurrentGear = m_tEmulator.gearBox().currentGear();
+    int iCurrentGear = m_tCar.gearBox().currentGear();
     m_pUI->CurrentGear->setText(QString::number(iCurrentGear));
 
-    double dEngineRPM = m_tEmulator.sensors().currentRPM().value();
+    double dEngineRPM = m_tCar.sensors().currentRPM().value();
     m_pUI->EngineRPM->setText(QString::number(dEngineRPM, 'g', 4));
 
-    double dSpeed = m_tEmulator.sensors().currentSpeedKMH().value();
+    double dSpeed = m_tCar.sensors().currentSpeedKMH().value();
     m_pUI->Speed->setText(QString::number(dSpeed, 'g', 4));
 
-    double dFuelLevel = m_tEmulator.sensors().currentFuelLevelL().value();
+    double dFuelLevel = m_tCar.sensors().currentFuelLevelL().value();
     m_pUI->FuelLevel->setText(QString::number(dFuelLevel, 'g', 4));
 
-    double dEngineTemp = m_tEmulator.sensors().currentEngineTempC().value();
+    double dEngineTemp = m_tCar.sensors().currentEngineTempC().value();
     m_pUI->EngineTemperature->setText(QString::number(dEngineTemp, 'g', 4));
 
-    double dFuelCons = m_tEmulator.sensors().fuelConsumptionL100KM().value();
+    double dFuelCons = m_tCar.sensors().fuelConsumptionL100KM().value();
     m_pUI->FuelConsumption->setText(QString::number(dFuelCons, 'g', 4));
 }
 
-void CMainWindow::onActionStart(bool bValue)
+void CMainWindow::onActionStartEngine(bool bValue)
 {
     Q_UNUSED(bValue);
 
-    m_tTimer.start();
+    m_tCar.startEngine();
+}
+
+void CMainWindow::onActionStopEngine(bool bValue)
+{
+    Q_UNUSED(bValue);
+
+    m_tCar.stopEngine();
 }
 
 void CMainWindow::onGearUpClicked(bool bValue)
 {
     Q_UNUSED(bValue);
 
-    m_tEmulator.gearBox().up();
+    m_tCar.gearBox().up();
 }
 
 void CMainWindow::onGearDownClicked(bool bValue)
 {
     Q_UNUSED(bValue);
 
-    m_tEmulator.gearBox().down();
+    m_tCar.gearBox().down();
 }
 
 void CMainWindow::onClutchChanged(int iValue)
 {
-    m_tEmulator.clutchPedal().setValue(1.0 - ((double) iValue / 100.0));
+    m_tCar.clutchPedal().setValue(1.0 - ((double) iValue / 100.0));
 }
 
 void CMainWindow::onBreakChanged(int iValue)
 {
-    m_tEmulator.breakPedal().setValue((double) iValue / 100.0);
+    m_tCar.breakPedal().setValue((double) iValue / 100.0);
 }
 
 void CMainWindow::onGasChanged(int iValue)
 {
-    m_tEmulator.gasPedal().setValue((double) iValue / 100.0);
+    m_tCar.gasPedal().setValue((double) iValue / 100.0);
 }

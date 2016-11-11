@@ -8,9 +8,6 @@
 
 // Qt
 #include <QObject>
-#include <QVector>
-#include <QTimer>
-#include <QDateTime>
 
 // Application
 #include "CInterpolator.h"
@@ -32,15 +29,12 @@ class CAREMULATOR_SHARED_EXPORT CCar : public QObject
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructeurs et destructeur
     // Constructors et destructor
     //-------------------------------------------------------------------------------------------------
 
-    //! Constructeur par défaut
     //! Default constructor
     CCar();
 
-    //! Destructeur
     //! Destructor
     virtual ~CCar();
 
@@ -67,27 +61,16 @@ public:
     CNormalizedInput& clutchPedal();
 
     //-------------------------------------------------------------------------------------------------
-    // Méthodes de contrôle
     // Control methods
     //-------------------------------------------------------------------------------------------------
+
+    void startEngine();
+
+    void stopEngine();
 
     void process(double dDeltaTimeMillis);
 
     //-------------------------------------------------------------------------------------------------
-    // Signaux
-    // Signals
-    //-------------------------------------------------------------------------------------------------
-
-signals:
-
-    //-------------------------------------------------------------------------------------------------
-    // Slots
-    //-------------------------------------------------------------------------------------------------
-
-protected slots:
-
-    //-------------------------------------------------------------------------------------------------
-    // Propriétés
     // Properties
     //-------------------------------------------------------------------------------------------------
 
@@ -105,6 +88,7 @@ protected:
     CNormalizedInput        m_iClutchLevel;
     CInterpolator<double>   m_iTorqueTable;
 
+    bool                    m_bEngineOn;
     double                  m_dWheelRPS;
     double                  m_dEnginePowerRPS;
 };

@@ -7,6 +7,9 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CCar::CCar()
+    : m_bEngineOn(0)
+    , m_dWheelRPS(0.0)
+    , m_dEnginePowerRPS(0.0)
 {
     m_iTorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);
     m_iTorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);
@@ -76,6 +79,20 @@ CNormalizedInput& CCar::clutchPedal()
 
 //-------------------------------------------------------------------------------------------------
 
+void CCar::startEngine()
+{
+    m_bEngineOn = true;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCar::stopEngine()
+{
+    m_bEngineOn = false;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void CCar::process(double dDeltaTimeMillis)
 {
     m_sSensors.process(dDeltaTimeMillis);
@@ -92,6 +109,13 @@ void CCar::process(double dDeltaTimeMillis)
     double dMaxTemperatureC = engineSettings().maxTemperatureC();
     double dBreakDownTemperatureC = engineSettings().breakDownTemperatureC();
     double dFuelLevelL = m_sSensors.currentFuelLevelL().value();
+
+    /*
+    if (m_bEngineOn == false)
+    {
+        dEngineRPS = 0.0;
+    }
+    */
 
     // Compute the actual clutch level using contact point and full engage point
     m_iClutchLevel.setValue((clutchPedal().value() - engineSettings().clutchContact()) / dClutchRange);
@@ -118,6 +142,11 @@ void CCar::process(double dDeltaTimeMillis)
     // Slow down the engine RPS using limit RPM
     dRawEngineTorqueRPS = (dRawEngineTorqueRPS * ((dBreakDownRPS - dRawEngineTorqueRPS) / dBreakDownRPS)) * 4;
 
+    if (m_bEngineOn == false)
+    {
+        dRawEngineTorqueRPS = 0.0;
+    }
+
     double dEngineDrag = ((dBreakDownRPS - dEngineRPS) / dBreakDownRPS);
 
     // Apply the engine drag (reaching limit RPM) to the engine RPM
@@ -125,6 +154,11 @@ void CCar::process(double dDeltaTimeMillis)
 
     // Bring back engine to minimum RPS according to torque transfer factor and fuel flow
     double dIdlePower = (dEngineRPS - dIdleEngineRPS) / (dIdleEngineRPS / 15.0);
+
+    if (m_bEngineOn == false)
+    {
+        dIdlePower = (dEngineRPS - 0.0) / (dIdleEngineRPS / 15.0);
+    }
 
     dEngineRPS -= ((dIdlePower * (1.0 - dTorqueTransferFactor) * (1.0 - dFuelGasFactor)) * dDeltaTimeSeconds) * 1.5;
 
@@ -161,7 +195,7 @@ void CCar::process(double dDeltaTimeMillis)
     m_dWheelRPS += dAccelRPS * dDeltaTimeSeconds;
 
     // Check speed limits
-    if (m_dWheelRPS < 0) m_dWheelRPS = 0;
+    if (m_dWheelRPS < 0.0) m_dWheelRPS = 0.0;
 
     dCarSpeedMS = m_dWheelRPS * dWheelCircM;
 
@@ -212,6 +246,11 @@ void CCar::process(double dDeltaTimeMillis)
 
     // Bring car speed value down from RPM
     dCarSpeedMS /= CEngineSettings::SpeedMSToRPS;
+
+    if (dEngineRPS < 1.0)
+    {
+        m_bEngineOn = false;
+    }
 
     // Assign new engine RPM
     m_sSensors.currentRPM().setValue(CUtils::RPSToRPM(dEngineRPS));

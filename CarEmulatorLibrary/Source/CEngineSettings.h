@@ -16,15 +16,12 @@ class CAREMULATOR_SHARED_EXPORT CEngineSettings
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructeurs et destructeur
     // Constructors et destructor
     //-------------------------------------------------------------------------------------------------
 
-    //! Constructeur par défaut
     //! Default constructor
     CEngineSettings();
 
-    //! Destructeur
     //! Destructor
     virtual ~CEngineSettings();
 
@@ -59,12 +56,15 @@ public:
 
     double startupEndSpeedKMH() const;
 
+    //-------------------------------------------------------------------------------------------------
+    // Public properties
+    //-------------------------------------------------------------------------------------------------
+
     static const double SpeedMSToRPS;                 // Factor used to convert speed to RPS
     static const double RPSToL;                       // Factor used to convert RPM to Liters
     static const double WheelRadiusM;
 
     //-------------------------------------------------------------------------------------------------
-    // Propriétés
     // Properties
     //-------------------------------------------------------------------------------------------------
 

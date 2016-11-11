@@ -30,7 +30,9 @@ protected slots:
 
     void onTimeout();
 
-    void onActionStart(bool);
+    void onActionStartEngine(bool);
+
+    void onActionStopEngine(bool);
 
     void onGearUpClicked(bool bValue);
 
@@ -46,7 +48,7 @@ private:
 
     Ui::CMainWindow*            m_pUI;
 
-    CarEmulator::CCar           m_tEmulator;
+    CarEmulator::CCar           m_tCar;
 
     QTimer                      m_tTimer;
 };

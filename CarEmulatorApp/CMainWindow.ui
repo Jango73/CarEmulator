@@ -153,6 +153,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QSlider" name="Clutch">
+            <property name="value">
+             <number>99</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -197,12 +200,18 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionStart"/>
+   <addaction name="actionStartEngine"/>
+   <addaction name="actionStopEngine"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionStart">
+  <action name="actionStartEngine">
    <property name="text">
-    <string>Start</string>
+    <string>Start engine</string>
+   </property>
+  </action>
+  <action name="actionStopEngine">
+   <property name="text">
+    <string>Stop engine</string>
    </property>
   </action>
  </widget>

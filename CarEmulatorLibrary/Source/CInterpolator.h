@@ -41,10 +41,10 @@ public:
     };
 
     //-------------------------------------------------------------------------------------------------
-    // Constructeurs et destructeur
+    // Constructors et destructor
     //-------------------------------------------------------------------------------------------------
 
-    //! Constructeur par défaut
+    //! Default constructor
     CInterpolator()
     {
     }
@@ -53,14 +53,14 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    //! Retourne le nombre de valeurs
+    //! Returns number of values
     int count() { return m_vValues.count(); }
 
-    //! Retourne le vecteur de valeurs
+    //! Returns the vector of values
     QVector<InterpolatorValue>& getValues() { return m_vValues; }
 
     //-------------------------------------------------------------------------------------------------
-    // Méthodes de contrôle
+    // Control methods
     //-------------------------------------------------------------------------------------------------
 
     //! Ajoute un pas d'interpolation
@@ -118,7 +118,7 @@ public:
     }
 
     //-------------------------------------------------------------------------------------------------
-    // Propriétés
+    // Properties
     //-------------------------------------------------------------------------------------------------
 
 protected:
