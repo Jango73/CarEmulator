@@ -28,14 +28,20 @@ void CMainWindow::onTimeout()
 {
     m_tEmulator.process(100);
 
+    int iCurrentGear = m_tEmulator.vehicle().gearBox().currentGear();
+    m_pUI->CurrentGear->setText(QString::number(iCurrentGear));
+
     double dEngineRPM = m_tEmulator.vehicle().sensors().currentRPM().value();
     m_pUI->EngineRPM->setText(QString::number(dEngineRPM, 'g', 4));
 
     double dSpeed = m_tEmulator.vehicle().sensors().currentSpeedKMH().value();
     m_pUI->Speed->setText(QString::number(dSpeed, 'g', 4));
 
-    int iCurrentGear = m_tEmulator.vehicle().gearBox().currentGear();
-    m_pUI->CurrentGear->setText(QString::number(iCurrentGear));
+    double dEngineTemp = m_tEmulator.vehicle().sensors().currentEngineTempC().value();
+    m_pUI->EngineTemperature->setText(QString::number(dEngineTemp, 'g', 4));
+
+    double dFuelCons = m_tEmulator.vehicle().sensors().fuelConsumptionL100KM().value();
+    m_pUI->FuelConsumption->setText(QString::number(dFuelCons, 'g', 4));
 }
 
 void CMainWindow::onActionStart(bool bValue)
