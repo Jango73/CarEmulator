@@ -7,7 +7,7 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CSensors::CSensors()
-    : m_vCurrentRPM(CSensorValue(800.0))
+    : m_vCurrentRPM(CSensorValue(0.0))
     , m_vCurrentSpeedKMH(CSensorValue(0.0))
     , m_vCurrentEngineTempC(CSensorValue(80.0))
     , m_vAccelerationKMHS(CSensorValue(0.0))

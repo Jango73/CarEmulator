@@ -110,21 +110,14 @@ void CCar::process(double dDeltaTimeMillis)
     double dBreakDownTemperatureC = engineSettings().breakDownTemperatureC();
     double dFuelLevelL = m_sSensors.currentFuelLevelL().value();
 
-    /*
-    if (m_bEngineOn == false)
-    {
-        dEngineRPS = 0.0;
-    }
-    */
-
-    // Compute the actual clutch level using contact point and full engage point
+    // Actual clutch level using contact point and full engage point
     m_iClutchLevel.setValue((clutchPedal().value() - engineSettings().clutchContact()) / dClutchRange);
 
     // Compute fuel consumption
     double dFuelGasFactor = gasPedal().value();
-    if (dFuelGasFactor < 0.05) dFuelGasFactor = 0.05;
+    if (dFuelGasFactor < 0.02) dFuelGasFactor = 0.02;
 
-    // Compute torque transfer factor
+    // Torque transfer factor
     double dTorqueTransferFactor = m_iClutchLevel.value();
     if (dTorqueTransferFactor > 1.0) dTorqueTransferFactor = 1.0;
     if (dGearRatio == 0.0) dTorqueTransferFactor = 0.0;
@@ -132,11 +125,11 @@ void CCar::process(double dDeltaTimeMillis)
     // Bring car speed value up to RPM
     dCarSpeedMS *= CEngineSettings::SpeedMSToRPS;
 
-    // Compute wheel circumference
+    // Wheel circumference
     double dWheelCircM = 2.0 * CEngineSettings::WheelRadiusM * M_PI;
     m_dWheelRPS = dCarSpeedMS / dWheelCircM;
 
-    // Compute raw force produced by engine
+    // Raw force produced by engine
     double dRawEngineTorqueRPS = dEngineRPS * dFuelGasFactor;
 
     // Slow down the engine RPS using limit RPM
@@ -157,7 +150,7 @@ void CCar::process(double dDeltaTimeMillis)
 
     if (m_bEngineOn == false)
     {
-        dIdlePower = (dEngineRPS - 0.0) / (dIdleEngineRPS / 15.0);
+        dIdlePower = dEngineRPS / (dIdleEngineRPS / 15.0);
     }
 
     dEngineRPS -= ((dIdlePower * (1.0 - dTorqueTransferFactor) * (1.0 - dFuelGasFactor)) * dDeltaTimeSeconds) * 1.5;
@@ -263,4 +256,7 @@ void CCar::process(double dDeltaTimeMillis)
 
     // Assign new fuel level
     m_sSensors.currentFuelLevelL().setValue(dFuelLevelL);
+
+    emit engineRPMChanged();
+    emit speedKMHChanged();
 }

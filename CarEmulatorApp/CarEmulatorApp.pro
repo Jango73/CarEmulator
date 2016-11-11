@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui
+QT += core gui quickwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,3 +26,6 @@ else:unix: LIBS += -L$$OUT_PWD/../CarEmulatorLibrary/ -lCarEmulatorLibrary
 
 INCLUDEPATH += $$PWD/../CarEmulatorLibrary
 DEPENDPATH += $$PWD/../CarEmulatorLibrary
+
+RESOURCES += \
+    Resources/CarEmulatorApp.qrc

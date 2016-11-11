@@ -1,4 +1,9 @@
 
+// Qt
+#include <QQmlEngine>
+#include <QQmlContext>
+
+// Application
 #include "CMainWindow.h"
 #include "ui_cmainwindow.h"
 
@@ -19,6 +24,10 @@ CMainWindow::CMainWindow(QWidget *parent) :
 
     m_tTimer.setInterval(100);
     m_tTimer.start();
+
+    m_pUI->Cluster->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_pUI->Cluster->engine()->rootContext()->setContextProperty("car", &m_tCar);
+    m_pUI->Cluster->setSource(QUrl("qrc:/Cluster.qml"));
 }
 
 CMainWindow::~CMainWindow()

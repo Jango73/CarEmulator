@@ -26,6 +26,13 @@ class CAREMULATOR_SHARED_EXPORT CCar : public QObject
 {
     Q_OBJECT
 
+    //-------------------------------------------------------------------------------------------------
+    // QML properties
+    //-------------------------------------------------------------------------------------------------
+
+    Q_PROPERTY(double engineRPM READ engineRPM NOTIFY engineRPMChanged)
+    Q_PROPERTY(double speedKMH READ speedKMH NOTIFY speedKMHChanged)
+
 public:
 
     //-------------------------------------------------------------------------------------------------
@@ -45,6 +52,10 @@ public:
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
+
+    double engineRPM() { return m_sSensors.currentRPM().value(); }
+
+    double speedKMH() { return m_sSensors.currentSpeedKMH().value(); }
 
     CCarSettings& settings();
 
@@ -69,6 +80,16 @@ public:
     void stopEngine();
 
     void process(double dDeltaTimeMillis);
+
+    //-------------------------------------------------------------------------------------------------
+    // Signals
+    //-------------------------------------------------------------------------------------------------
+
+signals:
+
+    void engineRPMChanged();
+
+    void speedKMHChanged();
 
     //-------------------------------------------------------------------------------------------------
     // Properties
