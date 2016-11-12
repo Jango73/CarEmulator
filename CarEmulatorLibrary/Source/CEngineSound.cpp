@@ -12,7 +12,7 @@ using namespace CarEmulator;
 
 const int iDurationSeconds      = 1;
 const int iToneSampleRateHz     = 440;
-const int iSamplesPerBuffer     = 44100 / 15;
+const int iSamplesPerBuffer     = 44100 / 20;
 const int iBytesPerSample       = 2;
 const double dSampleRate        = 44100.0;
 const double dBufferDurationS   = (double) iSamplesPerBuffer / dSampleRate;
@@ -152,58 +152,58 @@ QByteArray CEngineSound::synthesize(qint64 pos)
 
     for (int Index = 0; Index < iSamplesPerBuffer; Index++)
     {
-        double SamplesPerCycle = (1.0 / dEngineRPS) * dSampleRate;
-        double CycleDurationS = dCycleSecondsPerSample * SamplesPerCycle;
-        double Value = 0.0;
+        double dSamplesPerCycle = (1.0 / dEngineRPS) * dSampleRate;
+        double dCycleDurationS = dCycleSecondsPerSample * dSamplesPerCycle;
+        double dValue = 0.0;
 
         m_iEngineSound.reset();
 
-        for (int SoundIndex = 0; SoundIndex < _SoundNormalizedPosition.count(); SoundIndex += 2)
+        for (int iSoundIndex = 0; iSoundIndex < m_dSoundNormalizedPosition.count(); iSoundIndex += 2)
         {
-            if (_SoundNormalizedPosition[SoundIndex] < 1.0)
+            if (m_dSoundNormalizedPosition[iSoundIndex] < 1.0)
             {
-                double SoundDurationS = _SoundNormalizedPosition[SoundIndex + 1];
-                double AddValue = m_iEngineSound.getValue(_SoundNormalizedPosition[SoundIndex]);
-                double NumSamplesForSound = SoundDurationS * dSampleRate;
-                double SoundSecondsPerSample = SoundDurationS / NumSamplesForSound;
+                double dSoundDurationS = m_dSoundNormalizedPosition[iSoundIndex + 1];
+                double dAddValue = m_iEngineSound.getValue(m_dSoundNormalizedPosition[iSoundIndex]);
+                double dNumSamplesForSound = dSoundDurationS * dSampleRate;
+                double dSoundSecondsPerSample = dSoundDurationS / dNumSamplesForSound;
 
-                if (SoundIndex > 1) AddValue *= 0.75;
+                if (iSoundIndex > 1) dAddValue *= 0.75;
 
-                Value += AddValue;
+                dValue += dAddValue;
 
-                _SoundNormalizedPosition[SoundIndex] += SoundSecondsPerSample / SoundDurationS;
+                m_dSoundNormalizedPosition[iSoundIndex] += dSoundSecondsPerSample / dSoundDurationS;
             }
 
-            if (_SoundNormalizedPosition[SoundIndex] >= 1.0)
+            if (m_dSoundNormalizedPosition[iSoundIndex] >= 1.0)
             {
-                _SoundNormalizedPosition.removeAt(SoundIndex);
-                _SoundNormalizedPosition.removeAt(SoundIndex);
-                SoundIndex -= 2;
+                m_dSoundNormalizedPosition.removeAt(iSoundIndex);
+                m_dSoundNormalizedPosition.removeAt(iSoundIndex);
+                iSoundIndex -= 2;
             }
         }
 
         // Value *= 1.0 + (_Rand.NextDouble() / 20.0);
 
-        if (Value < -1.0) Value = -1.0;
-        if (Value > 1.0) Value = 1.0;
+        if (dValue < -1.0) dValue = -1.0;
+        if (dValue > 1.0) dValue = 1.0;
 
-        int SoundData = (int)(Value * 32767.0);
+        int iSoundData = (int)(dValue * 32767.0);
 
         // Left
-        baData[iSoundDataIndex++] = (char)((SoundData >> 0) & 0xFF);
-        baData[iSoundDataIndex++] = (char)((SoundData >> 8) & 0xFF);
+        baData[iSoundDataIndex++] = (char)((iSoundData >> 0) & 0xFF);
+        baData[iSoundDataIndex++] = (char)((iSoundData >> 8) & 0xFF);
 
         // Right
-        baData[iSoundDataIndex++] = (char)((SoundData >> 0) & 0xFF);
-        baData[iSoundDataIndex++] = (char)((SoundData >> 8) & 0xFF);
+        baData[iSoundDataIndex++] = (char)((iSoundData >> 0) & 0xFF);
+        baData[iSoundDataIndex++] = (char)((iSoundData >> 8) & 0xFF);
 
-        _SoundCycleNormalizedPosition += dCycleSecondsPerSample / CycleDurationS;
+        m_dSoundCycleNormalizedPosition += dCycleSecondsPerSample / dCycleDurationS;
 
-        if (_SoundCycleNormalizedPosition >= 1.0)
+        if (m_dSoundCycleNormalizedPosition >= 1.0)
         {
-            _SoundCycleNormalizedPosition = 0.0;
-            _SoundNormalizedPosition << 0.0;
-            _SoundNormalizedPosition << (0.04 + (0.02 * (dBreakDownRPS / dEngineRPS)));
+            m_dSoundCycleNormalizedPosition = 0.0;
+            m_dSoundNormalizedPosition << 0.0;
+            m_dSoundNormalizedPosition << (0.04 + (0.02 * (dBreakDownRPS / dEngineRPS)));
         }
 
         dTimeS += dCycleSecondsPerSample;

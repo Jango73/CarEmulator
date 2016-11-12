@@ -26,7 +26,7 @@ Rectangle {
 
             Behavior on value {
                 NumberAnimation {
-                    duration: 1000
+                    duration: 100
                 }
             }
 
@@ -44,12 +44,6 @@ Rectangle {
             maximumValue: 100
             stepSize: 0.5
             value: fuelPercent
-
-            Behavior on value {
-                NumberAnimation {
-                    duration: 1000
-                }
-            }
 
             style: CircularGaugeStyle {
                 tickmarkStepSize: 25
@@ -70,7 +64,7 @@ Rectangle {
 
             Behavior on value {
                 NumberAnimation {
-                    duration: 1000
+                    duration: 100
                 }
             }
 
