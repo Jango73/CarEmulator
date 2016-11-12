@@ -7,7 +7,8 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CCar::CCar()
-    : m_bEngineOn(0)
+    : m_sSound(this)
+    , m_bEngineOn(0)
     , m_dWheelRPS(0.0)
     , m_dEnginePowerRPS(0.0)
 {

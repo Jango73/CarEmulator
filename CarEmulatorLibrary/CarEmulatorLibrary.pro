@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui xml network serialport widgets positioning qml quickwidgets
+QT += core multimedia
 
 CONFIG += warn_off
 
@@ -28,6 +28,8 @@ HEADERS += \
     Source/CEngineSettings.h \
     Source/CCarSettings.h \
     Source/CGearBox.h \
+    Source/CSoundSynth.h \
+    Source/CEngineSound.h \
     Source/CCar.h
 
 SOURCES += \
@@ -37,4 +39,6 @@ SOURCES += \
     Source/CEngineSettings.cpp \
     Source/CCarSettings.cpp \
     Source/CGearBox.cpp \
+    Source/CSoundSynth.cpp \
+    Source/CEngineSound.cpp \
     Source/CCar.cpp

@@ -16,6 +16,7 @@
 #include "CSensors.h"
 #include "CEngineSettings.h"
 #include "CGearBox.h"
+#include "CEngineSound.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -108,6 +109,7 @@ protected:
     CEngineSettings         m_sEngineSettings;
     CSensors                m_sSensors;
     CGearBox                m_gGearBox;
+    CEngineSound            m_sSound;
 
     CNormalizedInput        m_iGasPedal;
     CNormalizedInput        m_iBreakPedal;
