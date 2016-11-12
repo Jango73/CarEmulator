@@ -46,6 +46,8 @@ protected:
 
     CCar*                   m_pCar;
     CInterpolator<double>   m_iEngineSound;
+    double                  _SoundCycleNormalizedPosition;
+    QList<double>           _SoundNormalizedPosition;
 };
 
 }

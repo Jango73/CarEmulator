@@ -155,6 +155,7 @@ QList<QByteArray> CSoundSynth::CSoundSynthGenerator::getBuffers()
 void CSoundSynth::CSoundSynthGenerator::stop()
 {
     m_bRun = false;
+    wait();
 }
 
 //-------------------------------------------------------------------------------------------------

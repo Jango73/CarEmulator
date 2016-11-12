@@ -161,37 +161,32 @@ public:
         return output;
     }
 
-    bool compareByInput(CInterpolator<T>::InterpolatorValue& a, CInterpolator<T>::InterpolatorValue& b)
+    void merge(CInterpolator<T> tInput)
     {
-        return a.dInput < b.dInput;
-    }
-
-    void Merge(CInterpolator<T> tInput)
-    {
-        for (int newIndex = 0; newIndex < tInput.m_vValues; newIndex++)
+        for (int newIndex = 0; newIndex < tInput.m_vValues.count(); newIndex++)
         {
-            bool Found = false;
-
-            for (int localIndex = 0; localIndex < m_vValues; localIndex++)
+            for (int localIndex = 0; localIndex < m_vValues.count(); localIndex++)
             {
-                if (m_vValues[localIndex].Input == tInput.m_vValues[newIndex].dInput)
+                if (m_vValues[localIndex].dInput == tInput.m_vValues[newIndex].dInput)
                 {
-                    m_vValues[localIndex].Output += tInput.m_vValues[newIndex].Output;
+                    m_vValues[localIndex].tOutput += tInput.m_vValues[newIndex].tOutput;
 
-                    if (m_vValues[localIndex].Output < -1.0) m_vValues[localIndex].Output = -1.0;
-                    if (m_vValues[localIndex].Output > 1.0) m_vValues[localIndex].Output = 1.0;
-
-                    Found = true;
+                    if (m_vValues[localIndex].tOutput < -1.0) m_vValues[localIndex].tOutput = -1.0;
+                    if (m_vValues[localIndex].tOutput >  1.0) m_vValues[localIndex].tOutput =  1.0;
+                }
+                else if
+                        (
+                         m_vValues[localIndex].dInput < tInput.m_vValues[newIndex].dInput &&
+                         (
+                             localIndex == m_vValues.count() - 1 ||
+                             m_vValues[localIndex + 1].dInput > tInput.m_vValues[newIndex].dInput
+                             )
+                         )
+                {
+                    m_vValues.insert(localIndex + 1, tInput.m_vValues[newIndex]);
                 }
             }
-
-            if (Found == false)
-            {
-                m_vValues << tInput.m_vValues[newIndex];
-            }
         }
-
-        qSort(m_vValues.begin(), m_vValues.end(), compareByInput);
     }
 
     //-------------------------------------------------------------------------------------------------
