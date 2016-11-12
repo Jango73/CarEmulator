@@ -12,7 +12,7 @@ using namespace CarEmulator;
 
 const int iDurationSeconds      = 1;
 const int iToneSampleRateHz     = 440;
-const int iSamplesPerBuffer     = 44100 / 20;
+const int iSamplesPerBuffer     = 44100 / 15;
 const int iBytesPerSample       = 2;
 const double dSampleRate        = 44100.0;
 const double dBufferDurationS   = (double) iSamplesPerBuffer / dSampleRate;
@@ -35,21 +35,26 @@ CEngineSound::CEngineSound(CCar* pCar)
     m_iEngineSound << CInterpolator<double>::InterpolatorValue(0.50,  0.0);
 
     CInterpolator<double> iTemp1 = m_iEngineSound;
-    CInterpolator<double> iTemp2 = m_iEngineSound;
+    // CInterpolator<double> iTemp2 = m_iEngineSound;
     // CInterpolator<double> iTemp3 = m_iEngineSound;
+    // CInterpolator<double> iTemp4 = m_iEngineSound;
 
-    iTemp1.shift(0.11);
+    iTemp1.shift(0.08);
     iTemp1.randomize(0.75);
     m_iEngineSound.merge(iTemp1);
 
-    iTemp2.shift(0.22);
+    /*
+    iTemp2.shift(0.16);
     iTemp2.randomize(0.75);
     m_iEngineSound.merge(iTemp2);
 
-    /*
-    iTemp3.shift(0.33);
+    iTemp3.shift(0.24);
     iTemp3.randomize(0.75);
     m_iEngineSound.merge(iTemp3);
+
+    iTemp4.shift(0.32);
+    iTemp4.randomize(0.75);
+    m_iEngineSound.merge(iTemp4);
     */
 }
 
@@ -138,9 +143,9 @@ QByteArray CEngineSound::synthesize(qint64 pos)
 {
     QByteArray baData;
 
-    double dEngineRPS = CUtils::RPMToRPS(m_pCar->sensors().currentRPM().value()) * 1;
-    double dBreakDownRPS = CUtils::RPMToRPS(m_pCar->engineSettings().breakDownRPM()) * 1;
-    double dEngineAccelRPSS = m_pCar->sensors().engineAccelerationRPSS().value() * 1;
+    double dEngineRPS = CUtils::RPMToRPS(m_pCar->sensors().currentRPM().value()) * 1.5;
+    double dBreakDownRPS = CUtils::RPMToRPS(m_pCar->engineSettings().breakDownRPM()) * 1.5;
+    double dEngineAccelRPSS = m_pCar->sensors().engineAccelerationRPSS().value() * 1.5;
     double dCycleSecondsPerSample = dBufferDurationS / iSamplesPerBuffer;
     double dTimeS = 0.0;
     int iSoundDataIndex = 0;

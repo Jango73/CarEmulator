@@ -173,10 +173,13 @@ public:
 
                     if (m_vValues[localIndex].tOutput < -1.0) m_vValues[localIndex].tOutput = -1.0;
                     if (m_vValues[localIndex].tOutput >  1.0) m_vValues[localIndex].tOutput =  1.0;
+
+                    break;
                 }
                 else if
                         (
-                         m_vValues[localIndex].dInput < tInput.m_vValues[newIndex].dInput &&
+                         m_vValues[localIndex].dInput < tInput.m_vValues[newIndex].dInput
+                         &&
                          (
                              localIndex == m_vValues.count() - 1 ||
                              m_vValues[localIndex + 1].dInput > tInput.m_vValues[newIndex].dInput
@@ -184,6 +187,8 @@ public:
                          )
                 {
                     m_vValues.insert(localIndex + 1, tInput.m_vValues[newIndex]);
+
+                    break;
                 }
             }
         }
