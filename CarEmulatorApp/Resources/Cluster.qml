@@ -31,6 +31,7 @@ Rectangle {
             }
 
             style: CircularGaugeStyle {
+                labelStepSize: 1000
                 tickmarkStepSize: 1000
             }
         }
@@ -46,6 +47,7 @@ Rectangle {
             value: fuelPercent
 
             style: CircularGaugeStyle {
+                labelStepSize: 25
                 tickmarkStepSize: 25
                 minimumValueAngle: 150
                 maximumValueAngle: 30
@@ -69,7 +71,8 @@ Rectangle {
             }
 
             style: CircularGaugeStyle {
-                tickmarkStepSize: 30
+                labelStepSize: 30
+                tickmarkStepSize: 50
             }
         }
     }

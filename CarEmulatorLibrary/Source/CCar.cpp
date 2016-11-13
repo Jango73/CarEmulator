@@ -6,8 +6,8 @@ using namespace CarEmulator;
 
 //-------------------------------------------------------------------------------------------------
 
-CCar::CCar()
-    : m_sSound(this)
+CCar::CCar(bool bSoundOn)
+    : m_pSound(NULL)
     , m_bEngineOn(0)
     , m_dWheelRPS(0.0)
     , m_dEnginePowerRPS(0.0)
@@ -21,12 +21,21 @@ CCar::CCar()
     m_iTorqueTable << CInterpolator<double>::InterpolatorValue(103, 1.8);
     m_iTorqueTable << CInterpolator<double>::InterpolatorValue(133, 0.4);
     m_iTorqueTable << CInterpolator<double>::InterpolatorValue(150, 0.0);
+
+    if (bSoundOn)
+    {
+        m_pSound = new CEngineSound(this);
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
 
 CCar::~CCar()
 {
+    if (m_pSound != NULL)
+    {
+        delete m_pSound;
+    }
 }
 
 //-------------------------------------------------------------------------------------------------

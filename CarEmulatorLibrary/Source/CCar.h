@@ -42,7 +42,7 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
-    CCar();
+    CCar(bool bSoundOn = false);
 
     //! Destructor
     virtual ~CCar();
@@ -109,7 +109,7 @@ protected:
     CEngineSettings         m_sEngineSettings;
     CSensors                m_sSensors;
     CGearBox                m_gGearBox;
-    CEngineSound            m_sSound;
+    CEngineSound*           m_pSound;
 
     CNormalizedInput        m_iGasPedal;
     CNormalizedInput        m_iBreakPedal;
