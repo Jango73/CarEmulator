@@ -43,7 +43,6 @@ CSoundSynth::CSoundSynth()
 
 CSoundSynth::~CSoundSynth()
 {
-    m_tGenerator.stop();
     close();
 }
 
@@ -127,6 +126,7 @@ CSoundSynth::CSoundSynthGenerator::CSoundSynthGenerator(CSoundSynth* pSynth)
 
 CSoundSynth::CSoundSynthGenerator::~CSoundSynthGenerator()
 {
+    stopMe();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ QList<QByteArray> CSoundSynth::CSoundSynthGenerator::getBuffers()
 
 //-------------------------------------------------------------------------------------------------
 
-void CSoundSynth::CSoundSynthGenerator::stop()
+void CSoundSynth::CSoundSynthGenerator::stopMe()
 {
     m_bRun = false;
     wait();

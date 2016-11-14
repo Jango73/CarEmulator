@@ -73,7 +73,7 @@ protected:
 
         QList<QByteArray> getBuffers();
 
-        void stop();
+        void stopMe();
 
         virtual void run() Q_DECL_OVERRIDE;
 
