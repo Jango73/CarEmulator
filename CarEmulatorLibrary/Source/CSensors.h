@@ -17,6 +17,10 @@
 
 //-------------------------------------------------------------------------------------------------
 
+#define ENGINE_ESPILON  0.0001
+
+//-------------------------------------------------------------------------------------------------
+
 namespace CarEmulator
 {
 
@@ -100,6 +104,7 @@ protected:
     CSensorRealValue                        m_vCurrentEngineTempC;          // Degrees celcius
     CSensorRealValue                        m_vAccelerationKMHS;            // Kilometers per hour per second
     CSensorRealValue                        m_vEngineAccelerationRPSS;      // Rounds per second per second
+    CSensorRealValue                        m_vMaximumFuelLevelL;           // Liters
     CSensorRealValue                        m_vCurrentFuelLevelL;           // Liters
     CSensorRealValue                        m_vCurrentFuelLevelPercent;     // Percentage
     CSensorRealValue                        m_vFuelConsumptionL100KM;       // Liters per 100 km

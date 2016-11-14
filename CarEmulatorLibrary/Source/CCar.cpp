@@ -112,8 +112,6 @@ void CCar::stopEngine()
 
 void CCar::process(double dDeltaTimeMillis)
 {
-    m_sSensors.process(dDeltaTimeMillis);
-
     // Get parameters from settings and sensors
     double dDeltaTimeSeconds = CUtils::millisToSeconds(dDeltaTimeMillis);
     double dEngineRPS = CUtils::RPMToRPS(m_sSensors.currentRPM().value());
@@ -275,7 +273,9 @@ void CCar::process(double dDeltaTimeMillis)
 
     // Assign new fuel level
     m_sSensors.currentFuelLevelL().setValue(dFuelLevelL);
-    m_sSensors.currentFuelLevelPercent().setValue((dFuelLevelL / 60.0) * 100.0);
+
+    // Process sensors
+    m_sSensors.process(dDeltaTimeMillis);
 
     emit engineRPMChanged();
     emit speedKMHChanged();

@@ -17,24 +17,24 @@ public:
     // Public static methods
     //-------------------------------------------------------------------------------------------------
 
-    static inline double millisToSeconds(double Millis)
+    static inline double millisToSeconds(double dMillis)
     {
-        return Millis / 1000.0;
+        return dMillis / 1000.0;
     }
 
-    static inline double secondsToHours(double Seconds)
+    static inline double secondsToHours(double dSeconds)
     {
-        return Seconds / (60.0 * 60.0);
+        return dSeconds / (60.0 * 60.0);
     }
 
-    static inline double hoursToSeconds(double Hours)
+    static inline double hoursToSeconds(double dHours)
     {
-        return Hours * (60.0 * 60.0);
+        return dHours * (60.0 * 60.0);
     }
 
-    static inline double perSecondToPerHour(double Seconds)
+    static inline double perSecondToPerHour(double dSeconds)
     {
-        return Seconds * (60.0 * 60.0);
+        return dSeconds * (60.0 * 60.0);
     }
 
     static inline double KMHToMS(double KMH)
