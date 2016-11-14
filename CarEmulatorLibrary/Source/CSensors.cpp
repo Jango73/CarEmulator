@@ -93,7 +93,7 @@ void CSensors::process(double dDeltaTimeMillis)
 
     if (m_tFuelConsTimer.elapsed() > 1000)
     {
-        double dFuelConsTimerSeconds = CUtils::MillisToSeconds(m_tFuelConsTimer.elapsed());
+        double dFuelConsTimerSeconds = CUtils::millisToSeconds(m_tFuelConsTimer.elapsed());
         double dFuelDiff = m_vCurrentFuelLevelL.value() - m_vPreviousFuelLevelL;
         m_vPreviousFuelLevelL = m_vCurrentFuelLevelL.value();
 
@@ -101,7 +101,7 @@ void CSensors::process(double dDeltaTimeMillis)
         {
             double dFuelConsumptionLS = (dFuelDiff * dFuelConsTimerSeconds) * -1.0;
             // m_vFuelConsumptionL100KM.setValue(FuelConsumptionLS);
-            double dSecondsFor100KM = CUtils::HoursToSeconds(100.0 / m_vCurrentSpeedKMH.value());
+            double dSecondsFor100KM = CUtils::hoursToSeconds(100.0 / m_vCurrentSpeedKMH.value());
             m_vFuelConsumptionL100KM.setValue(dFuelConsumptionLS * dSecondsFor100KM);
         }
         else

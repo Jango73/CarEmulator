@@ -108,7 +108,7 @@ void CCar::process(double dDeltaTimeMillis)
     m_sSensors.process(dDeltaTimeMillis);
 
     // Get parameters from settings and sensors
-    double dDeltaTimeSeconds = CUtils::MillisToSeconds(dDeltaTimeMillis);
+    double dDeltaTimeSeconds = CUtils::millisToSeconds(dDeltaTimeMillis);
     double dEngineRPS = CUtils::RPMToRPS(m_sSensors.currentRPM().value());
     double dIdleEngineRPS = CUtils::RPMToRPS(engineSettings().idleRPM());
     double dBreakDownRPS = CUtils::RPMToRPS(engineSettings().breakDownRPM());

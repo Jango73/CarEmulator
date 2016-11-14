@@ -17,22 +17,22 @@ public:
     // Public static methods
     //-------------------------------------------------------------------------------------------------
 
-    static inline double MillisToSeconds(double Millis)
+    static inline double millisToSeconds(double Millis)
     {
         return Millis / 1000.0;
     }
 
-    static inline double SecondsToHours(double Seconds)
+    static inline double secondsToHours(double Seconds)
     {
         return Seconds / (60.0 * 60.0);
     }
 
-    static inline double HoursToSeconds(double Hours)
+    static inline double hoursToSeconds(double Hours)
     {
         return Hours * (60.0 * 60.0);
     }
 
-    static inline double PerSecondToPerHour(double Seconds)
+    static inline double perSecondToPerHour(double Seconds)
     {
         return Seconds * (60.0 * 60.0);
     }
