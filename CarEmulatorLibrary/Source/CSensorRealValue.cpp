@@ -10,14 +10,20 @@ CSensorRealValue::CSensorRealValue(double dValue)
 {
 }
 
+//-------------------------------------------------------------------------------------------------
+
 CSensorRealValue::~CSensorRealValue()
 {
 }
+
+//-------------------------------------------------------------------------------------------------
 
 void CSensorRealValue::setValue(double dValue)
 {
     m_dValue = dValue;
 }
+
+//-------------------------------------------------------------------------------------------------
 
 double CSensorRealValue::value() const
 {

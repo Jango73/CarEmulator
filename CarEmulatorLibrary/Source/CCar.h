@@ -77,6 +77,8 @@ public:
 
     CNormalizedInput& clutchPedal();
 
+    CNormalizedInput& steering();
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -114,6 +116,7 @@ protected:
     CNormalizedInput        m_iGasPedal;
     CNormalizedInput        m_iBreakPedal;
     CNormalizedInput        m_iClutchPedal;
+    CNormalizedInput        m_iSteering;
 
     CNormalizedInput        m_iClutchLevel;
     CInterpolator<double>   m_iTorqueTable;

@@ -21,7 +21,7 @@ CNormalizedInput::~CNormalizedInput()
 
 void CNormalizedInput::setValue(double dValue)
 {
-    m_dValue = dValue;
+    m_dValue = qBound(-1.0, dValue, 1.0);
 }
 
 //-------------------------------------------------------------------------------------------------

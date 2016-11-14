@@ -35,9 +35,13 @@ CGearBox::CGearBox()
     connect(&m_tTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
+//-------------------------------------------------------------------------------------------------
+
 CGearBox::~CGearBox()
 {
 }
+
+//-------------------------------------------------------------------------------------------------
 
 int CGearBox::numGears() const
 {
@@ -69,11 +73,15 @@ double CGearBox::currentMinSpeedKMH() const
     return m_vMinSpeedKMH[m_iCurrentGear];
 }
 
+//-------------------------------------------------------------------------------------------------
+
 void CGearBox::onTimeout()
 {
     m_tTimer.stop();
     m_iCurrentGear = m_iTargetGear;
 }
+
+//-------------------------------------------------------------------------------------------------
 
 bool CGearBox::setNeutralGear()
 {
@@ -85,6 +93,8 @@ bool CGearBox::setNeutralGear()
     return true;
 }
 
+//-------------------------------------------------------------------------------------------------
+
 bool CGearBox::setHighestGear()
 {
     if (m_iCurrentGear < m_iNumGears - 1)
@@ -95,6 +105,8 @@ bool CGearBox::setHighestGear()
     return true;
 }
 
+//-------------------------------------------------------------------------------------------------
+
 bool CGearBox::up()
 {
     if (m_iCurrentGear == m_iNumGears - 1) return false;
@@ -102,6 +114,8 @@ bool CGearBox::up()
     m_tTimer.start();
     return true;
 }
+
+//-------------------------------------------------------------------------------------------------
 
 bool CGearBox::down()
 {

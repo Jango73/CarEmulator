@@ -9,6 +9,7 @@
 // Qt
 #include <QObject>
 #include <QElapsedTimer>
+#include <QMap>
 
 // Application
 #include "CSensorRealValue.h"
@@ -29,13 +30,19 @@ public:
     // Enumerators
     //-------------------------------------------------------------------------------------------------
 
-    enum EDoorIndex {
+    enum EBoolSensor {
         eDoorDriver,
         eDoorPassenger,
         eDoorRearLeft,
         eDoorRearRight,
         eDoorBack,
-        eDoorMax
+        eDoorEngine,
+        eLightPosition,
+        eLightCrossing,
+        eLightRoad,
+        eLightWarnings,
+        eLightTurnRight,
+        eLightTurnLeft
     };
 
     //-------------------------------------------------------------------------------------------------
@@ -72,6 +79,8 @@ public:
 
     CSensorRealValue& fuelConsumptionL100KM();
 
+    QMap<EBoolSensor, CSensorBooleanValue>& boolSensors();
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------
@@ -84,22 +93,22 @@ public:
 
 protected:
 
-    QElapsedTimer       m_tFuelConsTimer;
+    QElapsedTimer                           m_tFuelConsTimer;
 
-    CSensorRealValue    m_vCurrentRPM;                  // Rounds per minute
-    CSensorRealValue    m_vCurrentSpeedKMH;             // Kilometers per hour
-    CSensorRealValue    m_vCurrentEngineTempC;          // Degrees celcius
-    CSensorRealValue    m_vAccelerationKMHS;            // Kilometers per hour per second
-    CSensorRealValue    m_vEngineAccelerationRPSS;      // Rounds per second per second
-    CSensorRealValue    m_vCurrentFuelLevelL;           // Liters
-    CSensorRealValue    m_vCurrentFuelLevelPercent;     // Percentage
-    CSensorRealValue    m_vFuelConsumptionL100KM;       // Liters per 100 km
+    CSensorRealValue                        m_vCurrentRPM;                  // Rounds per minute
+    CSensorRealValue                        m_vCurrentSpeedKMH;             // Kilometers per hour
+    CSensorRealValue                        m_vCurrentEngineTempC;          // Degrees celcius
+    CSensorRealValue                        m_vAccelerationKMHS;            // Kilometers per hour per second
+    CSensorRealValue                        m_vEngineAccelerationRPSS;      // Rounds per second per second
+    CSensorRealValue                        m_vCurrentFuelLevelL;           // Liters
+    CSensorRealValue                        m_vCurrentFuelLevelPercent;     // Percentage
+    CSensorRealValue                        m_vFuelConsumptionL100KM;       // Liters per 100 km
 
-    CSensorBooleanValue m_vDoorsClosed[eDoorMax];
+    QMap<EBoolSensor, CSensorBooleanValue>  m_vBoolSensors;
 
-    double              m_vPreviousSpeedKMH;            // Kilometers per hour
-    double              m_vPreviousRPS;                 // Rounds per second
-    double              m_vPreviousFuelLevelL;          // Liters
+    double                                  m_vPreviousSpeedKMH;            // Kilometers per hour
+    double                                  m_vPreviousRPS;                 // Rounds per second
+    double                                  m_vPreviousFuelLevelL;          // Liters
 };
 
 }

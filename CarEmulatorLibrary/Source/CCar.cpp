@@ -89,6 +89,13 @@ CNormalizedInput& CCar::clutchPedal()
 
 //-------------------------------------------------------------------------------------------------
 
+CNormalizedInput& CCar::steering()
+{
+    return m_iSteering;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void CCar::startEngine()
 {
     m_bEngineOn = true;

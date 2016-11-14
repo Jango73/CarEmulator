@@ -16,12 +16,30 @@ CSensors::CSensors()
     , m_vCurrentFuelLevelPercent(CSensorRealValue(100.0))
     , m_vFuelConsumptionL100KM(CSensorRealValue(0.0))
 {
+    m_vBoolSensors[eDoorDriver] = CSensorBooleanValue(false);
+    m_vBoolSensors[eDoorPassenger] = CSensorBooleanValue(false);
+    m_vBoolSensors[eDoorRearLeft] = CSensorBooleanValue(false);
+    m_vBoolSensors[eDoorRearRight] = CSensorBooleanValue(false);
+    m_vBoolSensors[eDoorBack] = CSensorBooleanValue(false);
+    m_vBoolSensors[eDoorEngine] = CSensorBooleanValue(false);
+
+    m_vBoolSensors[eLightPosition] = CSensorBooleanValue(false);
+    m_vBoolSensors[eLightCrossing] = CSensorBooleanValue(false);
+    m_vBoolSensors[eLightRoad] = CSensorBooleanValue(false);
+    m_vBoolSensors[eLightWarnings] = CSensorBooleanValue(false);
+    m_vBoolSensors[eLightTurnRight] = CSensorBooleanValue(false);
+    m_vBoolSensors[eLightTurnLeft] = CSensorBooleanValue(false);
+
     m_tFuelConsTimer.start();
 }
+
+//-------------------------------------------------------------------------------------------------
 
 CSensors::~CSensors()
 {
 }
+
+//-------------------------------------------------------------------------------------------------
 
 CSensorRealValue& CSensors::currentRPM()
 {
@@ -62,6 +80,13 @@ CSensorRealValue& CSensors::fuelConsumptionL100KM()
 {
     return m_vFuelConsumptionL100KM;
 }
+
+QMap<CSensors::EBoolSensor, CSensorBooleanValue>& CSensors::boolSensors()
+{
+    return m_vBoolSensors;
+}
+
+//-------------------------------------------------------------------------------------------------
 
 void CSensors::process(double dDeltaTimeMillis)
 {
