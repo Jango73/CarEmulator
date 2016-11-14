@@ -56,21 +56,21 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    CSensorDoubleValue& currentRPM();
+    CSensorRealValue& currentRPM();
 
-    CSensorDoubleValue& currentSpeedKMH();
+    CSensorRealValue& currentSpeedKMH();
 
-    CSensorDoubleValue& currentEngineTempC();
+    CSensorRealValue& currentEngineTempC();
 
-    CSensorDoubleValue& accelerationKMHS();
+    CSensorRealValue& accelerationKMHS();
 
-    CSensorDoubleValue& engineAccelerationRPSS();
+    CSensorRealValue& engineAccelerationRPSS();
 
-    CSensorDoubleValue& currentFuelLevelL();
+    CSensorRealValue& currentFuelLevelL();
 
-    CSensorDoubleValue& currentFuelLevelPercent();
+    CSensorRealValue& currentFuelLevelPercent();
 
-    CSensorDoubleValue& fuelConsumptionL100KM();
+    CSensorRealValue& fuelConsumptionL100KM();
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
@@ -86,14 +86,14 @@ protected:
 
     QElapsedTimer       m_tFuelConsTimer;
 
-    CSensorDoubleValue  m_vCurrentRPM;                  // Rounds per minute
-    CSensorDoubleValue  m_vCurrentSpeedKMH;             // Kilometers per hour
-    CSensorDoubleValue  m_vCurrentEngineTempC;          // Degrees celcius
-    CSensorDoubleValue  m_vAccelerationKMHS;            // Kilometers per hour per second
-    CSensorDoubleValue  m_vEngineAccelerationRPSS;      // Rounds per second per second
-    CSensorDoubleValue  m_vCurrentFuelLevelL;           // Liters
-    CSensorDoubleValue  m_vCurrentFuelLevelPercent;     // Percentage
-    CSensorDoubleValue  m_vFuelConsumptionL100KM;       // Liters per 100 km
+    CSensorRealValue    m_vCurrentRPM;                  // Rounds per minute
+    CSensorRealValue    m_vCurrentSpeedKMH;             // Kilometers per hour
+    CSensorRealValue    m_vCurrentEngineTempC;          // Degrees celcius
+    CSensorRealValue    m_vAccelerationKMHS;            // Kilometers per hour per second
+    CSensorRealValue    m_vEngineAccelerationRPSS;      // Rounds per second per second
+    CSensorRealValue    m_vCurrentFuelLevelL;           // Liters
+    CSensorRealValue    m_vCurrentFuelLevelPercent;     // Percentage
+    CSensorRealValue    m_vFuelConsumptionL100KM;       // Liters per 100 km
 
     CSensorBooleanValue m_vDoorsClosed[eDoorMax];
 

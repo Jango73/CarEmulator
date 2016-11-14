@@ -5,27 +5,21 @@ using namespace CarEmulator;
 
 //-------------------------------------------------------------------------------------------------
 
-CSensorDoubleValue::CSensorDoubleValue(double dValue)
-    : m_bIsValid(true)
-    , m_dValue(dValue)
+CSensorRealValue::CSensorRealValue(double dValue)
+    : m_dValue(dValue)
 {
 }
 
-CSensorDoubleValue::~CSensorDoubleValue()
+CSensorRealValue::~CSensorRealValue()
 {
 }
 
-void CSensorDoubleValue::setValue(double dValue)
+void CSensorRealValue::setValue(double dValue)
 {
     m_dValue = dValue;
 }
 
-bool CSensorDoubleValue::isValid() const
-{
-    return m_bIsValid;
-}
-
-double CSensorDoubleValue::value() const
+double CSensorRealValue::value() const
 {
     return m_dValue;
 }

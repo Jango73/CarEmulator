@@ -6,12 +6,14 @@
 //-------------------------------------------------------------------------------------------------
 // Includes
 
+#include "CSensorValue.h"
+
 //-------------------------------------------------------------------------------------------------
 
 namespace CarEmulator
 {
 
-class CAREMULATOR_SHARED_EXPORT CSensorDoubleValue
+class CAREMULATOR_SHARED_EXPORT CSensorRealValue : public CSensorValue
 {
 public:
 
@@ -20,10 +22,10 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
-    CSensorDoubleValue(double dValue = 0.0);
+    CSensorRealValue(double dValue = 0.0);
 
     //! Destructor
-    virtual ~CSensorDoubleValue();
+    virtual ~CSensorRealValue();
 
     //-------------------------------------------------------------------------------------------------
     // Setters
@@ -35,8 +37,6 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    bool isValid() const;
-
     double value() const;
 
     //-------------------------------------------------------------------------------------------------
@@ -45,7 +45,6 @@ public:
 
 protected:
 
-    bool    m_bIsValid;
     double  m_dValue;
 };
 

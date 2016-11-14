@@ -6,14 +6,12 @@
 //-------------------------------------------------------------------------------------------------
 // Includes
 
-#include "CSensorValue.h"
-
 //-------------------------------------------------------------------------------------------------
 
 namespace CarEmulator
 {
 
-class CAREMULATOR_SHARED_EXPORT CSensorBooleanValue : public CSensorValue
+class CAREMULATOR_SHARED_EXPORT CSensorValue
 {
 public:
 
@@ -22,22 +20,16 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
-    CSensorBooleanValue(bool bValue = false);
+    CSensorValue();
 
     //! Destructor
-    virtual ~CSensorBooleanValue();
-
-    //-------------------------------------------------------------------------------------------------
-    // Setters
-    //-------------------------------------------------------------------------------------------------
-
-    void setValue(bool bValue);
+    virtual ~CSensorValue();
 
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    bool value() const;
+    bool isValid() const;
 
     //-------------------------------------------------------------------------------------------------
     // Properties
@@ -45,7 +37,7 @@ public:
 
 protected:
 
-    bool    m_bValue;
+    bool    m_bIsValid;
 };
 
 }
