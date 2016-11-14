@@ -12,15 +12,15 @@ CCar::CCar(bool bSoundOn)
     , m_dWheelRPS(0.0)
     , m_dEnginePowerRPS(0.0)
 {
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(10, 0.6);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(16, 1.0);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(45, 2.0);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(75, 2.5);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(103, 1.8);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(133, 0.4);
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(150, 0.0);
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);         //
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);         // 300 RPM
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(10, 0.6);        // 600 RPM
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(16, 1.0);        // 960 RPM
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(45, 2.0);        // 2700 RPM
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(75, 2.5);        // 4500 RPM
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(103, 1.8);       // 6180 RPM
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(133, 0.4);       // 7980 RPM
+    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(150, 0.0);       // 9000 RPM
 
     if (bSoundOn)
     {
