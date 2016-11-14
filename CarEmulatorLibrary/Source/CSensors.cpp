@@ -7,14 +7,14 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CSensors::CSensors()
-    : m_vCurrentRPM(CSensorValue(0.0))
-    , m_vCurrentSpeedKMH(CSensorValue(0.0))
-    , m_vCurrentEngineTempC(CSensorValue(80.0))
-    , m_vAccelerationKMHS(CSensorValue(0.0))
-    , m_vEngineAccelerationRPSS(CSensorValue(0.0))
-    , m_vCurrentFuelLevelL(CSensorValue(60.0))
-    , m_vCurrentFuelLevelPercent(CSensorValue(100.0))
-    , m_vFuelConsumptionL100KM(CSensorValue(0.0))
+    : m_vCurrentRPM(CSensorDoubleValue(0.0))
+    , m_vCurrentSpeedKMH(CSensorDoubleValue(0.0))
+    , m_vCurrentEngineTempC(CSensorDoubleValue(80.0))
+    , m_vAccelerationKMHS(CSensorDoubleValue(0.0))
+    , m_vEngineAccelerationRPSS(CSensorDoubleValue(0.0))
+    , m_vCurrentFuelLevelL(CSensorDoubleValue(60.0))
+    , m_vCurrentFuelLevelPercent(CSensorDoubleValue(100.0))
+    , m_vFuelConsumptionL100KM(CSensorDoubleValue(0.0))
 {
     m_tFuelConsTimer.start();
 }
@@ -23,42 +23,42 @@ CSensors::~CSensors()
 {
 }
 
-CSensorValue& CSensors::currentRPM()
+CSensorDoubleValue& CSensors::currentRPM()
 {
     return m_vCurrentRPM;
 }
 
-CSensorValue& CSensors::currentSpeedKMH()
+CSensorDoubleValue& CSensors::currentSpeedKMH()
 {
     return m_vCurrentSpeedKMH;
 }
 
-CSensorValue& CSensors::currentEngineTempC()
+CSensorDoubleValue& CSensors::currentEngineTempC()
 {
     return m_vCurrentEngineTempC;
 }
 
-CSensorValue& CSensors::accelerationKMHS()
+CSensorDoubleValue& CSensors::accelerationKMHS()
 {
     return m_vAccelerationKMHS;
 }
 
-CSensorValue& CSensors::engineAccelerationRPSS()
+CSensorDoubleValue& CSensors::engineAccelerationRPSS()
 {
     return m_vEngineAccelerationRPSS;
 }
 
-CSensorValue& CSensors::currentFuelLevelL()
+CSensorDoubleValue& CSensors::currentFuelLevelL()
 {
     return m_vCurrentFuelLevelL;
 }
 
-CSensorValue& CSensors::currentFuelLevelPercent()
+CSensorDoubleValue& CSensors::currentFuelLevelPercent()
 {
     return m_vCurrentFuelLevelPercent;
 }
 
-CSensorValue& CSensors::fuelConsumptionL100KM()
+CSensorDoubleValue& CSensors::fuelConsumptionL100KM()
 {
     return m_vFuelConsumptionL100KM;
 }

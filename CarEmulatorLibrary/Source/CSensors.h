@@ -11,7 +11,8 @@
 #include <QElapsedTimer>
 
 // Application
-#include "CSensorValue.h"
+#include "CSensorRealValue.h"
+#include "CSensorBooleanValue.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -23,6 +24,19 @@ class CAREMULATOR_SHARED_EXPORT CSensors : public QObject
     Q_OBJECT
 
 public:
+
+    //-------------------------------------------------------------------------------------------------
+    // Enumerators
+    //-------------------------------------------------------------------------------------------------
+
+    enum EDoorIndex {
+        eDoorDriver,
+        eDoorPassenger,
+        eDoorRearLeft,
+        eDoorRearRight,
+        eDoorBack,
+        eDoorMax
+    };
 
     //-------------------------------------------------------------------------------------------------
     // Constructors et destructor
@@ -42,21 +56,21 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    CSensorValue& currentRPM();
+    CSensorDoubleValue& currentRPM();
 
-    CSensorValue& currentSpeedKMH();
+    CSensorDoubleValue& currentSpeedKMH();
 
-    CSensorValue& currentEngineTempC();
+    CSensorDoubleValue& currentEngineTempC();
 
-    CSensorValue& accelerationKMHS();
+    CSensorDoubleValue& accelerationKMHS();
 
-    CSensorValue& engineAccelerationRPSS();
+    CSensorDoubleValue& engineAccelerationRPSS();
 
-    CSensorValue& currentFuelLevelL();
+    CSensorDoubleValue& currentFuelLevelL();
 
-    CSensorValue& currentFuelLevelPercent();
+    CSensorDoubleValue& currentFuelLevelPercent();
 
-    CSensorValue& fuelConsumptionL100KM();
+    CSensorDoubleValue& fuelConsumptionL100KM();
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
@@ -70,20 +84,22 @@ public:
 
 protected:
 
-    QElapsedTimer   m_tFuelConsTimer;
+    QElapsedTimer       m_tFuelConsTimer;
 
-    CSensorValue    m_vCurrentRPM;                // Rounds per minute
-    CSensorValue    m_vCurrentSpeedKMH;           // Kilometers per hour
-    CSensorValue    m_vCurrentEngineTempC;        // Degrees celcius
-    CSensorValue    m_vAccelerationKMHS;          // Kilometers per hour per second
-    CSensorValue    m_vEngineAccelerationRPSS;    // Rounds per second per second
-    CSensorValue    m_vCurrentFuelLevelL;         // Liters
-    CSensorValue    m_vCurrentFuelLevelPercent;   // Percentage
-    CSensorValue    m_vFuelConsumptionL100KM;     // Liters per 100 km
+    CSensorDoubleValue  m_vCurrentRPM;                  // Rounds per minute
+    CSensorDoubleValue  m_vCurrentSpeedKMH;             // Kilometers per hour
+    CSensorDoubleValue  m_vCurrentEngineTempC;          // Degrees celcius
+    CSensorDoubleValue  m_vAccelerationKMHS;            // Kilometers per hour per second
+    CSensorDoubleValue  m_vEngineAccelerationRPSS;      // Rounds per second per second
+    CSensorDoubleValue  m_vCurrentFuelLevelL;           // Liters
+    CSensorDoubleValue  m_vCurrentFuelLevelPercent;     // Percentage
+    CSensorDoubleValue  m_vFuelConsumptionL100KM;       // Liters per 100 km
 
-    double          m_vPreviousSpeedKMH;          // Kilometers per hour
-    double          m_vPreviousRPS;               // Rounds per second
-    double          m_vPreviousFuelLevelL;        // Liters
+    CSensorBooleanValue m_vDoorsClosed[eDoorMax];
+
+    double              m_vPreviousSpeedKMH;            // Kilometers per hour
+    double              m_vPreviousRPS;                 // Rounds per second
+    double              m_vPreviousFuelLevelL;          // Liters
 };
 
 }

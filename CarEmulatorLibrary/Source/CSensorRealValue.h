@@ -6,23 +6,13 @@
 //-------------------------------------------------------------------------------------------------
 // Includes
 
-// Qt
-#include <QObject>
-#include <QVector>
-#include <QTimer>
-
-// Application
-#include "CSensorRealValue.h"
-
 //-------------------------------------------------------------------------------------------------
 
 namespace CarEmulator
 {
 
-class CAREMULATOR_SHARED_EXPORT CGearBox : public QObject
+class CAREMULATOR_SHARED_EXPORT CSensorDoubleValue
 {
-    Q_OBJECT
-
 public:
 
     //-------------------------------------------------------------------------------------------------
@@ -30,50 +20,24 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
-    CGearBox();
+    CSensorDoubleValue(double dValue = 0.0);
 
     //! Destructor
-    virtual ~CGearBox();
+    virtual ~CSensorDoubleValue();
 
     //-------------------------------------------------------------------------------------------------
     // Setters
     //-------------------------------------------------------------------------------------------------
 
-    bool setNeutralGear();
-
-    bool setHighestGear();
+    void setValue(double dValue);
 
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
 
-    int numGears() const;
+    bool isValid() const;
 
-    int currentGear() const;
-
-    int targetGear() const;
-
-    double currentRatio() const;
-
-    double currentMaxSpeedKMH() const;
-
-    double currentMinSpeedKMH() const;
-
-    //-------------------------------------------------------------------------------------------------
-    // Control methods
-    //-------------------------------------------------------------------------------------------------
-
-    bool up();
-
-    bool down();
-
-    //-------------------------------------------------------------------------------------------------
-    // Slots
-    //-------------------------------------------------------------------------------------------------
-
-protected slots:
-
-    void onTimeout();
+    double value() const;
 
     //-------------------------------------------------------------------------------------------------
     // Properties
@@ -81,13 +45,8 @@ protected slots:
 
 protected:
 
-    int                 m_iNumGears;
-    int                 m_iCurrentGear;
-    int                 m_iTargetGear;
-    QVector<double>     m_vRatios;
-    QVector<double>     m_vMaxSpeedKMH;
-    QVector<double>     m_vMinSpeedKMH;
-    QTimer              m_tTimer;
+    bool    m_bIsValid;
+    double  m_dValue;
 };
 
 }

@@ -23,7 +23,8 @@ HEADERS += \
     Source/CUtils.h \
     Source/CInterpolator.h \
     Source/CNormalizedInput.h \
-    Source/CSensorValue.h \
+    Source/CSensorBooleanValue.h \
+    Source/CSensorRealValue.h \
     Source/CSensors.h \
     Source/CEngineSettings.h \
     Source/CCarSettings.h \
@@ -34,7 +35,8 @@ HEADERS += \
 
 SOURCES += \
     Source/CNormalizedInput.cpp \
-    Source/CSensorValue.cpp \
+    Source/CSensorBooleanValue.cpp \
+    Source/CSensorRealValue.cpp \
     Source/CSensors.cpp \
     Source/CEngineSettings.cpp \
     Source/CCarSettings.cpp \

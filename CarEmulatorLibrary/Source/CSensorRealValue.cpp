@@ -1,31 +1,31 @@
 
-#include "CSensorValue.h"
+#include "CSensorRealValue.h"
 
 using namespace CarEmulator;
 
 //-------------------------------------------------------------------------------------------------
 
-CSensorValue::CSensorValue(double dValue)
+CSensorDoubleValue::CSensorDoubleValue(double dValue)
     : m_bIsValid(true)
     , m_dValue(dValue)
 {
 }
 
-CSensorValue::~CSensorValue()
+CSensorDoubleValue::~CSensorDoubleValue()
 {
 }
 
-void CSensorValue::setValue(double dValue)
+void CSensorDoubleValue::setValue(double dValue)
 {
     m_dValue = dValue;
 }
 
-bool CSensorValue::isValid() const
+bool CSensorDoubleValue::isValid() const
 {
     return m_bIsValid;
 }
 
-double CSensorValue::value() const
+double CSensorDoubleValue::value() const
 {
     return m_dValue;
 }

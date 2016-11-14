@@ -11,7 +11,7 @@
 namespace CarEmulator
 {
 
-class CAREMULATOR_SHARED_EXPORT CSensorValue
+class CAREMULATOR_SHARED_EXPORT CSensorBooleanValue
 {
 public:
 
@@ -20,16 +20,16 @@ public:
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
-    CSensorValue(double dValue = 0.0);
+    CSensorBooleanValue(bool bValue = false);
 
     //! Destructor
-    virtual ~CSensorValue();
+    virtual ~CSensorBooleanValue();
 
     //-------------------------------------------------------------------------------------------------
     // Setters
     //-------------------------------------------------------------------------------------------------
 
-    void setValue(double dValue);
+    void setValue(bool bValue);
 
     //-------------------------------------------------------------------------------------------------
     // Getters
@@ -37,7 +37,7 @@ public:
 
     bool isValid() const;
 
-    double value() const;
+    bool value() const;
 
     //-------------------------------------------------------------------------------------------------
     // Properties
@@ -45,8 +45,8 @@ public:
 
 protected:
 
-    double      m_bIsValid;
-    double      m_dValue;
+    bool    m_bIsValid;
+    bool    m_bValue;
 };
 
 }
