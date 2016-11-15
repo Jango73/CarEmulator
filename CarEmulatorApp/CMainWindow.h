@@ -40,6 +40,8 @@ protected slots:
 
     void onClutchChanged(int iValue);
 
+    void onClutchPedalChanged();
+
     void onBreakChanged(int iValue);
 
     void onGasChanged(int iValue);

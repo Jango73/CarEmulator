@@ -11,7 +11,7 @@ CCarAI::CCarAI(bool bSoundOn)
     , m_eBehavior(eNormal)
     , m_bAutoClutch(true)
     , m_bAutoGear(true)
-    , m_bAutoGas(true)
+    , m_bAutoGas(false)
     , m_bAutoBreak(true)
     , m_dSpeedDemand(0.0)
     , m_dAccelDemand(0.0)
@@ -30,9 +30,11 @@ CCarAI::~CCarAI()
 
 void CCarAI::process(double dDeltaTimeMillis)
 {
-    CCar::process(dDeltaTimeMillis);
-
     processAutoClutch(dDeltaTimeMillis);
+    processAutoGear(dDeltaTimeMillis);
+    processAutoGas(dDeltaTimeMillis);
+
+    CCar::process(dDeltaTimeMillis);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -174,7 +176,10 @@ void CCarAI::processAutoGear(double dDeltaTimeMillis)
                 }
                 else // No gas pedal pressure, bring gear down to reach neutral
                 {
-                    gearBox().down();
+                    if (gearBox().currentGear() != 0)
+                    {
+                        gearBox().down();
+                    }
                 }
             }
         }
@@ -343,5 +348,9 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
                 }
             }
         }
+    }
+    else
+    {
+        m_dAccelDemand = (gasPedal().value() - (engineSettings().gasPedalEpsilon() * 4.0)) * 5.0;
     }
 }

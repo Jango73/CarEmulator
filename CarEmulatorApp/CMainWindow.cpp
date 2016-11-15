@@ -30,6 +30,8 @@ CMainWindow::CMainWindow(QWidget *parent)
     m_pUI->Cluster->setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_pUI->Cluster->engine()->rootContext()->setContextProperty("car", &m_tCar);
     m_pUI->Cluster->setSource(QUrl("qrc:/Cluster.qml"));
+
+    connect(&m_tCar, SIGNAL(clutchPedalChanged()), this, SLOT(onClutchPedalChanged()));
 }
 
 CMainWindow::~CMainWindow()
@@ -94,6 +96,12 @@ void CMainWindow::onGearDownClicked(bool bValue)
 void CMainWindow::onClutchChanged(int iValue)
 {
     m_tCar.clutchPedal().setValue(1.0 - ((double) iValue / 100.0));
+}
+
+void CMainWindow::onClutchPedalChanged()
+{
+    int iValue = (int) ((1.0 - m_tCar.clutchPedal().value()) * 100.0);
+    m_pUI->Clutch->setValue(iValue);
 }
 
 void CMainWindow::onBreakChanged(int iValue)
