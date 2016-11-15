@@ -22,6 +22,7 @@ CMainWindow::CMainWindow(QWidget *parent)
     connect(m_pUI->Clutch, SIGNAL(valueChanged(int)), this, SLOT(onClutchChanged(int)));
     connect(m_pUI->Break, SIGNAL(valueChanged(int)), this, SLOT(onBreakChanged(int)));
     connect(m_pUI->Gas, SIGNAL(valueChanged(int)), this, SLOT(onGasChanged(int)));
+    connect(m_pUI->AutoGear, SIGNAL(toggled(bool)), this, SLOT(onAutoGearChanged(bool)));
 
     m_tTimer.setInterval(50);
     m_tTimer.start();
@@ -103,4 +104,9 @@ void CMainWindow::onBreakChanged(int iValue)
 void CMainWindow::onGasChanged(int iValue)
 {
     m_tCar.gasPedal().setValue((double) iValue / 100.0);
+}
+
+void CMainWindow::onAutoGearChanged(bool bValue)
+{
+    m_tCar.setAutoGear(bValue);
 }

@@ -44,6 +44,8 @@ protected slots:
 
     void onGasChanged(int iValue);
 
+    void onAutoGearChanged(bool bValue);
+
 private:
 
     Ui::CMainWindow*            m_pUI;
