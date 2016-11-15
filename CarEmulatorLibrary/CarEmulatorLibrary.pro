@@ -22,6 +22,8 @@ HEADERS += \
     Source/CarEmulatorGlobal.h \
     Source/CUtils.h \
     Source/CInterpolator.h \
+    Source/CAverager.h \
+    Source/CPIDController.h \
     Source/CNormalizedInput.h \
     Source/CSensorValue.h \
     Source/CSensorBooleanValue.h \
@@ -32,9 +34,11 @@ HEADERS += \
     Source/CGearBox.h \
     Source/CSoundSynth.h \
     Source/CEngineSound.h \
-    Source/CCar.h
+    Source/CCar.h \
+    Source/CCarAI.h
 
 SOURCES += \
+    Source/CPIDController.cpp \
     Source/CNormalizedInput.cpp \
     Source/CSensorValue.cpp \
     Source/CSensorBooleanValue.cpp \
@@ -45,4 +49,5 @@ SOURCES += \
     Source/CGearBox.cpp \
     Source/CSoundSynth.cpp \
     Source/CEngineSound.cpp \
-    Source/CCar.cpp
+    Source/CCar.cpp \
+    Source/CCarAI.cpp

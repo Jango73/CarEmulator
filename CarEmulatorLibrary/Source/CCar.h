@@ -89,7 +89,7 @@ public:
 
     void stopEngine();
 
-    void process(double dDeltaTimeMillis);
+    virtual void process(double dDeltaTimeMillis);
 
     //-------------------------------------------------------------------------------------------------
     // Signals
@@ -102,6 +102,8 @@ signals:
     void speedKMHChanged();
 
     void fuelPercentChanged();
+
+    void clutchPedalChanged();
 
     //-------------------------------------------------------------------------------------------------
     // Properties

@@ -6,7 +6,7 @@
 #include <QTimer>
 
 // Foundations
-#include "../CarEmulatorLibrary/Source/CCar.h"
+#include "../CarEmulatorLibrary/Source/CCarAI.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ private:
 
     Ui::CMainWindow*            m_pUI;
 
-    CarEmulator::CCar           m_tCar;
+    CarEmulator::CCarAI         m_tCar;
 
     QTimer                      m_tTimer;
 };
