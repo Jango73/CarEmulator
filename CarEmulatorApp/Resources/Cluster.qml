@@ -20,7 +20,7 @@ Rectangle {
             height: root.height * 0.98
             anchors.bottom: parent.bottom
             minimumValue: 0
-            maximumValue: 8000
+            maximumValue: 6000
             stepSize: 10
             value: engineRPM
 
