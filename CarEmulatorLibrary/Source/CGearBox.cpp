@@ -31,7 +31,7 @@ CGearBox::CGearBox()
     m_vMinSpeedKMH << 40.0;
     m_vMinSpeedKMH << 60.0;
 
-    m_tTimer.setInterval(1000);
+    m_tTimer.setInterval(500);
     connect(&m_tTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 }
 
@@ -109,6 +109,7 @@ bool CGearBox::setHighestGear()
 
 bool CGearBox::up()
 {
+    if (m_iCurrentGear != m_iTargetGear) return false;
     if (m_iCurrentGear == m_iNumGears - 1) return false;
     m_iTargetGear = m_iCurrentGear + 1;
     m_tTimer.start();
@@ -119,6 +120,7 @@ bool CGearBox::up()
 
 bool CGearBox::down()
 {
+    if (m_iCurrentGear != m_iTargetGear) return false;
     if (m_iCurrentGear == 0) return false;
     m_iTargetGear = m_iCurrentGear - 1;
     m_tTimer.start();

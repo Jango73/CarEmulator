@@ -51,8 +51,6 @@ public:
     // Setters
     //-------------------------------------------------------------------------------------------------
 
-    void setAutoGear(bool bValue);
-
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
@@ -126,7 +124,6 @@ protected:
     CInterpolator<double>   m_iTorqueTable;
 
     bool                    m_bEngineOn;
-    bool                    m_bAutoGear;
     double                  m_dWheelRPS;
     double                  m_dEnginePowerRPS;
     double                  m_dTorqueTransferFactor;

@@ -9,7 +9,6 @@ using namespace CarEmulator;
 CCar::CCar(bool bSoundOn)
     : m_pSound(NULL)
     , m_bEngineOn(0)
-    , m_bAutoGear(false)
     , m_dWheelRPS(0.0)
     , m_dEnginePowerRPS(0.0)
 {
@@ -37,13 +36,6 @@ CCar::~CCar()
     {
         delete m_pSound;
     }
-}
-
-//-------------------------------------------------------------------------------------------------
-
-void CCar::setAutoGear(bool bValue)
-{
-    m_bAutoGear = bValue;
 }
 
 //-------------------------------------------------------------------------------------------------

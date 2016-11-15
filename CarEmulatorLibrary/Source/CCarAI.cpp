@@ -1,4 +1,8 @@
 
+// Qt
+#include <QDebug>
+
+// Application
 #include "CCarAI.h"
 #include "CUtils.h"
 
@@ -12,7 +16,7 @@ CCarAI::CCarAI(bool bSoundOn)
     , m_bAutoClutch(true)
     , m_bAutoGear(true)
     , m_bAutoGas(false)
-    , m_bAutoBreak(true)
+    , m_bAutoBreak(false)
     , m_dSpeedDemand(0.0)
     , m_dAccelDemand(0.0)
     , m_pidClutchControl(1.0, 0.005, 0.05)
@@ -24,6 +28,34 @@ CCarAI::CCarAI(bool bSoundOn)
 
 CCarAI::~CCarAI()
 {
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCarAI::setAutoClutch(bool bValue)
+{
+    m_bAutoClutch = bValue;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCarAI::setAutoGear(bool bValue)
+{
+    m_bAutoGear = bValue;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCarAI::setAutoGas(bool bValue)
+{
+    m_bAutoGas = bValue;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCarAI::setAutoBreak(bool bValue)
+{
+    m_bAutoBreak = bValue;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -172,7 +204,10 @@ void CCarAI::processAutoGear(double dDeltaTimeMillis)
                 {
                     // If gear is neutral, then bring gear up
 
-                    if (gearBox().currentGear() < 1) gearBox().up();
+                    if (gearBox().currentGear() < 1)
+                    {
+                        gearBox().up();
+                    }
                 }
                 else // No gas pedal pressure, bring gear down to reach neutral
                 {

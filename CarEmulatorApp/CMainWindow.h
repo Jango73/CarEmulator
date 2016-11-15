@@ -46,6 +46,8 @@ protected slots:
 
     void onGasChanged(int iValue);
 
+    void onAutoClutchChanged(bool bValue);
+
     void onAutoGearChanged(bool bValue);
 
 private:
