@@ -31,9 +31,16 @@ class CAREMULATOR_SHARED_EXPORT CCar : public QObject
     // QML properties
     //-------------------------------------------------------------------------------------------------
 
+    Q_PROPERTY(double gasPedal READ gasPedalValue WRITE setGasPedalValue NOTIFY gasPedalChanged)
+    Q_PROPERTY(double breakPedal READ breakPedalValue WRITE setBreakPedalValue NOTIFY breakPedalChanged)
+    Q_PROPERTY(double clutchPedal READ clutchPedalValue WRITE setClutchPedalValue NOTIFY clutchPedalChanged)
     Q_PROPERTY(double engineRPM READ engineRPM NOTIFY engineRPMChanged)
+    Q_PROPERTY(double enginePowerHP READ enginePowerHP NOTIFY enginePowerHPChanged)
+    Q_PROPERTY(double engineTorqueNM READ engineTorqueNM NOTIFY engineTorqueNMChanged)
     Q_PROPERTY(double speedKMH READ speedKMH NOTIFY speedKMHChanged)
     Q_PROPERTY(double fuelPercent READ fuelPercent NOTIFY fuelPercentChanged)
+    Q_PROPERTY(double engineTemperatureC READ engineTemperatureC NOTIFY engineTemperatureCChanged)
+    Q_PROPERTY(double engineWaterTemperatureC READ engineWaterTemperatureC NOTIFY engineWaterTemperatureCChanged)
 
 public:
 
@@ -51,17 +58,15 @@ public:
     // Setters
     //-------------------------------------------------------------------------------------------------
 
+    void setGasPedalValue(double dValue);
+
+    void setBreakPedalValue(double dValue);
+
+    void setClutchPedalValue(double dValue);
+
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
-
-    double engineRPM() { return m_sSensors.currentRPM().value(); }
-
-    double speedKMH() { return m_sSensors.currentSpeedKMH().value(); }
-
-    double fuelPercent() { return m_sSensors.currentFuelLevelPercent().value(); }
-
-    double torqueTransferFactor() { return m_dTorqueTransferFactor; }
 
     CCarSettings& settings();
 
@@ -78,6 +83,28 @@ public:
     CNormalizedInput& clutchPedal();
 
     CNormalizedInput& steering();
+
+    double gasPedalValue() const;
+
+    double breakPedalValue() const;
+
+    double clutchPedalValue() const;
+
+    double engineRPM() const;
+
+    double enginePowerHP() const;
+
+    double engineTorqueNM() const;
+
+    double speedKMH() const;
+
+    double fuelPercent() const;
+
+    double engineTemperatureC() const;
+
+    double engineWaterTemperatureC() const;
+
+    double torqueTransferFactor() const;
 
     //-------------------------------------------------------------------------------------------------
     // Control methods
@@ -97,9 +124,21 @@ signals:
 
     void engineRPMChanged();
 
+    void enginePowerHPChanged();
+
+    void engineTorqueNMChanged();
+
     void speedKMHChanged();
 
     void fuelPercentChanged();
+
+    void engineTemperatureCChanged();
+
+    void engineWaterTemperatureCChanged();
+
+    void gasPedalChanged();
+
+    void breakPedalChanged();
 
     void clutchPedalChanged();
 
@@ -107,7 +146,7 @@ signals:
     // Properties
     //-------------------------------------------------------------------------------------------------
 
-protected:
+private:
 
     CCarSettings            m_sSettings;
     CEngineSettings         m_sEngineSettings;
@@ -124,9 +163,9 @@ protected:
     CInterpolator<double>   m_iTorqueTable;
 
     bool                    m_bEngineOn;
-    double                  m_dWheelRPS;
-    double                  m_dEnginePowerRPS;
-    double                  m_dTorqueTransferFactor;
+    double                  m_dWheelRPS;                // For internal use, wheel rotation in revolutions per seconds
+    double                  m_dEnginePowerRPS;          // For internal use, engine power in revolutions per second
+    double                  m_dTorqueTransferFactor;    // For internal use, the actual torque transfer factor from engine to wheels
 };
 
 }

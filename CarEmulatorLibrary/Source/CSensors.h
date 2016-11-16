@@ -67,6 +67,22 @@ public:
     // Getters
     //-------------------------------------------------------------------------------------------------
 
+    const CSensorRealValue& currentRPM() const;
+
+    const CSensorRealValue& currentSpeedKMH() const;
+
+    const CSensorRealValue& currentEngineTempC() const;
+
+    const CSensorRealValue& accelerationKMHS() const;
+
+    const CSensorRealValue& engineAccelerationRPSS() const;
+
+    const CSensorRealValue& currentFuelLevelL() const;
+
+    const CSensorRealValue& currentFuelLevelPercent() const;
+
+    const CSensorRealValue& fuelConsumptionL100KM() const;
+
     CSensorRealValue& currentRPM();
 
     CSensorRealValue& currentSpeedKMH();

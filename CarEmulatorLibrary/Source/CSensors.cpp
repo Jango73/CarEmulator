@@ -42,6 +42,48 @@ CSensors::~CSensors()
 
 //-------------------------------------------------------------------------------------------------
 
+const CSensorRealValue& CSensors::currentRPM() const
+{
+    return m_vCurrentRPM;
+}
+
+const CSensorRealValue& CSensors::currentSpeedKMH() const
+{
+    return m_vCurrentSpeedKMH;
+}
+
+const CSensorRealValue& CSensors::currentEngineTempC() const
+{
+    return m_vCurrentEngineTempC;
+}
+
+const CSensorRealValue& CSensors::accelerationKMHS() const
+{
+    return m_vAccelerationKMHS;
+}
+
+const CSensorRealValue& CSensors::engineAccelerationRPSS() const
+{
+    return m_vEngineAccelerationRPSS;
+}
+
+const CSensorRealValue& CSensors::currentFuelLevelL() const
+{
+    return m_vCurrentFuelLevelL;
+}
+
+const CSensorRealValue& CSensors::currentFuelLevelPercent() const
+{
+    return m_vCurrentFuelLevelPercent;
+}
+
+const CSensorRealValue& CSensors::fuelConsumptionL100KM() const
+{
+    return m_vFuelConsumptionL100KM;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 CSensorRealValue& CSensors::currentRPM()
 {
     return m_vCurrentRPM;

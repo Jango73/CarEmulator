@@ -40,6 +40,27 @@ CCar::~CCar()
 
 //-------------------------------------------------------------------------------------------------
 
+void CCar::setGasPedalValue(double dValue)
+{
+    m_iGasPedal.setValue(dValue);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCar::setBreakPedalValue(double dValue)
+{
+    m_iBreakPedal.setValue(dValue);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCar::setClutchPedalValue(double dValue)
+{
+    m_iGasPedal.setValue(dValue);
+}
+
+//-------------------------------------------------------------------------------------------------
+
 CCarSettings& CCar::settings()
 {
     return m_sSettings;
@@ -92,6 +113,83 @@ CNormalizedInput& CCar::clutchPedal()
 CNormalizedInput& CCar::steering()
 {
     return m_iSteering;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::gasPedalValue() const
+{
+    return m_iGasPedal.value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::breakPedalValue() const
+{
+    return m_iBreakPedal.value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::clutchPedalValue() const
+{
+    return m_iClutchPedal.value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::engineRPM() const
+{
+    return m_sSensors.currentRPM().value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::enginePowerHP() const
+{
+    return m_dEnginePowerRPS;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::engineTorqueNM() const
+{
+    return m_dEnginePowerRPS;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::speedKMH() const
+{
+    return m_sSensors.currentSpeedKMH().value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::fuelPercent() const
+{
+    return m_sSensors.currentFuelLevelPercent().value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::engineTemperatureC() const
+{
+    return m_sSensors.currentEngineTempC().value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::engineWaterTemperatureC() const
+{
+    return m_sSensors.currentEngineTempC().value();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCar::torqueTransferFactor() const
+{
+    return m_dTorqueTransferFactor;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -257,7 +355,10 @@ void CCar::process(double dDeltaTimeMillis)
     // Bring car speed value down from RPM
     dCarSpeedMS /= CEngineSettings::SpeedMSToRPS;
 
-    if (dEngineRPS < 1.0)
+    // Check stall
+    double dStallRPS = CUtils::RPMToRPS(m_sEngineSettings.stallRPM()) / 2.0;
+
+    if (dEngineRPS < dStallRPS)
     {
         m_bEngineOn = false;
     }
@@ -278,6 +379,10 @@ void CCar::process(double dDeltaTimeMillis)
     m_sSensors.process(dDeltaTimeMillis);
 
     emit engineRPMChanged();
+    emit enginePowerHPChanged();
+    emit engineTorqueNMChanged();
     emit speedKMHChanged();
     emit fuelPercentChanged();
+    emit engineTemperatureCChanged();
+    emit engineWaterTemperatureCChanged();
 }
