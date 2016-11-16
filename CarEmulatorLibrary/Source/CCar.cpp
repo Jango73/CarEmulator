@@ -8,9 +8,10 @@ using namespace CarEmulator;
 
 CCar::CCar(bool bSoundOn)
     : m_pSound(NULL)
-    , m_bEngineOn(0)
+    , m_bEngineOn(false)
     , m_dWheelRPS(0.0)
     , m_dEnginePowerRPS(0.0)
+    , m_dTorqueTransferFactor(0.0)
 {
     m_iTorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);         //
     m_iTorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);         // 300 RPM
@@ -356,7 +357,8 @@ void CCar::process(double dDeltaTimeMillis)
     dCarSpeedMS /= CEngineSettings::SpeedMSToRPS;
 
     // Check stall
-    double dStallRPS = CUtils::RPMToRPS(m_sEngineSettings.stallRPM()) / 2.0;
+    // double dStallRPS = CUtils::RPMToRPS(m_sEngineSettings.stallRPM()) / 2.0;
+    double dStallRPS = 1.0;
 
     if (dEngineRPS < dStallRPS)
     {
