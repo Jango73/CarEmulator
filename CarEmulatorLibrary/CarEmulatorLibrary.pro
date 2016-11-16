@@ -4,9 +4,11 @@
 #
 #-------------------------------------------------
 
-QT += core multimedia
+QT += core multimedia qml quick
 
 CONFIG += warn_off
+CONFIG += qt plugin
+CONFIG += c++11
 
 TARGET = CarEmulatorLibrary
 TEMPLATE = lib
@@ -35,7 +37,8 @@ HEADERS += \
     Source/CSoundSynth.h \
     Source/CEngineSound.h \
     Source/CCar.h \
-    Source/CCarAI.h
+    Source/CCarAI.h \
+    Source/CarEmulatorPlugin.h
 
 SOURCES += \
     Source/CPIDController.cpp \
@@ -50,4 +53,5 @@ SOURCES += \
     Source/CSoundSynth.cpp \
     Source/CEngineSound.cpp \
     Source/CCar.cpp \
-    Source/CCarAI.cpp
+    Source/CCarAI.cpp \
+    Source/CarEmulatorPlugin.cpp

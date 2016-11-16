@@ -110,11 +110,11 @@ public:
     // Control methods
     //-------------------------------------------------------------------------------------------------
 
-    void startEngine();
+    Q_INVOKABLE void startEngine();
 
-    void stopEngine();
+    Q_INVOKABLE void stopEngine();
 
-    virtual void process(double dDeltaTimeMillis);
+    Q_INVOKABLE virtual void process(double dDeltaTimeMillis);
 
     //-------------------------------------------------------------------------------------------------
     // Signals

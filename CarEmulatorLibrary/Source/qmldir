@@ -1,0 +1,4 @@
+module CarEmulator
+plugin CarEmulatorLibrary
+classname Car
+classname AICar
