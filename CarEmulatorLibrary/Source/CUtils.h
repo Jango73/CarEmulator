@@ -74,7 +74,7 @@ public:
         return KMH / (60.0 * 60.0);
     }
 
-    static inline mix(double dValue1, dValue2, dMix)
+    static inline mix(double dValue1, double dValue2, double dMix)
     {
         double dFinalMix = qBound(0.0, dMix, 1.0);
         return dValue1 * (1.0 - dFinalMix) + dValue2 * dFinalMix;
