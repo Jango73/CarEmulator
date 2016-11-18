@@ -92,8 +92,10 @@ void CCarAI::processAutoClutch(double dDeltaTimeMillis)
 
                 // Compute the target RPM
 
+                double dCurrentRPM = sensors().currentRPM().value();
                 double dTargetRPM = engineSettings().idleRPM() + ((engineSettings().maxRPM() / 10.0) * gasPedal().value());
                 // double TargetRPM = engineSettings().IdleRPM;
+                dTargetRPM = CUtils::mix(dTargetRPM, dCurrentRPM, 0.25);
 
                 // Process with the controller
 
