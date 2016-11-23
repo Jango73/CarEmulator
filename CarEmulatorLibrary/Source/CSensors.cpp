@@ -16,20 +16,16 @@ CSensors::CSensors()
     , m_vCurrentFuelLevelL(CSensorRealValue(60.0))
     , m_vCurrentFuelLevelPercent(CSensorRealValue(100.0))
     , m_vFuelConsumptionL100KM(CSensorRealValue(0.0))
+    , m_eMainLights(eMLOff)
+    , m_eSecondaryLights(eSLOff)
+    , m_eBlinkLights(eBLOff)
 {
-    m_vBoolSensors[eDoorDriver] = CSensorBooleanValue(false);
-    m_vBoolSensors[eDoorPassenger] = CSensorBooleanValue(false);
-    m_vBoolSensors[eDoorRearLeft] = CSensorBooleanValue(false);
-    m_vBoolSensors[eDoorRearRight] = CSensorBooleanValue(false);
-    m_vBoolSensors[eDoorBack] = CSensorBooleanValue(false);
-    m_vBoolSensors[eDoorEngine] = CSensorBooleanValue(false);
-
-    m_vBoolSensors[eLightPosition] = CSensorBooleanValue(false);
-    m_vBoolSensors[eLightCrossing] = CSensorBooleanValue(false);
-    m_vBoolSensors[eLightRoad] = CSensorBooleanValue(false);
-    m_vBoolSensors[eLightWarnings] = CSensorBooleanValue(false);
-    m_vBoolSensors[eLightTurnRight] = CSensorBooleanValue(false);
-    m_vBoolSensors[eLightTurnLeft] = CSensorBooleanValue(false);
+    m_mDoorSensors[eDoorDriver] = CSensorBooleanValue(false);
+    m_mDoorSensors[eDoorPassenger] = CSensorBooleanValue(false);
+    m_mDoorSensors[eDoorRearLeft] = CSensorBooleanValue(false);
+    m_mDoorSensors[eDoorRearRight] = CSensorBooleanValue(false);
+    m_mDoorSensors[eDoorBack] = CSensorBooleanValue(false);
+    m_mDoorSensors[eDoorEngine] = CSensorBooleanValue(false);
 
     m_tFuelConsTimer.start();
 }
@@ -38,6 +34,23 @@ CSensors::CSensors()
 
 CSensors::~CSensors()
 {
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CSensors::setMainLightsState(EMainLights eValue)
+{
+    m_eMainLights = eValue;
+}
+
+void CSensors::secondaryLightsState(ESecondaryLights eValue)
+{
+    m_eSecondaryLights = eValue;
+}
+
+void CSensors::blinkLightsState(EBlinkLights eValue)
+{
+    m_eBlinkLights = eValue;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -124,9 +137,24 @@ CSensorRealValue& CSensors::fuelConsumptionL100KM()
     return m_vFuelConsumptionL100KM;
 }
 
-QMap<CSensors::EBoolSensor, CSensorBooleanValue>& CSensors::boolSensors()
+QMap<CSensors::EDoorSensors, CSensorBooleanValue>& CSensors::doorSensors()
 {
-    return m_vBoolSensors;
+    return m_mDoorSensors;
+}
+
+CSensors::EMainLights CSensors::mainLightsState() const
+{
+    return m_eMainLights;
+}
+
+CSensors::ESecondaryLights CSensors::secondaryLightsState() const
+{
+    return m_eSecondaryLights;
+}
+
+CSensors::EBlinkLights CSensors::blinkLightsState() const
+{
+    return m_eBlinkLights;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -136,7 +164,7 @@ void CSensors::process(double dDeltaTimeMillis)
     double dDeltaTimeSeconds = CUtils::millisToSeconds(dDeltaTimeMillis);
 
     // Compute acceleration
-    double dSpeedDiffKMH = m_vCurrentSpeedKMH.value() - m_vPreviousSpeedKMH;
+    double dSpeedDiffKMH = m_vCurrentSpeedKMH.value() - m_dPreviousSpeedKMH;
 
     if (abs(dSpeedDiffKMH) < ENGINE_ESPILON)
     {
@@ -148,7 +176,7 @@ void CSensors::process(double dDeltaTimeMillis)
     }
 
     // Compute engine acceleration
-    double dEngineDiffRPS = CUtils::RPMToRPS(m_vCurrentRPM.value()) - m_vPreviousRPS;
+    double dEngineDiffRPS = CUtils::RPMToRPS(m_vCurrentRPM.value()) - m_dPreviousRPS;
 
     if (abs(dEngineDiffRPS) < ENGINE_ESPILON)
     {
@@ -163,8 +191,8 @@ void CSensors::process(double dDeltaTimeMillis)
     if (m_tFuelConsTimer.elapsed() > 1000)
     {
         double dFuelConsTimerSeconds = CUtils::millisToSeconds(m_tFuelConsTimer.elapsed());
-        double dFuelDiff = m_vCurrentFuelLevelL.value() - m_vPreviousFuelLevelL;
-        m_vPreviousFuelLevelL = m_vCurrentFuelLevelL.value();
+        double dFuelDiff = m_vCurrentFuelLevelL.value() - m_dPreviousFuelLevelL;
+        m_dPreviousFuelLevelL = m_vCurrentFuelLevelL.value();
 
         if (m_vCurrentSpeedKMH.value() > 3.0)
         {
@@ -184,6 +212,6 @@ void CSensors::process(double dDeltaTimeMillis)
     // Set fuel percent
     m_vCurrentFuelLevelPercent.setValue((m_vCurrentFuelLevelL.value() / m_vMaximumFuelLevelL.value()) * 100.0);
 
-    m_vPreviousSpeedKMH = m_vCurrentSpeedKMH.value();
-    m_vPreviousRPS = CUtils::RPMToRPS(m_vCurrentRPM.value());
+    m_dPreviousSpeedKMH = m_vCurrentSpeedKMH.value();
+    m_dPreviousRPS = CUtils::RPMToRPS(m_vCurrentRPM.value());
 }

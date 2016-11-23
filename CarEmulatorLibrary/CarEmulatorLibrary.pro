@@ -29,6 +29,7 @@ HEADERS += \
     Source/CNormalizedInput.h \
     Source/CSensorValue.h \
     Source/CSensorBooleanValue.h \
+    Source/CSensorIntegerValue.h \
     Source/CSensorRealValue.h \
     Source/CSensors.h \
     Source/CEngineSettings.h \
@@ -45,6 +46,7 @@ SOURCES += \
     Source/CNormalizedInput.cpp \
     Source/CSensorValue.cpp \
     Source/CSensorBooleanValue.cpp \
+    Source/CSensorIntegerValue.cpp \
     Source/CSensorRealValue.cpp \
     Source/CSensors.cpp \
     Source/CEngineSettings.cpp \
