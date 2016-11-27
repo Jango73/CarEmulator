@@ -108,7 +108,7 @@ void CCarAI::processAutoClutch(double dDeltaTimeMillis)
                 {
                     // If we are in neutral gear, fully engage the clutch and reset the controller
 
-                    if (gearBox().currentGear() == 0)
+                    if (gearBox().currentGear() == GEAR_NEUTRAL)
                     {
                         clutchPedal().setValue(1.0);
                         emit clutchPedalChanged();
@@ -139,7 +139,7 @@ void CCarAI::processAutoClutch(double dDeltaTimeMillis)
         }
         else // else we are in a gear shift sequence, fully disengage the clutch and reset the controller
         {
-            if (gearBox().currentGear() > 0 || gearBox().targetGear() > 0)
+            if (gearBox().currentGear() > GEAR_NEUTRAL || gearBox().targetGear() > GEAR_NEUTRAL)
             {
                 clutchPedal().setValue(0.0);
                 emit clutchPedalChanged();
@@ -181,7 +181,7 @@ void CCarAI::processAutoGear(double dDeltaTimeMillis)
 
                 double dMaxSpeedKMH = gearBox().currentMaxSpeedKMH() + (dMaxSpeedMultplier * gasPedal().value());
 
-                if (sensors().currentSpeedKMH().value() > dMaxSpeedKMH)
+                if (sensors().currentSpeedKMH().value() > dMaxSpeedKMH && gearBox().currentGear() != GEAR_REVERSE)
                 {
                     gearBox().up();
                 }
@@ -190,7 +190,8 @@ void CCarAI::processAutoGear(double dDeltaTimeMillis)
             {
                 if (sensors().currentSpeedKMH().value() < gearBox().currentMinSpeedKMH())
                 {
-                    gearBox().down();
+                    if (gearBox().targetGear() > GEAR_NEUTRAL)
+                        gearBox().down();
                 }
             }
         }
@@ -206,14 +207,14 @@ void CCarAI::processAutoGear(double dDeltaTimeMillis)
                 {
                     // If gear is neutral, then bring gear up
 
-                    if (gearBox().currentGear() < 1)
+                    if (gearBox().targetGear() < GEAR_1 && gearBox().currentGear() != GEAR_REVERSE)
                     {
                         gearBox().up();
                     }
                 }
                 else // No gas pedal pressure, bring gear down to reach neutral
                 {
-                    if (gearBox().currentGear() != 0)
+                    if (gearBox().targetGear() > GEAR_NEUTRAL)
                     {
                         gearBox().down();
                     }
@@ -293,7 +294,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
         {
             // Case where the gear is neutral
 
-            if (gearBox().currentGear() == 0)
+            if (gearBox().currentGear() == GEAR_NEUTRAL)
             {
                 // Apply little pressure to gas in order to activate the startup sequence
                 // Reset the controller

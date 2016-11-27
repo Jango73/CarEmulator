@@ -34,18 +34,6 @@ protected slots:
 
     void onActionStopEngine(bool);
 
-    void onGearUpClicked(bool bValue);
-
-    void onGearDownClicked(bool bValue);
-
-    void onClutchChanged(int iValue);
-
-    void onClutchPedalChanged();
-
-    void onBreakChanged(int iValue);
-
-    void onGasChanged(int iValue);
-
     void onAutoClutchChanged(bool bValue);
 
     void onAutoGearChanged(bool bValue);

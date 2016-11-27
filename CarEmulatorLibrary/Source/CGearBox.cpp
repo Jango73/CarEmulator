@@ -6,10 +6,11 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CGearBox::CGearBox()
-    : m_iNumGears(6)
-    , m_iCurrentGear(0)
-    , m_iTargetGear(0)
+    : m_iNumGears(7)
+    , m_iCurrentGear(GEAR_NEUTRAL)
+    , m_iTargetGear(GEAR_NEUTRAL)
 {
+    m_vRatios << -2.20;
     m_vRatios << 0.0;
     m_vRatios << 2.20;
     m_vRatios << 1.20;
@@ -17,6 +18,7 @@ CGearBox::CGearBox()
     m_vRatios << 0.60;
     m_vRatios << 0.50;
 
+    m_vMaxSpeedKMH << -10.0;
     m_vMaxSpeedKMH << 0.0;
     m_vMaxSpeedKMH << 10.0;
     m_vMaxSpeedKMH << 25.0;
@@ -24,6 +26,7 @@ CGearBox::CGearBox()
     m_vMaxSpeedKMH << 65.0;
     m_vMaxSpeedKMH << 200.0;
 
+    m_vMinSpeedKMH << -5.0;
     m_vMinSpeedKMH << 0.0;
     m_vMinSpeedKMH << 5.0;
     m_vMinSpeedKMH << 10.0;
@@ -79,17 +82,34 @@ void CGearBox::onTimeout()
 {
     m_tTimer.stop();
     m_iCurrentGear = m_iTargetGear;
+
+    emit gearChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+bool CGearBox::setCurrentGear(int iValue)
+{
+    if (m_iCurrentGear != m_iTargetGear) return false;
+
+    m_iTargetGear = iValue;
+    if (m_iTargetGear < 0) m_iTargetGear = 0;
+    if (m_iTargetGear > m_iNumGears - 1) m_iTargetGear = m_iNumGears - 1;
+
+    m_tTimer.start();
+    return true;
 }
 
 //-------------------------------------------------------------------------------------------------
 
 bool CGearBox::setNeutralGear()
 {
-    if (m_iCurrentGear != 0)
+    if (m_iTargetGear != GEAR_NEUTRAL)
     {
-        m_iTargetGear = 0;
+        m_iTargetGear = GEAR_NEUTRAL;
         m_tTimer.start();
     }
+
     return true;
 }
 
@@ -97,11 +117,12 @@ bool CGearBox::setNeutralGear()
 
 bool CGearBox::setHighestGear()
 {
-    if (m_iCurrentGear < m_iNumGears - 1)
+    if (m_iTargetGear < m_iNumGears - 1)
     {
         m_iTargetGear = m_iNumGears - 1;
         m_tTimer.start();
     }
+
     return true;
 }
 
@@ -111,8 +132,10 @@ bool CGearBox::up()
 {
     if (m_iCurrentGear != m_iTargetGear) return false;
     if (m_iCurrentGear == m_iNumGears - 1) return false;
+
     m_iTargetGear = m_iCurrentGear + 1;
     m_tTimer.start();
+
     return true;
 }
 
@@ -122,7 +145,9 @@ bool CGearBox::down()
 {
     if (m_iCurrentGear != m_iTargetGear) return false;
     if (m_iCurrentGear == 0) return false;
+
     m_iTargetGear = m_iCurrentGear - 1;
     m_tTimer.start();
+
     return true;
 }

@@ -31,6 +31,7 @@ class CAREMULATOR_SHARED_EXPORT CCar : public QObject
     // QML properties
     //-------------------------------------------------------------------------------------------------
 
+    Q_PROPERTY(int gear READ gearValue WRITE setGearValue NOTIFY gearChanged)
     Q_PROPERTY(double gasPedal READ gasPedalValue WRITE setGasPedalValue NOTIFY gasPedalChanged)
     Q_PROPERTY(double breakPedal READ breakPedalValue WRITE setBreakPedalValue NOTIFY breakPedalChanged)
     Q_PROPERTY(double clutchPedal READ clutchPedalValue WRITE setClutchPedalValue NOTIFY clutchPedalChanged)
@@ -58,6 +59,8 @@ public:
     // Setters
     //-------------------------------------------------------------------------------------------------
 
+    void setGearValue(int iValue);
+
     void setGasPedalValue(double dValue);
 
     void setBreakPedalValue(double dValue);
@@ -83,6 +86,8 @@ public:
     CNormalizedInput& clutchPedal();
 
     CNormalizedInput& steering();
+
+    int gearValue() const;
 
     double gasPedalValue() const;
 
@@ -114,13 +119,33 @@ public:
 
     Q_INVOKABLE void stopEngine();
 
+    Q_INVOKABLE void gearUp();
+
+    Q_INVOKABLE void gearDown();
+
     Q_INVOKABLE virtual void process(double dDeltaTimeMillis);
+
+    //-------------------------------------------------------------------------------------------------
+    // Slots
+    //-------------------------------------------------------------------------------------------------
+
+protected slots:
+
+    void onGearChanged();
 
     //-------------------------------------------------------------------------------------------------
     // Signals
     //-------------------------------------------------------------------------------------------------
 
 signals:
+
+    void gearChanged();
+
+    void gasPedalChanged();
+
+    void breakPedalChanged();
+
+    void clutchPedalChanged();
 
     void engineRPMChanged();
 
@@ -135,12 +160,6 @@ signals:
     void engineTemperatureCChanged();
 
     void engineWaterTemperatureCChanged();
-
-    void gasPedalChanged();
-
-    void breakPedalChanged();
-
-    void clutchPedalChanged();
 
     //-------------------------------------------------------------------------------------------------
     // Properties

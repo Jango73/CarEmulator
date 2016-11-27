@@ -27,6 +27,8 @@ CCar::CCar(bool bSoundOn)
     {
         m_pSound = new CEngineSound(this);
     }
+
+    connect(&m_gGearBox, SIGNAL(gearChanged()), this, SLOT(onGearChanged()));
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -41,9 +43,17 @@ CCar::~CCar()
 
 //-------------------------------------------------------------------------------------------------
 
+void CCar::setGearValue(int iValue)
+{
+    m_gGearBox.setCurrentGear(iValue);
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void CCar::setGasPedalValue(double dValue)
 {
     m_iGasPedal.setValue(dValue);
+    emit gasPedalChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -51,13 +61,15 @@ void CCar::setGasPedalValue(double dValue)
 void CCar::setBreakPedalValue(double dValue)
 {
     m_iBreakPedal.setValue(dValue);
+    emit breakPedalChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
 
 void CCar::setClutchPedalValue(double dValue)
 {
-    m_iGasPedal.setValue(dValue);
+    m_iClutchPedal.setValue(dValue);
+    emit clutchPedalChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -114,6 +126,13 @@ CNormalizedInput& CCar::clutchPedal()
 CNormalizedInput& CCar::steering()
 {
     return m_iSteering;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+int CCar::gearValue() const
+{
+    return m_gGearBox.currentGear();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -209,6 +228,20 @@ void CCar::stopEngine()
 
 //-------------------------------------------------------------------------------------------------
 
+void CCar::gearUp()
+{
+    m_gGearBox.up();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCar::gearDown()
+{
+    m_gGearBox.down();
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void CCar::process(double dDeltaTimeMillis)
 {
     // Get parameters from settings and sensors
@@ -224,6 +257,10 @@ void CCar::process(double dDeltaTimeMillis)
     double dBreakDownTemperatureC = engineSettings().breakDownTemperatureC();
     double dFuelLevelL = m_sSensors.currentFuelLevelL().value();
 
+    bool bReverse = dGearRatio < 0.0;
+
+    dGearRatio = fabs(dGearRatio);
+
     // Actual clutch level using contact point and full engage point
     m_iClutchLevel.setValue((clutchPedal().value() - engineSettings().clutchContact()) / dClutchRange);
 
@@ -238,8 +275,8 @@ void CCar::process(double dDeltaTimeMillis)
 
     // Torque transfer factor
     m_dTorqueTransferFactor = m_iClutchLevel.value();
-    if (m_dTorqueTransferFactor > 1.0) m_dTorqueTransferFactor = 1.0;
     if (m_dTorqueTransferFactor < 0.0) m_dTorqueTransferFactor = 0.0;
+    if (m_dTorqueTransferFactor > 1.0) m_dTorqueTransferFactor = 1.0;
     if (dGearRatio == 0.0) m_dTorqueTransferFactor = 0.0;
 
     // Bring car speed value up to RPM
@@ -258,7 +295,7 @@ void CCar::process(double dDeltaTimeMillis)
     double dEngineDrag = ((dBreakDownRPS - dEngineRPS) / dBreakDownRPS);
 
     // Apply the engine drag (reaching limit RPM) to the engine RPM
-    dEngineRPS += (((dRawEngineTorqueRPS * (1 - m_dTorqueTransferFactor)) * dEngineDrag) * dDeltaTimeSeconds) * 1.5;
+    dEngineRPS += (((dRawEngineTorqueRPS * (1.0 - m_dTorqueTransferFactor)) * dEngineDrag) * dDeltaTimeSeconds) * 1.5;
 
     // Bring back engine to minimum RPS according to torque transfer factor and fuel flow
     double dIdlePower = (dEngineRPS - dIdleEngineRPS) / (dIdleEngineRPS / 15.0);
@@ -275,7 +312,6 @@ void CCar::process(double dDeltaTimeMillis)
 
     if (dGearRatio != 0.0)
     {
-        // dWheelRPSToEngine = ((m_dWheelRPS - (dEngineRPS / dGearRatio)) * dTorqueTransferFactor) * 8.0;
         dWheelRPSToEngine = ((m_dWheelRPS - (dEngineRPS / dGearRatio)) * m_dTorqueTransferFactor) * 8.0;
     }
 
@@ -286,7 +322,7 @@ void CCar::process(double dDeltaTimeMillis)
     if (dEngineRPS > dBreakDownRPS) dEngineRPS = dBreakDownRPS;
 
     // Compute the engine power
-    m_dEnginePowerRPS = (m_iTorqueTable.getValue(dEngineRPS) * 8) * dFuelGasFactor;
+    m_dEnginePowerRPS = (m_iTorqueTable.getValue(dEngineRPS) * 8.0) * dFuelGasFactor;
 
     double dCarSpeedDivider = dCarSpeedMS * 0.05;
     if (dCarSpeedDivider < 1.0) dCarSpeedDivider = 1.0;
@@ -300,11 +336,22 @@ void CCar::process(double dDeltaTimeMillis)
     // Compute acceleration
     double dAccelRPS = m_dEnginePowerRPS * m_dTorqueTransferFactor;
 
+    if (bReverse)
+    {
+        dAccelRPS *= -1.0;
+    }
+
     // Compute car speed
     m_dWheelRPS += dAccelRPS * dDeltaTimeSeconds;
 
-    // Check speed limits
-    if (m_dWheelRPS < 0.0) m_dWheelRPS = 0.0;
+    if (dCarSpeedMS > 0.0)
+    {
+        m_dWheelRPS -= ((breakPedal().value() * 60) * dDeltaTimeSeconds) * 0.25;
+    }
+    else
+    {
+        m_dWheelRPS += ((breakPedal().value() * 60) * dDeltaTimeSeconds) * 0.25;
+    }
 
     dCarSpeedMS = m_dWheelRPS * dWheelCircM;
 
@@ -319,11 +366,13 @@ void CCar::process(double dDeltaTimeMillis)
     // Compute total drag
     double dTotalDrag = dGroundDrag + dAirDrag;
 
+    if (dCarSpeedMS < 0.0)
+    {
+        dTotalDrag *= -1.0;
+    }
+
     // Add drags to speed
     dCarSpeedMS += (dTotalDrag * dDeltaTimeSeconds);
-
-    // Add break to speed
-    dCarSpeedMS += (breakPedal().value() * -60) * dDeltaTimeSeconds;
 
     // Compute wheel RPS
     m_dWheelRPS = (dCarSpeedMS / dWheelCircM) / CEngineSettings::SpeedMSToRPS;
@@ -387,4 +436,11 @@ void CCar::process(double dDeltaTimeMillis)
     emit fuelPercentChanged();
     emit engineTemperatureCChanged();
     emit engineWaterTemperatureCChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCar::onGearChanged()
+{
+    emit gearChanged();
 }

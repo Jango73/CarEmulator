@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>Cluster.qml</file>
+        <file>MechanicalControls.qml</file>
+        <file>TextButton.qml</file>
     </qresource>
 </RCC>

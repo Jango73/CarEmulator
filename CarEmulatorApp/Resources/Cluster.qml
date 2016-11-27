@@ -62,7 +62,7 @@ Rectangle {
             minimumValue: 0
             maximumValue: 280
             stepSize: 0.5
-            value: speedKMH
+            value: Math.abs(speedKMH)
 
             Behavior on value {
                 NumberAnimation {

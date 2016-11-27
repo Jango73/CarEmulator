@@ -17,11 +17,6 @@ CMainWindow::CMainWindow(QWidget *parent)
     connect(&m_tTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
     connect(m_pUI->actionStartEngine, SIGNAL(triggered(bool)), this, SLOT(onActionStartEngine(bool)));
     connect(m_pUI->actionStopEngine, SIGNAL(triggered(bool)), this, SLOT(onActionStopEngine(bool)));
-    connect(m_pUI->GearUp, SIGNAL(clicked(bool)), this, SLOT(onGearUpClicked(bool)));
-    connect(m_pUI->GearDown, SIGNAL(clicked(bool)), this, SLOT(onGearDownClicked(bool)));
-    connect(m_pUI->Clutch, SIGNAL(valueChanged(int)), this, SLOT(onClutchChanged(int)));
-    connect(m_pUI->Break, SIGNAL(valueChanged(int)), this, SLOT(onBreakChanged(int)));
-    connect(m_pUI->Gas, SIGNAL(valueChanged(int)), this, SLOT(onGasChanged(int)));
     connect(m_pUI->AutoClutch, SIGNAL(toggled(bool)), this, SLOT(onAutoClutchChanged(bool)));
     connect(m_pUI->AutoGear, SIGNAL(toggled(bool)), this, SLOT(onAutoGearChanged(bool)));
 
@@ -32,7 +27,9 @@ CMainWindow::CMainWindow(QWidget *parent)
     m_pUI->Cluster->engine()->rootContext()->setContextProperty("car", &m_tCar);
     m_pUI->Cluster->setSource(QUrl("qrc:/Cluster.qml"));
 
-    connect(&m_tCar, SIGNAL(clutchPedalChanged()), this, SLOT(onClutchPedalChanged()));
+    m_pUI->MechanicalControls->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_pUI->MechanicalControls->engine()->rootContext()->setContextProperty("car", &m_tCar);
+    m_pUI->MechanicalControls->setSource(QUrl("qrc:/MechanicalControls.qml"));
 }
 
 CMainWindow::~CMainWindow()
@@ -43,9 +40,6 @@ CMainWindow::~CMainWindow()
 void CMainWindow::onTimeout()
 {
     m_tCar.process(50);
-
-    int iCurrentGear = m_tCar.gearBox().currentGear();
-    m_pUI->CurrentGear->setText(QString::number(iCurrentGear));
 
     double dEngineRPM = m_tCar.sensors().currentRPM().value();
     m_pUI->EngineRPM->setText(QString::number(dEngineRPM, 'g', 4));
@@ -78,41 +72,6 @@ void CMainWindow::onActionStopEngine(bool bValue)
     Q_UNUSED(bValue);
 
     m_tCar.stopEngine();
-}
-
-void CMainWindow::onGearUpClicked(bool bValue)
-{
-    Q_UNUSED(bValue);
-
-    m_tCar.gearBox().up();
-}
-
-void CMainWindow::onGearDownClicked(bool bValue)
-{
-    Q_UNUSED(bValue);
-
-    m_tCar.gearBox().down();
-}
-
-void CMainWindow::onClutchChanged(int iValue)
-{
-    m_tCar.clutchPedal().setValue(1.0 - ((double) iValue / 100.0));
-}
-
-void CMainWindow::onClutchPedalChanged()
-{
-    int iValue = (int) ((1.0 - m_tCar.clutchPedal().value()) * 100.0);
-    m_pUI->Clutch->setValue(iValue);
-}
-
-void CMainWindow::onBreakChanged(int iValue)
-{
-    m_tCar.breakPedal().setValue((double) iValue / 100.0);
-}
-
-void CMainWindow::onGasChanged(int iValue)
-{
-    m_tCar.gasPedal().setValue((double) iValue / 100.0);
 }
 
 void CMainWindow::onAutoClutchChanged(bool bValue)
