@@ -32,7 +32,7 @@ class CAREMULATOR_SHARED_EXPORT CGearBox : public QObject
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructors et destructor
+    // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor

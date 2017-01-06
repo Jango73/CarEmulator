@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core multimedia qml quick
+QT += core multimedia qml quick xml
 
 CONFIG += warn_off
 CONFIG += qt plugin
@@ -22,6 +22,8 @@ DEFINES += CAREMULATOR_LIBRARY
 
 HEADERS += \
     Source/CarEmulatorGlobal.h \
+    Source/Constants.h \
+    Source/CXMLNode.h \
     Source/CUtils.h \
     Source/CInterpolator.h \
     Source/CAverager.h \
@@ -42,6 +44,7 @@ HEADERS += \
     Source/CarEmulatorPlugin.h
 
 SOURCES += \
+    Source/CXMLNode.cpp \
     Source/CPIDController.cpp \
     Source/CNormalizedInput.cpp \
     Source/CSensorValue.cpp \

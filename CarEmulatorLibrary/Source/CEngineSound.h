@@ -23,7 +23,7 @@ class CAREMULATOR_SHARED_EXPORT CEngineSound : public CSoundSynth
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructors et destructor
+    // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor

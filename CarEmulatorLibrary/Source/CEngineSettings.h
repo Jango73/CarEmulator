@@ -6,6 +6,11 @@
 //-------------------------------------------------------------------------------------------------
 // Includes
 
+// Application
+#include "Constants.h"
+#include "CXMLNode.h"
+#include "CInterpolator.h"
+
 //-------------------------------------------------------------------------------------------------
 
 namespace CarEmulator
@@ -16,7 +21,7 @@ class CAREMULATOR_SHARED_EXPORT CEngineSettings
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructors et destructor
+    // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
@@ -56,6 +61,16 @@ public:
 
     double startupEndSpeedKMH() const;
 
+    CInterpolator<double>& torqueTable();
+
+    const CInterpolator<double>& torqueTable() const;
+
+    //-------------------------------------------------------------------------------------------------
+    // Control methods
+    //-------------------------------------------------------------------------------------------------
+
+    void applyParameters(CXMLNode xParams);
+
     //-------------------------------------------------------------------------------------------------
     // Public properties
     //-------------------------------------------------------------------------------------------------
@@ -70,17 +85,18 @@ public:
 
 protected:
 
-    double m_dStallRPM;                         // RPM at which car will stall if clutch is fully engaged
-    double m_dIdleRPM;                          // RPM at idle (no gear)
-    double m_dMaxRPM;                           // Max RPM that controller allows
-    double m_dBreakDownRPM;                     // RPM at which engine breaks down
-    double m_dMaxTemperatureC;                  // Maximum engine temperature in normal usage
-    double m_dBreakDownTemperatureC;            // Temperature at which engine breaks down
-    double m_dMaxSpeedKMH;                      // Maximum speed of vehicle in normal usage
-    double m_dClutchContact;                    // Clutch contact point normalized (0 = full disengage, 1 = full engage)
-    double m_dClutchFullEngaged;                // Normalized value at which clutch is fully engaged
-    double m_dGasPedalEpsilon;                  // Value at which gas pedal is considered fully released
-    double m_dStartupEndSpeedKMH;               // Speed at which clutch is supposed to be fully engaged after startup
+    double                  m_dStallRPM;                        // RPM at which car will stall if clutch is fully engaged
+    double                  m_dIdleRPM;                         // RPM at idle (no gear)
+    double                  m_dMaxRPM;                          // Max RPM that controller allows
+    double                  m_dBreakDownRPM;                    // RPM at which engine breaks down
+    double                  m_dMaxTemperatureC;                 // Maximum engine temperature in normal usage
+    double                  m_dBreakDownTemperatureC;           // Temperature at which engine breaks down
+    double                  m_dMaxSpeedKMH;                     // Maximum speed of vehicle in normal usage
+    double                  m_dClutchContact;                   // Clutch contact point normalized (0 = full disengage, 1 = full engage)
+    double                  m_dClutchFullEngaged;               // Normalized value at which clutch is fully engaged
+    double                  m_dGasPedalEpsilon;                 // Value at which gas pedal is considered fully released
+    double                  m_dStartupEndSpeedKMH;              // Speed at which clutch is supposed to be fully engaged after startup
+    CInterpolator<double>   m_iTorqueTable;
 };
 
 }

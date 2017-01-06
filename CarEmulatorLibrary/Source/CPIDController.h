@@ -13,7 +13,7 @@ class CAREMULATOR_SHARED_EXPORT CPIDController
 public:
 
 	//-------------------------------------------------------------------------------------------------
-	// Constructeurs et destructeur
+    // Constructeurs and destructeur
 	//-------------------------------------------------------------------------------------------------
 
 	//! Constructeur par défaut

@@ -30,7 +30,7 @@ class CAREMULATOR_SHARED_EXPORT CSoundSynth : public QIODevice
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructors et destructor
+    // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
