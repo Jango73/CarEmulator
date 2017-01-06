@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,85 +58,92 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Speed</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Engine RPM</string>
+             <string>Auto gas</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="AutoGas">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>Fuel cons</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Engine RPM</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Speed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
            <widget class="QLineEdit" name="EngineTemperature">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Engine temp</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="EngineRPM">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="FuelConsumption">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="8" column="0">
            <widget class="QLabel" name="label_7">
             <property name="text">
              <string>Torque trans</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Engine temp</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
            <widget class="QLineEdit" name="FuelLevel">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Fuel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLineEdit" name="TorqueTransfer">
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="EngineRPM">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="FuelConsumption">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
            <widget class="QLineEdit" name="Speed">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="TorqueTransfer">
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -149,6 +156,13 @@
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Fuel</string>
             </property>
            </widget>
           </item>
@@ -172,6 +186,20 @@
              <string/>
             </property>
             <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Speed demand</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QLineEdit" name="SpeedDemand">
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>

@@ -87,6 +87,17 @@ Rectangle {
                 value: car.gasPedal
                 onValueChanged: car.gasPedal = value;
             }
+
+            Slider {
+                id: speedDemand
+                width: pedals.width * 0.2
+                height: pedals.height * 0.8
+                orientation: Qt.Vertical
+                minimumValue: -1.0
+                maximumValue: 1.0
+                value: car.speedDemand
+                onValueChanged: car.speedDemand = value;
+            }
         }
     }
 }

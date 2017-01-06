@@ -10,7 +10,7 @@
 CMainWindow::CMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_pUI(new Ui::CMainWindow)
-    , m_tCar(true)
+    // , m_tCar(true)
 {
     m_pUI->setupUi(this);
 
@@ -19,6 +19,7 @@ CMainWindow::CMainWindow(QWidget *parent)
     connect(m_pUI->actionStopEngine, SIGNAL(triggered(bool)), this, SLOT(onActionStopEngine(bool)));
     connect(m_pUI->AutoClutch, SIGNAL(toggled(bool)), this, SLOT(onAutoClutchChanged(bool)));
     connect(m_pUI->AutoGear, SIGNAL(toggled(bool)), this, SLOT(onAutoGearChanged(bool)));
+    connect(m_pUI->AutoGas, SIGNAL(toggled(bool)), this, SLOT(onAutoGasChanged(bool)));
 
     m_tTimer.setInterval(50);
     m_tTimer.start();
@@ -58,6 +59,9 @@ void CMainWindow::onTimeout()
 
     double dTorqueTransferFactor = m_tCar.torqueTransferFactor();
     m_pUI->TorqueTransfer->setText(QString::number(dTorqueTransferFactor, 'g', 4));
+
+    double dSpeedDemand = m_tCar.speedDemand();
+    m_pUI->SpeedDemand->setText(QString::number(dSpeedDemand, 'g', 4));
 }
 
 void CMainWindow::onActionStartEngine(bool bValue)
@@ -82,4 +86,10 @@ void CMainWindow::onAutoClutchChanged(bool bValue)
 void CMainWindow::onAutoGearChanged(bool bValue)
 {
     m_tCar.setAutoGear(bValue);
+}
+
+void CMainWindow::onAutoGasChanged(bool bValue)
+{
+    m_tCar.setAutoGas(bValue);
+    m_tCar.setAutoBreak(bValue);
 }

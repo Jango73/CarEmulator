@@ -49,6 +49,7 @@ void CCarAI::setAutoGear(bool bValue)
 void CCarAI::setAutoGas(bool bValue)
 {
     m_bAutoGas = bValue;
+    m_dAccelDemand = 0.0;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -56,6 +57,21 @@ void CCarAI::setAutoGas(bool bValue)
 void CCarAI::setAutoBreak(bool bValue)
 {
     m_bAutoBreak = bValue;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCarAI::setSpeedDemand(double dValue)
+{
+    m_dSpeedDemand = dValue;
+    emit speedDemandChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCarAI::speedDemand() const
+{
+    return m_dSpeedDemand;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -281,6 +297,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
             // Fully disengage the gas pedal and reset the controller
 
             gasPedal().setValue(0.0);
+            emit gasPedalChanged();
             m_pidAccelControl.reset();
 
             // Apply parking breaks
@@ -288,6 +305,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
             if (m_bAutoBreak)
             {
                 breakPedal().setValue(0.5);
+                emit breakPedalChanged();
             }
         }
         else
@@ -300,20 +318,22 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
                 // Reset the controller
 
                 gasPedal().setValue(engineSettings().gasPedalEpsilon() * 4);
+                emit gasPedalChanged();
                 m_pidAccelControl.reset();
             }
 
-            // Case where the clutch is disengaged (not necessarily fully)
+            // Case where the clutch is partially or fully disengaged
 
             else if (clutchPedal().value() <= engineSettings().clutchContact())
             {
                 // Bring gas fully down
 
                 gasPedal().setValue(0.0);
+                emit gasPedalChanged();
 
                 if (dTargetSpeedMS < dCarSpeedMS)
                 {
-                    // _AccelControl.Reset();
+                    // m_pidAccelControl.Reset();
                 }
             }
 
@@ -374,6 +394,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
                 // Assign gas value to pedal controller
 
                 gasPedal().setValue(dGasPedalValue);
+                emit gasPedalChanged();
 
                 // Check if breaking is needed
                 // Executed only if auto-break is enabled
@@ -383,6 +404,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
                     // Assign break value to pedal controller
 
                     breakPedal().setValue(dBreakPedalValue);
+                    emit breakPedalChanged();
                 }
             }
         }
