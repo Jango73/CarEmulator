@@ -10,6 +10,8 @@
 #include <QObject>
 
 // Application
+#include "Constants.h"
+#include "CXMLNode.h"
 #include "CInterpolator.h"
 #include "CNormalizedInput.h"
 #include "CCarSettings.h"
@@ -46,11 +48,14 @@ class CAREMULATOR_SHARED_EXPORT CCar : public QObject
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructors et destructor
+    // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
     CCar(bool bSoundOn = false);
+
+    //! Constructor using parameters
+    CCar(CXMLNode xParams, bool bSoundOn = false);
 
     //! Destructor
     virtual ~CCar();
@@ -112,7 +117,7 @@ public:
     double torqueTransferFactor() const;
 
     //-------------------------------------------------------------------------------------------------
-    // Control methods
+    // Public control methods
     //-------------------------------------------------------------------------------------------------
 
     Q_INVOKABLE void startEngine();
@@ -124,6 +129,16 @@ public:
     Q_INVOKABLE void gearDown();
 
     Q_INVOKABLE virtual void process(double dDeltaTimeMillis);
+
+    //-------------------------------------------------------------------------------------------------
+    // Private control methods
+    //-------------------------------------------------------------------------------------------------
+
+private:
+
+    void initialize(bool bSoundOn);
+
+    void applyParameters(CXMLNode xParams);
 
     //-------------------------------------------------------------------------------------------------
     // Slots
@@ -179,7 +194,6 @@ private:
     CNormalizedInput        m_iSteering;
 
     CNormalizedInput        m_iClutchLevel;
-    CInterpolator<double>   m_iTorqueTable;
 
     bool                    m_bEngineOn;
     double                  m_dWheelRPS;                // For internal use, wheel rotation in revolutions per seconds

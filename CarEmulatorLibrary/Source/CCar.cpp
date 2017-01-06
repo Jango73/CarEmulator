@@ -7,21 +7,37 @@ using namespace CarEmulator;
 //-------------------------------------------------------------------------------------------------
 
 CCar::CCar(bool bSoundOn)
-    : m_pSound(NULL)
-    , m_bEngineOn(false)
-    , m_dWheelRPS(0.0)
-    , m_dEnginePowerRPS(0.0)
-    , m_dTorqueTransferFactor(0.0)
 {
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(0, 0.0);         //
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(5, 0.4);         // 300 RPM
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(10, 0.6);        // 600 RPM
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(16, 1.0);        // 960 RPM
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(45, 2.0);        // 2700 RPM
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(75, 2.5);        // 4500 RPM
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(103, 1.8);       // 6180 RPM
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(133, 0.4);       // 7980 RPM
-    m_iTorqueTable << CInterpolator<double>::InterpolatorValue(150, 0.0);       // 9000 RPM
+    initialize(bSoundOn);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+CCar::CCar(CXMLNode xParams, bool bSoundOn)
+{
+    initialize(bSoundOn);
+    applyParameters(xParams);
+}
+
+//-------------------------------------------------------------------------------------------------
+
+CCar::~CCar()
+{
+    if (m_pSound != NULL)
+    {
+        delete m_pSound;
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCar::initialize(bool bSoundOn)
+{
+    m_pSound = NULL;
+    m_bEngineOn = false;
+    m_dWheelRPS = 0.0;
+    m_dEnginePowerRPS = 0.0;
+    m_dTorqueTransferFactor = 0.0;
 
     if (bSoundOn)
     {
@@ -33,11 +49,13 @@ CCar::CCar(bool bSoundOn)
 
 //-------------------------------------------------------------------------------------------------
 
-CCar::~CCar()
+void CCar::applyParameters(CXMLNode xParams)
 {
-    if (m_pSound != NULL)
+    CXMLNode xEngine = xParams.getNodeByTagName(PARAM_NAME_ENGINE);
+
+    if (xEngine.isEmpty() == false)
     {
-        delete m_pSound;
+        m_sEngineSettings.applyParameters(xEngine);
     }
 }
 
@@ -322,7 +340,13 @@ void CCar::process(double dDeltaTimeMillis)
     if (dEngineRPS > dBreakDownRPS) dEngineRPS = dBreakDownRPS;
 
     // Compute the engine power
-    m_dEnginePowerRPS = (m_iTorqueTable.getValue(dEngineRPS) * 8.0) * dFuelGasFactor;
+    m_dEnginePowerRPS = m_sEngineSettings.torqueTable().getValue(dEngineRPS) * dFuelGasFactor;
+
+    // Apply car weight to engine power
+    double dWeightDivider = m_sSettings.weightKG() / WEIGHT_REFERENCE;
+    if (dWeightDivider < 1.0) dWeightDivider = 1.0;
+
+    m_dEnginePowerRPS /= dWeightDivider;
 
     double dCarSpeedDivider = dCarSpeedMS * 0.05;
     if (dCarSpeedDivider < 1.0) dCarSpeedDivider = 1.0;

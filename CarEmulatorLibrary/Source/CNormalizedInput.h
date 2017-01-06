@@ -24,7 +24,7 @@ class CAREMULATOR_SHARED_EXPORT CNormalizedInput : public QObject
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructors et destructor
+    // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor

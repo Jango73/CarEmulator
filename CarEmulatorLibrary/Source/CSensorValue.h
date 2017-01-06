@@ -16,7 +16,7 @@ class CAREMULATOR_SHARED_EXPORT CSensorValue
 public:
 
     //-------------------------------------------------------------------------------------------------
-    // Constructors et destructor
+    // Constructors and destructor
     //-------------------------------------------------------------------------------------------------
 
     //! Default constructor
