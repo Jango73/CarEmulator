@@ -43,19 +43,19 @@ public:
 	//-------------------------------------------------------------------------------------------------
 
 	//! Retourne la valeur cible à atteindre
-	double getSetPoint() { return m_dSetPoint; }
+    double getSetPoint() const { return m_dSetPoint; }
 
 	//! Retourne le facteur proportionnel
-	double getProportionalConstant() { return m_dProportionalConstant; }
+    double getProportionalConstant() const { return m_dProportionalConstant; }
 
 	//! Retourne le facteur intégral
-	double getIntegralConstant() { return m_dIntegralConstant; }
+    double getIntegralConstant() const { return m_dIntegralConstant; }
 
 	//! Retourne le facteur dérivé
-	double getDerivativeConstant() { return m_dDerivativeConstant; }
+    double getDerivativeConstant() const { return m_dDerivativeConstant; }
 
 	//! Retourne la valeur de sortie
-	double getOutput() { return m_dOutput; }
+    double getOutput() const { return m_dOutput; }
 
 	//-------------------------------------------------------------------------------------------------
 	// Méthode de contrôle

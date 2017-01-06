@@ -62,6 +62,18 @@ void CMainWindow::onTimeout()
 
     double dSpeedDemand = m_tCar.speedDemand();
     m_pUI->SpeedDemand->setText(QString::number(dSpeedDemand, 'g', 4));
+
+    double dAccelDemand = m_tCar.accelDemand();
+    m_pUI->AccelDemand->setText(QString::number(dAccelDemand, 'g', 6));
+
+    double dAccelerationKMHS = m_tCar.sensors().accelerationKMHS().value();
+    m_pUI->Acceleration->setText(QString::number(dAccelerationKMHS, 'g', 6));
+
+    double dAccelControlSetPoint = m_tCar.accelControl().getSetPoint();
+    m_pUI->AccelControlSP->setText(QString::number(dAccelControlSetPoint, 'g', 6));
+
+    double dAccelControlOutput = m_tCar.accelControl().getOutput();
+    m_pUI->AccelControlOut->setText(QString::number(dAccelControlOutput, 'g', 6));
 }
 
 void CMainWindow::onActionStartEngine(bool bValue)

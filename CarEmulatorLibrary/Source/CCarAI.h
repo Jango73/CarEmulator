@@ -71,6 +71,10 @@ public:
 
     double speedDemand() const;
 
+    double accelDemand() const;
+
+    const CPIDController& accelControl() const;
+
     //-------------------------------------------------------------------------------------------------
     // Control methods
     //-------------------------------------------------------------------------------------------------

@@ -20,7 +20,7 @@ CCarAI::CCarAI(bool bSoundOn)
     , m_dSpeedDemand(0.0)
     , m_dAccelDemand(0.0)
     , m_pidClutchControl(1.0, 0.005, 0.05)
-    , m_pidAccelControl(0.9, 0.008, 0.2)
+    , m_pidAccelControl(2.0, 0.0, 0.5)
 {
 }
 
@@ -72,6 +72,20 @@ void CCarAI::setSpeedDemand(double dValue)
 double CCarAI::speedDemand() const
 {
     return m_dSpeedDemand;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+double CCarAI::accelDemand() const
+{
+    return m_dAccelDemand;
+}
+
+//-------------------------------------------------------------------------------------------------
+
+const CPIDController& CCarAI::accelControl() const
+{
+    return m_pidAccelControl;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -346,7 +360,8 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
 
                 m_aAccelAverager.append(m_pidAccelControl.getOutput());
 
-                double dGasPedalValue = (m_aAccelAverager.getAverage() / (5));
+                // double dGasPedalValue = (m_aAccelAverager.getAverage() / 5.0);
+                double dGasPedalValue = m_pidAccelControl.getOutput() / 5.0;
                 double dBreakPedalValue = dGasPedalValue * -1.5;
 
                 // In case of extreme deceleration demand, push hard on brakes

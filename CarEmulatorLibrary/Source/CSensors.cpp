@@ -19,6 +19,9 @@ CSensors::CSensors()
     , m_eMainLights(eMLOff)
     , m_eSecondaryLights(eSLOff)
     , m_eBlinkLights(eBLOff)
+    , m_dPreviousSpeedKMH(0.0)
+    , m_dPreviousRPS(0.0)
+    , m_dPreviousFuelLevelL(0.0)
 {
     m_mDoorSensors[eDoorDriver] = CSensorBooleanValue(false);
     m_mDoorSensors[eDoorPassenger] = CSensorBooleanValue(false);

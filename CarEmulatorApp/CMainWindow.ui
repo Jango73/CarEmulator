@@ -58,17 +58,17 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_3">
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>Auto gas</string>
+             <string>AC SP</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="AutoGas">
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_9">
             <property name="text">
-             <string/>
+             <string>Accel KMHS</string>
             </property>
            </widget>
           </item>
@@ -79,17 +79,13 @@
             </property>
            </widget>
           </item>
+          <item row="11" column="1">
+           <widget class="QLineEdit" name="Acceleration"/>
+          </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Engine RPM</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Speed</string>
             </property>
            </widget>
           </item>
@@ -100,17 +96,23 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_7">
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>Torque trans</string>
+             <string>Accel demand</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Engine temp</string>
+          <item row="10" column="1">
+           <widget class="QLineEdit" name="AccelDemand"/>
+          </item>
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="AccelControlSP"/>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="FuelConsumption">
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -121,15 +123,15 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="EngineRPM">
-            <property name="readOnly">
-             <bool>true</bool>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Engine temp</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QLineEdit" name="FuelConsumption">
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="EngineRPM">
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -142,10 +144,24 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
-           <widget class="QLineEdit" name="TorqueTransfer">
-            <property name="readOnly">
-             <bool>true</bool>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Torque trans</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Auto gas</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Auto clutch</string>
             </property>
            </widget>
           </item>
@@ -166,17 +182,10 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>Auto clutch</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>Auto gear</string>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="TorqueTransfer">
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -187,6 +196,20 @@
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="AutoGas">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Speed</string>
             </property>
            </widget>
           </item>
@@ -201,6 +224,23 @@
            <widget class="QLineEdit" name="SpeedDemand">
             <property name="readOnly">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Auto gear</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="1">
+           <widget class="QLineEdit" name="AccelControlOut"/>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>AC Out</string>
             </property>
            </widget>
           </item>
