@@ -56,6 +56,8 @@ public:
     // Setters
     //-------------------------------------------------------------------------------------------------
 
+    void setBehavior(EBehavior eBehavior);
+
     void setAutoClutch(bool bValue);
 
     void setAutoGear(bool bValue);

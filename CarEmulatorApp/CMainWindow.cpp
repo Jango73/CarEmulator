@@ -20,6 +20,9 @@ CMainWindow::CMainWindow(QWidget *parent)
     connect(m_pUI->AutoClutch, SIGNAL(toggled(bool)), this, SLOT(onAutoClutchChanged(bool)));
     connect(m_pUI->AutoGear, SIGNAL(toggled(bool)), this, SLOT(onAutoGearChanged(bool)));
     connect(m_pUI->AutoGas, SIGNAL(toggled(bool)), this, SLOT(onAutoGasChanged(bool)));
+    connect(m_pUI->AccelSlow, SIGNAL(clicked(bool)), this, SLOT(onAccelSlow(bool)));
+    connect(m_pUI->AccelNormal, SIGNAL(clicked(bool)), this, SLOT(onAccelNormal(bool)));
+    connect(m_pUI->AccelFast, SIGNAL(clicked(bool)), this, SLOT(onAccelFast(bool)));
 
     m_tTimer.setInterval(50);
     m_tTimer.start();
@@ -64,16 +67,10 @@ void CMainWindow::onTimeout()
     m_pUI->SpeedDemand->setText(QString::number(dSpeedDemand, 'g', 4));
 
     double dAccelDemand = m_tCar.accelDemand();
-    m_pUI->AccelDemand->setText(QString::number(dAccelDemand, 'g', 6));
+    m_pUI->AccelDemand->setText(QString::number(dAccelDemand, 'g', 4));
 
     double dAccelerationKMHS = m_tCar.sensors().accelerationKMHS().value();
-    m_pUI->Acceleration->setText(QString::number(dAccelerationKMHS, 'g', 6));
-
-    double dAccelControlSetPoint = m_tCar.accelControl().getSetPoint();
-    m_pUI->AccelControlSP->setText(QString::number(dAccelControlSetPoint, 'g', 4));
-
-    double dAccelControlOutput = m_tCar.accelControl().getOutput();
-    m_pUI->AccelControlOut->setText(QString::number(dAccelControlOutput, 'g', 4));
+    m_pUI->Acceleration->setText(QString::number(dAccelerationKMHS, 'g', 4));
 }
 
 void CMainWindow::onActionStartEngine(bool bValue)
@@ -104,4 +101,25 @@ void CMainWindow::onAutoGasChanged(bool bValue)
 {
     m_tCar.setAutoGas(bValue);
     m_tCar.setAutoBreak(bValue);
+}
+
+void CMainWindow::onAccelSlow(bool bValue)
+{
+    Q_UNUSED(bValue);
+
+    m_tCar.setBehavior(CarEmulator::CCarAI::eSlow);
+}
+
+void CMainWindow::onAccelNormal(bool bValue)
+{
+    Q_UNUSED(bValue);
+
+    m_tCar.setBehavior(CarEmulator::CCarAI::eNormal);
+}
+
+void CMainWindow::onAccelFast(bool bValue)
+{
+    Q_UNUSED(bValue);
+
+    m_tCar.setBehavior(CarEmulator::CCarAI::eFast);
 }

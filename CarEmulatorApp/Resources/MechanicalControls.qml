@@ -63,105 +63,49 @@ Rectangle {
             anchors.centerIn: parent
             spacing: 5
 
-            Column {
-                Text {
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.1
-                    text: "Clutch"
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                Slider {
-                    id: clutchPedal
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.8
-                    orientation: Qt.Vertical
-                    value: car.clutchPedal
-                    onValueChanged: car.clutchPedal = value;
-                }
+            Pedal {
+                width: pedals.pedalWidth
+                height: pedals.height * 0.8
+                text: "Clutch"
+                slider.value: car.clutchPedal
+                slider.onValueChanged: car.clutchPedal = slider.value;
+                slider.minimumValue: 0
             }
 
-            Column {
-                Text {
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.1
-                    text: "Break"
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                Slider {
-                    id: breakPedal
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.8
-                    orientation: Qt.Vertical
-                    value: car.breakPedal
-                    onValueChanged: car.breakPedal = value;
-                }
+            Pedal {
+                width: pedals.pedalWidth
+                height: pedals.height * 0.8
+                text: "Break"
+                slider.value: car.breakPedal
+                slider.onValueChanged: car.breakPedal = slider.value;
+                slider.minimumValue: 0
             }
 
-            Column {
-                Text {
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.1
-                    text: "Gas"
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                Slider {
-                    id: gasPedal
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.8
-                    orientation: Qt.Vertical
-                    value: car.gasPedal
-                    onValueChanged: car.gasPedal = value;
-                }
+            Pedal {
+                width: pedals.pedalWidth
+                height: pedals.height * 0.8
+                text: "Gas"
+                slider.value: car.gasPedal
+                slider.onValueChanged: car.gasPedal = slider.value;
+                slider.minimumValue: 0
             }
 
-            Column {
-                Text {
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.1
-                    text: "Speed dem"
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                Slider {
-                    id: speedDemand
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.8
-                    orientation: Qt.Vertical
-                    minimumValue: -1.0
-                    maximumValue: 1.0
-                    stepSize: 0.1
-                    value: car.speedDemand
-                    onValueChanged: car.speedDemand = value;
-                }
+            Pedal {
+                width: pedals.pedalWidth
+                height: pedals.height * 0.8
+                text: "Speed"
+                slider.value: car.speedDemand
+                slider.onValueChanged: car.speedDemand = slider.value;
+                slider.minimumValue: 0
             }
 
-            Column {
-                Text {
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.1
-                    text: "Accel dem"
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                }
-
-                Slider {
-                    id: accelDemand
-                    width: pedals.pedalWidth
-                    height: pedals.height * 0.8
-                    orientation: Qt.Vertical
-                    minimumValue: -1.0
-                    maximumValue: 1.0
-                    stepSize: 0.1
-                    value: car.accelDemand
-                    onValueChanged: car.accelDemand = value;
-                }
+            Pedal {
+                width: pedals.pedalWidth
+                height: pedals.height * 0.8
+                text: "Accel"
+                slider.value: car.accelDemand
+                slider.onValueChanged: car.accelDemand = slider.value;
+                slider.stepSize: 0.1
             }
         }
     }

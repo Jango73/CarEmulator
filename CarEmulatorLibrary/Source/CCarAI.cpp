@@ -32,6 +32,13 @@ CCarAI::~CCarAI()
 
 //-------------------------------------------------------------------------------------------------
 
+void CCarAI::setBehavior(EBehavior eBehavior)
+{
+    m_eBehavior = eBehavior;
+}
+
+//-------------------------------------------------------------------------------------------------
+
 void CCarAI::setAutoClutch(bool bValue)
 {
     m_bAutoClutch = bValue;
@@ -387,21 +394,6 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
 
                 if (bServingSpeed)
                 {
-                    // Choose a gas clip value according to acceleration behavior
-
-                    double GasClip = 0.4;
-
-                    if (m_eBehavior == eNormal)
-                    {
-                        GasClip = 0.6;
-                    }
-                    else if (m_eBehavior == eFast)
-                    {
-                        GasClip = 1.0;
-                    }
-
-                    if (dGasPedalValue > GasClip) dGasPedalValue = GasClip;
-
                     if (dTargetSpeedMS <= dCarSpeedMS && dGasPedalValue > 0.95)
                     {
                         m_pidAccelControl.reset();

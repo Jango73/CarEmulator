@@ -40,6 +40,10 @@ protected slots:
 
     void onAutoGasChanged(bool bValue);
 
+    void onAccelSlow(bool bValue);
+    void onAccelNormal(bool bValue);
+    void onAccelFast(bool bValue);
+
 private:
 
     Ui::CMainWindow*            m_pUI;
