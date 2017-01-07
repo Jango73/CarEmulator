@@ -15,8 +15,8 @@ CMainWindow::CMainWindow(QWidget *parent)
     m_pUI->setupUi(this);
 
     connect(&m_tTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-    connect(m_pUI->actionStartEngine, SIGNAL(triggered(bool)), this, SLOT(onActionStartEngine(bool)));
-    connect(m_pUI->actionStopEngine, SIGNAL(triggered(bool)), this, SLOT(onActionStopEngine(bool)));
+    connect(m_pUI->startEngine, SIGNAL(clicked(bool)), this, SLOT(onActionStartEngine(bool)));
+    connect(m_pUI->stopEngine, SIGNAL(clicked(bool)), this, SLOT(onActionStopEngine(bool)));
     connect(m_pUI->AutoClutch, SIGNAL(toggled(bool)), this, SLOT(onAutoClutchChanged(bool)));
     connect(m_pUI->AutoGear, SIGNAL(toggled(bool)), this, SLOT(onAutoGearChanged(bool)));
     connect(m_pUI->AutoGas, SIGNAL(toggled(bool)), this, SLOT(onAutoGasChanged(bool)));

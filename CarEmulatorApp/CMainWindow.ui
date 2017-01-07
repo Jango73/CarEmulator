@@ -43,6 +43,21 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>2</number>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
         <widget class="QFrame" name="Values">
          <property name="maximumSize">
@@ -58,97 +73,112 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="4" column="0">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <property name="spacing">
+           <number>4</number>
+          </property>
+          <item row="6" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Engine RPM</string>
             </property>
            </widget>
           </item>
-          <item row="12" column="1">
+          <item row="14" column="1">
            <widget class="QLineEdit" name="Acceleration"/>
           </item>
-          <item row="12" column="0">
+          <item row="14" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
              <string>Accel KMHS</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
+          <item row="9" column="1">
            <widget class="QLineEdit" name="EngineTemperature">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
+          <item row="10" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>Fuel cons</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
+          <item row="10" column="1">
            <widget class="QLineEdit" name="FuelConsumption">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
+          <item row="13" column="0">
            <widget class="QLabel" name="label_10">
             <property name="text">
              <string>Accel demand</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
+          <item row="8" column="1">
            <widget class="QLineEdit" name="FuelLevel">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="11" column="1">
+          <item row="13" column="1">
            <widget class="QLineEdit" name="AccelDemand"/>
           </item>
-          <item row="5" column="1">
+          <item row="7" column="1">
            <widget class="QLineEdit" name="Speed">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>Auto gas</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="9" column="0">
            <widget class="QLabel" name="label_4">
             <property name="text">
              <string>Engine temp</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
+          <item row="11" column="0">
            <widget class="QLabel" name="label_7">
             <property name="text">
              <string>Torque trans</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="6" column="1">
            <widget class="QLineEdit" name="EngineRPM">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="4" column="1">
            <widget class="QCheckBox" name="AutoGear">
             <property name="text">
              <string/>
@@ -158,21 +188,21 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
+          <item row="8" column="0">
            <widget class="QLabel" name="label_6">
             <property name="text">
              <string>Fuel</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_11">
             <property name="text">
              <string>Auto clutch</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="3" column="1">
            <widget class="QCheckBox" name="AutoClutch">
             <property name="text">
              <string/>
@@ -182,49 +212,49 @@
             </property>
            </widget>
           </item>
-          <item row="9" column="1">
+          <item row="11" column="1">
            <widget class="QLineEdit" name="TorqueTransfer">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="7" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
              <string>Speed</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="label_12">
             <property name="text">
              <string>Auto gear</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
+          <item row="12" column="0">
            <widget class="QLabel" name="label_8">
             <property name="text">
              <string>Speed demand</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="5" column="1">
            <widget class="QCheckBox" name="AutoGas">
             <property name="text">
              <string/>
             </property>
            </widget>
           </item>
-          <item row="10" column="1">
+          <item row="12" column="1">
            <widget class="QLineEdit" name="SpeedDemand">
             <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="1" column="1">
            <widget class="QGroupBox" name="groupBox">
             <property name="minimumSize">
              <size>
@@ -279,6 +309,32 @@
             </widget>
            </widget>
           </item>
+          <item row="0" column="1">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="startEngine">
+               <property name="text">
+                <string>Start engine</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="stopEngine">
+               <property name="text">
+                <string>Stop engine</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -291,6 +347,21 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
           <item>
            <widget class="QQuickWidget" name="MechanicalControls">
             <property name="minimumSize">
@@ -329,19 +400,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionStartEngine"/>
-   <addaction name="actionStopEngine"/>
   </widget>
-  <action name="actionStartEngine">
-   <property name="text">
-    <string>Start engine</string>
-   </property>
-  </action>
-  <action name="actionStopEngine">
-   <property name="text">
-    <string>Stop engine</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
