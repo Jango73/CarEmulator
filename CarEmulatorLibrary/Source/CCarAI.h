@@ -28,6 +28,7 @@ class CAREMULATOR_SHARED_EXPORT CCarAI : public CCar
     //-------------------------------------------------------------------------------------------------
 
     Q_PROPERTY(double speedDemand READ speedDemand WRITE setSpeedDemand NOTIFY speedDemandChanged)
+    Q_PROPERTY(double accelDemand READ accelDemand WRITE setAccelDemand NOTIFY accelDemandChanged)
 
 public:
 
@@ -65,6 +66,8 @@ public:
 
     void setSpeedDemand(double dValue);
 
+    void setAccelDemand(double dValue);
+
     //-------------------------------------------------------------------------------------------------
     // Getters
     //-------------------------------------------------------------------------------------------------
@@ -100,6 +103,8 @@ protected:
 signals:
 
     void speedDemandChanged();
+
+    void accelDemandChanged();
 
     //-------------------------------------------------------------------------------------------------
     // Properties

@@ -169,7 +169,7 @@ void CSensors::process(double dDeltaTimeMillis)
     // Compute acceleration
     double dSpeedDiffKMH = m_vCurrentSpeedKMH.value() - m_dPreviousSpeedKMH;
 
-    if (abs(dSpeedDiffKMH) < ENGINE_ESPILON)
+    if (fabs(dSpeedDiffKMH) < ENGINE_ESPILON)
     {
         m_vAccelerationKMHS.setValue(0.0);
     }
@@ -181,7 +181,7 @@ void CSensors::process(double dDeltaTimeMillis)
     // Compute engine acceleration
     double dEngineDiffRPS = CUtils::RPMToRPS(m_vCurrentRPM.value()) - m_dPreviousRPS;
 
-    if (abs(dEngineDiffRPS) < ENGINE_ESPILON)
+    if (fabs(dEngineDiffRPS) < ENGINE_ESPILON)
     {
         m_vEngineAccelerationRPSS.setValue(0.0);
     }

@@ -10,7 +10,7 @@
 CMainWindow::CMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_pUI(new Ui::CMainWindow)
-    // , m_tCar(true)
+    , m_tCar(true)
 {
     m_pUI->setupUi(this);
 
@@ -70,10 +70,10 @@ void CMainWindow::onTimeout()
     m_pUI->Acceleration->setText(QString::number(dAccelerationKMHS, 'g', 6));
 
     double dAccelControlSetPoint = m_tCar.accelControl().getSetPoint();
-    m_pUI->AccelControlSP->setText(QString::number(dAccelControlSetPoint, 'g', 6));
+    m_pUI->AccelControlSP->setText(QString::number(dAccelControlSetPoint, 'g', 4));
 
     double dAccelControlOutput = m_tCar.accelControl().getOutput();
-    m_pUI->AccelControlOut->setText(QString::number(dAccelControlOutput, 'g', 6));
+    m_pUI->AccelControlOut->setText(QString::number(dAccelControlOutput, 'g', 4));
 }
 
 void CMainWindow::onActionStartEngine(bool bValue)

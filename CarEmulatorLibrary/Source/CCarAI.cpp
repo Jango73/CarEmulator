@@ -20,7 +20,7 @@ CCarAI::CCarAI(bool bSoundOn)
     , m_dSpeedDemand(0.0)
     , m_dAccelDemand(0.0)
     , m_pidClutchControl(1.0, 0.005, 0.05)
-    , m_pidAccelControl(2.0, 0.0, 0.5)
+    , m_pidAccelControl(0.9, 0.008, 0.2)
 {
 }
 
@@ -65,6 +65,17 @@ void CCarAI::setSpeedDemand(double dValue)
 {
     m_dSpeedDemand = dValue;
     emit speedDemandChanged();
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void CCarAI::setAccelDemand(double dValue)
+{
+    if (fabs(dValue) < ENGINE_ESPILON)
+        dValue = 0.0;
+
+    m_dAccelDemand = dValue;
+    emit accelDemandChanged();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -278,6 +289,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
             // Target speed becomes current speed
 
             m_dSpeedDemand = sensors().currentSpeedKMH().value() / engineSettings().maxSpeedKMH();
+            emit speedDemandChanged();
 
             dTargetAccelerationMSS = m_dAccelDemand * CUtils::KMHToMS(15.0);
         }
@@ -318,7 +330,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
 
             if (m_bAutoBreak)
             {
-                breakPedal().setValue(0.5);
+                breakPedal().setValue(1.0);
                 emit breakPedalChanged();
             }
         }
@@ -360,8 +372,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
 
                 m_aAccelAverager.append(m_pidAccelControl.getOutput());
 
-                // double dGasPedalValue = (m_aAccelAverager.getAverage() / 5.0);
-                double dGasPedalValue = m_pidAccelControl.getOutput() / 5.0;
+                double dGasPedalValue = (m_aAccelAverager.getAverage() / 5.0);
                 double dBreakPedalValue = dGasPedalValue * -1.5;
 
                 // In case of extreme deceleration demand, push hard on brakes

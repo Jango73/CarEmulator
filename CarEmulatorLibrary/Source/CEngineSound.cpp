@@ -35,7 +35,7 @@ CEngineSound::CEngineSound(CCar* pCar)
     m_iEngineSound << CInterpolator<double>::InterpolatorValue(0.50,  0.0);
 
     CInterpolator<double> iTemp1 = m_iEngineSound;
-    // CInterpolator<double> iTemp2 = m_iEngineSound;
+    CInterpolator<double> iTemp2 = m_iEngineSound;
     // CInterpolator<double> iTemp3 = m_iEngineSound;
     // CInterpolator<double> iTemp4 = m_iEngineSound;
 
@@ -43,11 +43,11 @@ CEngineSound::CEngineSound(CCar* pCar)
     iTemp1.randomize(0.75);
     m_iEngineSound.merge(iTemp1);
 
-    /*
     iTemp2.shift(0.16);
     iTemp2.randomize(0.75);
     m_iEngineSound.merge(iTemp2);
 
+    /*
     iTemp3.shift(0.24);
     iTemp3.randomize(0.75);
     m_iEngineSound.merge(iTemp3);
