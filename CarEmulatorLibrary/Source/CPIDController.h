@@ -13,62 +13,62 @@ class CAREMULATOR_SHARED_EXPORT CPIDController
 public:
 
 	//-------------------------------------------------------------------------------------------------
-    // Constructeurs and destructeur
+    // Constructors and destructor
 	//-------------------------------------------------------------------------------------------------
 
-	//! Constructeur par défaut
+    //! Default constructor
 	CPIDController(double dNewProportional, double dNewIntegral, double dNewDerivative);
 
-	//! Destructeur
+    //! Destructor
 	virtual ~CPIDController();
 
 	//-------------------------------------------------------------------------------------------------
 	// Setters
 	//-------------------------------------------------------------------------------------------------
 
-	//! Définit la valeur cible à atteindre
+    //! Defines the set point (the value to reach)
 	void setSetPoint(double value) { m_dSetPoint = value; }
 
-	//! Définit le facteur proportionnel
+    //! Defines the proportional factor
 	void setProportionalConstant(double value) { m_dProportionalConstant = value; }
 
-	//! Définit le facteur intégral
+    //! Defines the integral factor
 	void setIntegralConstant(double value) { m_dIntegralConstant = value; }
 
-	//! Définit le facteur dérivé
+    //! Defines the derivative factor
 	void setDerivativeConstant(double value) { m_dDerivativeConstant = value; }
 
 	//-------------------------------------------------------------------------------------------------
 	// Getters
 	//-------------------------------------------------------------------------------------------------
 
-	//! Retourne la valeur cible à atteindre
-    double getSetPoint() const { return m_dSetPoint; }
+    //! Returns the set point (the value to reach)
+    double setPoint() const { return m_dSetPoint; }
 
-	//! Retourne le facteur proportionnel
-    double getProportionalConstant() const { return m_dProportionalConstant; }
+    //! Returns the proportional factor
+    double proportionalConstant() const { return m_dProportionalConstant; }
 
-	//! Retourne le facteur intégral
-    double getIntegralConstant() const { return m_dIntegralConstant; }
+    //! Returns the integral factor
+    double integralConstant() const { return m_dIntegralConstant; }
 
-	//! Retourne le facteur dérivé
-    double getDerivativeConstant() const { return m_dDerivativeConstant; }
+    //! Returns the derivative factor
+    double derivativeConstant() const { return m_dDerivativeConstant; }
 
-	//! Retourne la valeur de sortie
-    double getOutput() const { return m_dOutput; }
+    //! Returns the output value
+    double output() const { return m_dOutput; }
 
 	//-------------------------------------------------------------------------------------------------
-	// Méthode de contrôle
+    // Control methods
 	//-------------------------------------------------------------------------------------------------
 
-	//! Réinitialise le contrôleur
+    //! Resets the controller
 	void reset();
 
-	//! Met à jour le contrôleur
+    //! Updates the controller
 	void update(double dCurrentValue, double dDeltaTimeMillis);
 
 	//-------------------------------------------------------------------------------------------------
-	// Propriétés
+    // Properties
 	//-------------------------------------------------------------------------------------------------
 
 protected:

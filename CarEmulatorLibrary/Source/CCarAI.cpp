@@ -173,7 +173,7 @@ void CCarAI::processAutoClutch(double dDeltaTimeMillis)
                 {
                     clutchPedal().setValue(
                                 engineSettings().clutchContact() +
-                                (m_pidClutchControl.getOutput() / (engineSettings().breakDownRPM() * -1))
+                                (m_pidClutchControl.output() / (engineSettings().breakDownRPM() * -1))
                                 );
                     emit clutchPedalChanged();
                 }
@@ -377,7 +377,7 @@ void CCarAI::processAutoGas(double dDeltaTimeMillis)
                 m_pidAccelControl.setSetPoint(dTargetAccelerationMSS);
                 m_pidAccelControl.update(dCarAccelerationMSS, dDeltaTimeMillis);
 
-                m_aAccelAverager.append(m_pidAccelControl.getOutput());
+                m_aAccelAverager.append(m_pidAccelControl.output());
 
                 double dGasPedalValue = (m_aAccelAverager.getAverage() / 5.0);
                 double dBreakPedalValue = dGasPedalValue * -1.5;

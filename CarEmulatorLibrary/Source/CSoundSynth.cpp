@@ -146,6 +146,10 @@ QList<QByteArray> CSoundSynth::CSoundSynthGenerator::getBuffers()
 
         m_tMutex.unlock();
     }
+    else
+    {
+        qWarning() << "Unable to lock audio mutex";
+    }
 
     return baReturnValue;
 }
@@ -181,7 +185,15 @@ void CSoundSynth::CSoundSynthGenerator::run()
                         m_iPosition += m_lBuffers.last().count();
                         m_tMutex.unlock();
                     }
+                    else
+                    {
+                        qWarning() << "Unable to lock audio mutex";
+                    }
                 }
+            }
+            else
+            {
+                qWarning() << "Unable to lock audio mutex";
             }
 
             msleep(50);
